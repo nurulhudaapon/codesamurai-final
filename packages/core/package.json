@@ -1,0 +1,6 @@
+{
+  "name": "@ecosync/core",
+  "description": "All logic related to app, logic will be separated based on feature domain like for dashboard page or for chart",
+  "module": "index.ts",
+  "type": "module"
+}

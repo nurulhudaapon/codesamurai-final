@@ -1,0 +1,21 @@
+{
+  "name": "ecosync",
+  "description": "A monorepo for the Ecosync - an app to to bridge the gaps, streamline processes, and enhance accountability through technological innovation.",
+  "version": "0.0.0-alpha-0",
+  "module": "index.ts",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "workspaces": ["packages/*"],
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "kleur": "^4.1.5"
+  }
+}

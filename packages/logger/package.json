@@ -1,0 +1,5 @@
+{
+  "name": "@ecosync/logger",
+  "module": "index.ts",
+  "type": "module"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "@ecosync/client",
+  "description": "All the client interface like client that access database, api and cube.js",
+  "module": "index.ts",
+  "type": "module"
+}
