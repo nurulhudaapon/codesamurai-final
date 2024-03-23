@@ -10,9 +10,7 @@
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
-    "bun-types": "latest"
-  },
-  "peerDependencies": {
+    "bun-types": "latest",
     "typescript": "^5.0.0"
   },
   "dependencies": {
