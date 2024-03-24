@@ -1,5 +1,4 @@
 import Image from "next/image";
-import styles from "./page.module.css";
 import { EcosyncDatabase } from "@ecosync/db";
 import { EcosyncDbClient } from "@ecosync/client";
 
@@ -11,7 +10,7 @@ export default async function Home() {
   console.log(users)
 
   return (
-    <main className={styles.main}>
+    <main>
       <pre>{
         JSON.stringify(users, null, 2)
       }</pre>
