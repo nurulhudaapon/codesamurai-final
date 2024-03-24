@@ -1,8 +1,8 @@
 import { EcosyncDbClient } from "@ecosync/client";
 import { EcosyncDatabase } from "@ecosync/db";
 
-const client = new EcosyncDbClient();
 const db = new EcosyncDatabase();
+const client = new EcosyncDbClient({ db });
 
 const result = db.init();
 const users = client.getUsers();
