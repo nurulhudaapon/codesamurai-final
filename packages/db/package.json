@@ -2,5 +2,9 @@
   "name": "@ecosync/db",
   "description": "Database configuration including prisma schema, database seed, migration and reset logic",
   "module": "index.ts",
-  "type": "module"
+  "type": "module",
+  "prisma": {
+    "schema": "schema/schema.prisma",
+    "seed": "ts-node seed/seed.ts"
+  }
 }

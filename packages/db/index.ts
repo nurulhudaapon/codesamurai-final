@@ -1,4 +1,6 @@
+import { EcosyncLogger } from "@ecosync/logger";
 
+const console = new EcosyncLogger({ name: "Database" }).init();
 
 export class EcosyncDatabase {
     constructor() {
@@ -6,5 +8,6 @@ export class EcosyncDatabase {
     }
     init() {
         console.log('EcosyncDatabase init');
+        return 'Test'
     }
 }

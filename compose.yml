@@ -1,0 +1,10 @@
+# Compose file with api, web and cube
+
+version: '3.7'
+
+services:
+  web:
+    
+  api:
+
+  cube:
