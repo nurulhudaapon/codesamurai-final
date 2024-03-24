@@ -10,7 +10,7 @@ export const users = [
 		phone: '+8801000000000',
 		first_name: 'Default',
 		last_name: 'Admin',
-		status: 'active',
+		state: 'active',
 		role: 'admin',
 		password: 'HASHED_PASSWORD',
 		created_at: now,

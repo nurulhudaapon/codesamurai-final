@@ -5,6 +5,15 @@
   "type": "module",
   "prisma": {
     "schema": "schema/schema.prisma",
-    "seed": "ts-node seed/seed.ts"
+    "seed": "bun run seed/seed.ts"
+  },
+  "devDependencies": {
+    "prisma": "^5.11.0",
+    "prisma-markdown": "^1.0.9",
+    "ts-node": "^10.9.2",
+    "zod-prisma-types": "^3.1.6"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.11.0"
   }
 }

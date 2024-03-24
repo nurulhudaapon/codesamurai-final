@@ -30,7 +30,7 @@ generator client {
 
 generator markdown {
   provider = "prisma-markdown"
-  output   = "./../../README.md"
+  output   = "./../README.md"
   title    = "EcoSync Database"
 }
 
@@ -61,12 +61,6 @@ model users {
 
   /// Timestamp indicating when the user last logged in (optional).
   last_login_at  DateTime?     @db.Timestamptz(6)
-  
-  /// JSONB field for storing informatin regarding auth and provider related data
-  auth   Json?         @default("{}")
-  
-  /// JSON field for storing extra data
-  extra_data  Json?         @default("{}")
 
   /// Password associated with the user (optional).
   password    String?       @db.VarChar(255)
