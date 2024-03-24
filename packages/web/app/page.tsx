@@ -1,7 +1,14 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { EcosyncDatabase } from "@ecosync/db";
+import { EcosyncDbClient } from "@ecosync/client";
+
+const db = new EcosyncDatabase();
+const client = new EcosyncDbClient();
 
 export default function Home() {
+  console.log(db.init(), client.getUsers())
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
