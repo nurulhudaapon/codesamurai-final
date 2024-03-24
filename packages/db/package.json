@@ -3,6 +3,9 @@
   "description": "Database configuration including prisma schema, database seed, migration and reset logic",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "postinstall": "prisma generate"
+  },
   "prisma": {
     "schema": "schema/schema.prisma",
     "seed": "bun run seed/seed.ts"
