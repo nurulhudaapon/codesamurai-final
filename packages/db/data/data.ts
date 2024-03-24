@@ -1,9 +1,10 @@
+import type * as Entity from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
-const now = new Date().toISOString();
+const now = new Date();
 
 //======== Initial Data ========
-export const users = [
+const users: Entity.users[] = [
 	{
 		id: uuid(),
 		email: 'admin@ecosync.gov.bd',
@@ -11,9 +12,75 @@ export const users = [
 		first_name: 'Default',
 		last_name: 'Admin',
 		state: 'active',
-		role: 'admin',
 		password: 'HASHED_PASSWORD',
 		created_at: now,
 		updated_at: now,
+		last_login_at: null,
+		role_id: null,
 	}
 ];
+
+const roles: Entity.roles[] = [
+	{
+		id: uuid(),
+		slug: 'admin',
+		title: 'Admin',
+		created_at: now,
+		updated_at: now,
+	},
+	{
+		id: uuid(),
+		slug: 'sts_manager',
+		title: 'STS Manager',
+		created_at: now,
+		updated_at: now,
+	},
+	{
+		id: uuid(),
+		slug: 'landfill_manager',
+		title: 'Landfill Manager',
+		created_at: now,
+		updated_at: now,
+	},
+];
+
+const permissions: Entity.permissions[] = [
+	{
+		id: uuid(),
+		slug: 'manage_users',
+		title: 'Manage Users',
+		created_at: now,
+		updated_at: now,
+	},
+	{
+		id: uuid(),
+		slug: 'manage_roles',
+		title: 'Manage Roles',
+		created_at: now,
+		updated_at: now,
+	},
+	{
+		id: uuid(),
+		slug: 'manage_permissions',
+		title: 'Manage Permissions',
+		created_at: now,
+		updated_at: now,
+	},
+];
+
+const role_permissions: Entity.role_permissions[] = permissions.map((permission) => {
+	return {
+		id: uuid(),
+		role_id: roles[0].id,
+		permission_id: permission.id,
+		created_at: now,
+		updated_at: now,
+	};
+});
+
+export const InitData = {
+	users,
+	permissions,
+	roles,
+	role_permissions,
+}

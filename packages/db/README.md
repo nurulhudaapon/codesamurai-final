@@ -16,9 +16,33 @@ erDiagram
   String phone
   DateTime last_login_at "nullable"
   String password "nullable"
-  users_role role
+  String role_id FK "nullable"
   users_state state
 }
+"roles" {
+  String id PK
+  DateTime created_at
+  DateTime updated_at
+  String slug
+  String title
+}
+"permissions" {
+  String id PK
+  DateTime created_at
+  DateTime updated_at
+  String slug
+  String title
+}
+"role_permissions" {
+  String id PK
+  DateTime created_at
+  DateTime updated_at
+  String role_id FK
+  String permission_id FK
+}
+"users" }o--o| "roles" : role
+"role_permissions" }o--|| "roles" : role
+"role_permissions" }o--|| "permissions" : permission
 ```
 
 ### `users`
@@ -35,5 +59,35 @@ This model stores information about users.
   - `phone`: Phone number of the user.
   - `last_login_at`: Timestamp indicating when the user last logged in (optional).
   - `password`: Password associated with the user (optional).
-  - `role`: Role of the user (default sts).
+  - `role_id`: Role of the user (default sts).
   - `state`: State of the user (default active).
+
+### `roles`
+List of roles that a user can have.
+
+**Properties**
+  - `id`: Unique identifier for the role.
+  - `created_at`: Timestamp indicating when the role was created.
+  - `updated_at`: Timestamp indicating when the role was last updated.
+  - `slug`: Name/slug of the role.
+  - `title`: Title of the role.
+
+### `permissions`
+Represents the permissions that a role can have.
+
+**Properties**
+  - `id`: Unique identifier for the permission.
+  - `created_at`: Timestamp indicating when the permission was created.
+  - `updated_at`: Timestamp indicating when the permission was last updated.
+  - `slug`: Name/slug of the permission.
+  - `title`: Title of the permission.
+
+### `role_permissions`
+Represents the relationship between roles and permissions.
+
+**Properties**
+  - `id`: Unique identifier for the role permission.
+  - `created_at`: Timestamp indicating when the role permission was created.
+  - `updated_at`: Timestamp indicating when the role permission was last updated.
+  - `role_id`: Role ID associated with the role permission.
+  - `permission_id`: Permission ID associated with the role permission.

@@ -1,1 +1,1 @@
-export * as InitData from './data';
+export * from './data';

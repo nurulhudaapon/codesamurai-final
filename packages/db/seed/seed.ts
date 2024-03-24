@@ -17,6 +17,9 @@ export const main = async () => {
 			skipDuplicates: true,
 		});
 
+		// Wait 200ms
+
+
 		console.log(String(`✅ Seeded | Count: ${response?.count}] -> \x1b[32m${resource} \x1b[0m`));
 	}
 };

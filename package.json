@@ -10,6 +10,7 @@
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
+    "@types/uuid": "^9.0.8",
     "bun-types": "latest",
     "typescript": "^5.0.0"
   },

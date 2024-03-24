@@ -39,48 +39,119 @@ generator markdown {
 /// This model stores information about users.
 model users {
   /// Unique identifier for the user.
-  id          String        @id @db.Uuid
+  id String @id @db.Uuid @default(uuid())
 
   /// Timestamp indicating when the user was created.
-  created_at  DateTime      @db.Timestamptz(6)
+  created_at DateTime @db.Timestamptz(6) @default(now())
 
   /// Timestamp indicating when the user was last updated.
-  updated_at  DateTime      @db.Timestamptz(6)
+  updated_at DateTime @db.Timestamptz(6) @default(now())
 
   /// First name of the user (optional).
-  first_name  String?       @db.VarChar(100)
+  first_name String? @db.VarChar(100)
 
   /// Last name of the user (optional).
-  last_name String?       @db.VarChar(100)
+  last_name String? @db.VarChar(100)
 
   /// Email address of the user.
-  email       String        @db.VarChar(320)
+  email String @db.VarChar(320)
 
   /// Phone number of the user.
-  phone       String        @db.VarChar(80)
+  phone String @db.VarChar(80)
 
   /// Timestamp indicating when the user last logged in (optional).
-  last_login_at  DateTime?     @db.Timestamptz(6)
+  last_login_at DateTime? @db.Timestamptz(6)
 
   /// Password associated with the user (optional).
-  password    String?       @db.VarChar(255)
+  password String? @db.VarChar(255)
 
   /// Role of the user (default sts).
-  role        users_role  @default(admin)
+  role_id String? @db.Uuid
 
   /// State of the user (default active).
-  state       users_state @default(active)
+  state users_state @default(active)
+
+  // Relation to the role
+  role roles? @relation(fields: [role_id], references: [id])
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
 }
 
-enum users_role {
-  /// Admin role.
-  admin
+/// @namespace Accounts
+/// List of roles that a user can have.
+model roles {
+  /// Unique identifier for the role.
+  id String @id @db.Uuid @default(uuid())
 
-  /// STS role.
-  sts
+  /// Timestamp indicating when the role was created.
+  created_at DateTime @db.Timestamptz(6) @default(now())
+
+  /// Timestamp indicating when the role was last updated.
+  updated_at DateTime @db.Timestamptz(6) @default(now())
+
+  /// Name/slug of the role.
+  slug String @db.VarChar(100)
+
+  /// Title of the role.
+  title String @db.Text
+
+  users            users[]
+  role_permissions role_permissions[]
+
+  /// Index for searching by name
+  @@index([slug])
+}
+
+/// @namespace Accounts
+/// Represents the permissions that a role can have.
+model permissions {
+  /// Unique identifier for the permission.
+  id String @id @db.Uuid @default(uuid())
+
+  /// Timestamp indicating when the permission was created.
+  created_at DateTime @db.Timestamptz(6) @default(now())
+
+  /// Timestamp indicating when the permission was last updated.
+  updated_at DateTime @db.Timestamptz(6) @default(now())
+
+  /// Name/slug of the permission.
+  slug String @db.VarChar(100)
+
+  /// Title of the permission.
+  title            String             @db.Text
+  role_permissions role_permissions[]
+
+  /// Index for searching by name
+  @@index([slug])
+}
+
+/// @namespace Accounts
+/// Represents the relationship between roles and permissions.
+model role_permissions {
+  /// Unique identifier for the role permission.
+  id String @id @db.Uuid @default(uuid())
+
+  /// Timestamp indicating when the role permission was created.
+  created_at DateTime @db.Timestamptz(6) @default(now())
+
+  /// Timestamp indicating when the role permission was last updated.
+  updated_at DateTime @db.Timestamptz(6) @default(now())
+
+  /// Role ID associated with the role permission.
+  role_id String @db.Uuid
+
+  /// Permission ID associated with the role permission.
+  permission_id String @db.Uuid
+
+  /// Relation to the role
+  role roles @relation(fields: [role_id], references: [id])
+
+  /// Relation to the permission
+  permission permissions @relation(fields: [permission_id], references: [id])
+
+  /// Index for searching by role and permission
+  @@index([role_id, permission_id])
 }
 
 enum users_state {
