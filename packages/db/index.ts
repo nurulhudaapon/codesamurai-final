@@ -1,3 +1,5 @@
+export * from './schema';
+
 import { EcosyncLogger } from "@ecosync/logger";
 import { getPrismaClient } from "./client";
 

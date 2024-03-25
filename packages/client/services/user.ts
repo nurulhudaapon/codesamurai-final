@@ -1,5 +1,5 @@
 import { EcosyncLogger } from "@ecosync/logger";
-import type { EcosyncDatabase } from "@ecosync/db";
+import { Schema, type EcosyncDatabase } from "@ecosync/db";
 import type * as Entity from '@prisma/client';
 
 const console = new EcosyncLogger({ name: "User Service" }).init();
@@ -43,7 +43,11 @@ export class EcosyncUserService {
      * @returns {Promise<Entity.users>} A promise that resolves to the created User object
      */
     create(userData: Entity.users): Promise<Entity.users> {
-        return this.#client.users.create({ data: userData });
+        // Validate 
+        const validUserData = Schema.usersSchema.parse(userData);
+
+        // Commit
+        return this.#client.users.create({ data: validUserData });
     }
 
     /**
@@ -53,7 +57,11 @@ export class EcosyncUserService {
      * @returns {Promise<Entity.users | null>} A promise that resolves to the updated User object or null if not found
      */
     update(id: string, userData: object): Promise<Entity.users | null> {
-        return this.#client.users.update({ where: { id }, data: userData });
+        // Validate 
+        const validUserData = Schema.usersSchema.parse(userData);
+
+        // Commit
+        return this.#client.users.update({ where: { id }, data: validUserData });
     }
 
     /**
