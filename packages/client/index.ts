@@ -2,6 +2,9 @@ import { EcosyncLogger } from "@ecosync/logger";
 import { EcosyncDatabase } from "@ecosync/db";
 import { EcosyncRbacService } from "./services/rbac";
 import { EcosyncUserService } from "./services/user";
+import { EcosyncVehicleService } from "./services/vehicle";
+import { EcosyncStsDumpingService } from "./services/sts-dumping";
+import { EcosyncLandfillDumpingService } from "./services/landfill-dumping";
 
 const console = new EcosyncLogger({ name: "DbClient" }).init();
 
@@ -13,6 +16,9 @@ export class EcosyncDbClient {
     // ==== Public Services ==== //
     rbac: EcosyncRbacService;
     user: EcosyncUserService;
+    vehicle: EcosyncVehicleService;
+    stsDumping: EcosyncStsDumpingService;
+    landfillDumping: EcosyncLandfillDumpingService;
     
     constructor({
         db
@@ -28,5 +34,8 @@ export class EcosyncDbClient {
         // Public Services
         this.rbac = new EcosyncRbacService({ client: this.#client })
         this.user = new EcosyncUserService({ client: this.#client })
+        this.vehicle = new EcosyncVehicleService({ client: this.#client })
+        this.stsDumping = new EcosyncStsDumpingService({ client: this.#client })
+        this.landfillDumping = new EcosyncLandfillDumpingService({ client: this.#client })
     }
 }
