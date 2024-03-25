@@ -5,4 +5,4 @@ const db = new EcosyncDatabase();
 const client = new EcosyncDbClient({ db });
 
 const result = db.init();
-const users = client.getUsers();
+const users = client.user.getAll();

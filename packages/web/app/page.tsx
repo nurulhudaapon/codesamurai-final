@@ -6,8 +6,8 @@ const db = new EcosyncDatabase();
 const client = new EcosyncDbClient({ db });
 
 export default async function Home() {
-  const users = await client.getUsers();
-  console.log(users)
+  const users = await client.user.getAll();
+  console.info(users)
 
   return (
     <main>
