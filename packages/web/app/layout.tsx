@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { EcosyncLogger } from "@ecosync/logger";
 import { Logger } from "@/components";
+import "../style/globals.css";
 
 globalThis.console = new EcosyncLogger({ name: "Web" }).init();
 
