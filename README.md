@@ -5,11 +5,14 @@ To install dependencies:
 ```bash
 bun install
 ```
-
-To run:
+To preare:
 
 ```bash
-bun run index.ts
+bun run prepare
 ```
 
-This project was created using `bun init` in bun v1.0.19. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+To start dev:
+
+```bash
+bun run dev
+```

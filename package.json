@@ -6,7 +6,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc -b"
+    "start:container": "docker compose up -d",
+    "start:web": "cd packages/web && bun run dev",
+    "prepare": "docker compose up -d && cd packages/db && prisma migrate reset --force",
+    "dev": "bun run start:container && bun run start:web"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
