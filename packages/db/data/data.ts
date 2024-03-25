@@ -4,21 +4,6 @@ import { v4 as uuid } from 'uuid';
 const now = new Date();
 
 //======== Initial Data ========
-const users: Entity.users[] = [
-	{
-		id: uuid(),
-		email: 'admin@ecosync.gov.bd',
-		phone: '+8801000000000',
-		first_name: 'Default',
-		last_name: 'Admin',
-		state: 'active',
-		password: 'HASHED_PASSWORD',
-		created_at: now,
-		updated_at: now,
-		last_login_at: null,
-		role_id: null,
-	}
-];
 
 const roles: Entity.roles[] = [
 	{
@@ -78,9 +63,51 @@ const role_permissions: Entity.role_permissions[] = permissions.map((permission)
 	};
 });
 
+const users: Entity.users[] = [
+	{
+		id: uuid(),
+		email: 'admin@ecosync.gov.bd',
+		phone: '+8801000000000',
+		first_name: 'Default',
+		last_name: 'Admin',
+		state: 'active',
+		password: 'HASHED_PASSWORD',
+		created_at: now,
+		updated_at: now,
+		last_login_at: null,
+		role_id: roles[0].id,
+	},
+	{
+		id: uuid(),
+		email: 'sts.manager@ecosync.gov.bd',
+		phone: '+8801000000000',
+		first_name: 'STS',
+		last_name: 'Manager',
+		state: 'active',
+		password: 'HASHED_PASSWORD',
+		created_at: now,
+		updated_at: now,
+		last_login_at: null,
+		role_id: roles[1].id,
+	},
+	{
+		id: uuid(),
+		email: 'landfill.manager@ecosync.gov.bd',
+		phone: '+8801000000000',
+		first_name: 'Landfill',
+		last_name: 'Manager',
+		state: 'active',
+		password: 'HASHED_PASSWORD',
+		created_at: now,
+		updated_at: now,
+		last_login_at: null,
+		role_id: roles[2].id,
+	},
+];
+
 export const InitData = {
-	users,
 	permissions,
 	roles,
 	role_permissions,
+	users,
 }
