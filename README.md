@@ -5,10 +5,10 @@ To install dependencies:
 ```bash
 bun install
 ```
-To preare:
+To reset DB with default content:
 
 ```bash
-bun run prepare
+bun run reset
 ```
 
 To start dev:
