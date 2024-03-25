@@ -9,17 +9,17 @@ generator zod {
   // useMultipleFiles                 = true // default is false
   // writeBarrelFiles                 = false // default is true
   createInputTypes         = false // default is true
-  createModelTypes         = false // default is true
-  addInputTypeValidation   = false // default is true
+  // createModelTypes         = false // default is true
+  // addInputTypeValidation   = true // default is true
   addIncludeType           = false // default is true
-  // addSelectType                    = false // default is true
+  addSelectType                    = false // default is true
   // validateWhereUniqueInput         = true // default is false
   // createOptionalDefaultValuesTypes = true // default is false
   // createRelationValuesTypes        = true // default is false
   // createPartialTypes               = true // default is false
   // useDefaultValidators             = false // default is true
   // coerceDate                       = false // default is true
-  writeNullishInModelTypes = true // default is false
+  // writeNullishInModelTypes = true // default is false
   // prismaClientPath                 = "./path/to/prisma/client" // default is client output path
 }
 
@@ -39,13 +39,13 @@ generator markdown {
 /// This model stores information about users.
 model users {
   /// Unique identifier for the user.
-  id String @id @db.Uuid @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
   /// Timestamp indicating when the user was created.
-  created_at DateTime @db.Timestamptz(6) @default(now())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// Timestamp indicating when the user was last updated.
-  updated_at DateTime @db.Timestamptz(6) @default(now())
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// First name of the user (optional).
   first_name String? @db.VarChar(100)
@@ -72,7 +72,12 @@ model users {
   state users_state @default(active)
 
   // Relation to the role
-  role roles? @relation(fields: [role_id], references: [id])
+  role                        roles?                        @relation(fields: [role_id], references: [id])
+  manager_secondary_transfer_stations stss[] @relation(name: "sts_creator")
+  landfill_dumpings           landfill_dumpings[]
+  sts_dumpings                sts_dumpings[]
+  vehicles                    vehicles[]
+  creator_secondary_transfer_stations stss[]
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
@@ -82,13 +87,13 @@ model users {
 /// List of roles that a user can have.
 model roles {
   /// Unique identifier for the role.
-  id String @id @db.Uuid @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
   /// Timestamp indicating when the role was created.
-  created_at DateTime @db.Timestamptz(6) @default(now())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// Timestamp indicating when the role was last updated.
-  updated_at DateTime @db.Timestamptz(6) @default(now())
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// Name/slug of the role.
   slug String @db.VarChar(100)
@@ -107,13 +112,13 @@ model roles {
 /// Represents the permissions that a role can have.
 model permissions {
   /// Unique identifier for the permission.
-  id String @id @db.Uuid @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
   /// Timestamp indicating when the permission was created.
-  created_at DateTime @db.Timestamptz(6) @default(now())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// Timestamp indicating when the permission was last updated.
-  updated_at DateTime @db.Timestamptz(6) @default(now())
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// Name/slug of the permission.
   slug String @db.VarChar(100)
@@ -130,13 +135,13 @@ model permissions {
 /// Represents the relationship between roles and permissions.
 model role_permissions {
   /// Unique identifier for the role permission.
-  id String @id @db.Uuid @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
   /// Timestamp indicating when the role permission was created.
-  created_at DateTime @db.Timestamptz(6) @default(now())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// Timestamp indicating when the role permission was last updated.
-  updated_at DateTime @db.Timestamptz(6) @default(now())
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
 
   /// Role ID associated with the role permission.
   role_id String @db.Uuid
@@ -160,4 +165,169 @@ enum users_state {
 
   /// Inactive state.
   inactive
+}
+
+// Data Entry Interface : 
+// System admin can add vehicles with these mandatory attributes. You can store additional attributes as well.
+// Vehicle Number
+// Type : Open Truck, Dump Truck, Compactor, Container Carrier
+// Capacity: 3 ton, 5 ton, 7 ton. 
+// System admin can create STS with ward number, capacity in Tonnes and GPS coordinates. 
+// System admin can also assign an STS manager for each STS.
+// STS managers can add entry of vehicles leaving the STS with STS ID, vehicle number, volume of waste, time of arrival and time of departure.
+// Landfill managers can add entry of truck dumping with volume of waste, time of arrival and time of departure.
+
+model vehicles {
+  /// Unique identifier for the vehicle.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp indicating when the vehicle was created.
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  /// Timestamp indicating when the vehicle was last updated.
+  updated_at         DateTime @default(now()) @db.Timestamptz(6)
+  created_by_user_id String   @db.Uuid
+
+  /// Vehicle number.
+  number String @db.VarChar(100)
+
+  /// Type of the vehicle.
+  type vehicles_type
+
+  /// Capacity of the vehicle.
+  capacity     vehicles_capacity
+  sts_dumpings sts_dumpings[]
+
+  /// Relation to the user who created
+  user users @relation(fields: [created_by_user_id], references: [id])
+
+  /// Index for searching by vehicle number
+  @@index([number])
+}
+
+enum vehicles_type {
+  /// Open Truck type.
+  open_truck
+
+  /// Dump Truck type.
+  dump_truck
+
+  /// Compactor type.
+  compactor
+
+  /// Container Carrier type.
+  container_carrier
+}
+
+enum vehicles_capacity {
+  /// 3 ton capacity.
+  three_ton
+
+  /// 5 ton capacity.
+  five_ton
+
+  /// 7 ton capacity.
+  seven_ton
+}
+
+model stss {
+  /// Unique identifier for the STS.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp indicating when the STS was created.
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  /// Timestamp indicating when the STS was last updated.
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  created_by_user_id String @db.Uuid
+
+  /// Ward number of the STS.
+  ward_number String @db.VarChar(100)
+
+  /// Capacity of the STS.
+  capacity_tonnes Float
+
+  /// GPS coordinates of the STS.
+  gps_coordinates String @db.Text
+
+  /// STS manager ID associated with the STS.
+  manager_id String @db.Uuid
+
+  /// Relation to the STS manager
+  sts_manager  users          @relation(fields: [manager_id], references: [id])
+  sts_dumpings sts_dumpings[]
+
+  /// Relation to the user who created
+  creator users @relation(fields: [created_by_user_id], references: [id], name: "sts_creator")
+
+  /// Index for searching by ward number
+  @@index([ward_number])
+}
+
+model sts_dumpings {
+  /// Unique identifier for the STS entry.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp indicating when the STS entry was created.
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  /// Timestamp indicating when the STS entry was last updated.
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  /// User ID associated with the landfill entry.
+  created_by_user_id String @db.Uuid
+
+  /// STS ID associated with the STS entry.
+  sts_id String @db.Uuid
+
+  /// Vehicle ID associated with the STS entry.
+  vehicle_id String @db.Uuid
+
+  /// Volume of waste.
+  volume Float
+
+  /// Time of arrival.
+  arrival_time DateTime
+
+  /// Time of departure.
+  departure_time DateTime
+
+  /// Relation to the STS
+  sts stss @relation(fields: [sts_id], references: [id])
+
+  /// Relation to the vehicle
+  vehicle vehicles @relation(fields: [vehicle_id], references: [id])
+
+  /// Relation to the user who created
+  user users @relation(fields: [created_by_user_id], references: [id])
+
+  /// Index for searching by STS ID
+  @@index([sts_id])
+}
+
+model landfill_dumpings {
+  /// Unique identifier for the landfill entry.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp indicating when the landfill entry was created.
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  /// Timestamp indicating when the landfill entry was last updated.
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  /// User ID associated with the landfill entry.
+  created_by_user_id String @db.Uuid
+
+  /// Volume of waste.
+  volume Float
+
+  /// Time of arrival.
+  arrival_time DateTime
+
+  /// Time of departure.
+  departure_time DateTime
+
+  /// Relation to the user
+  user users @relation(fields: [created_by_user_id], references: [id])
 }
