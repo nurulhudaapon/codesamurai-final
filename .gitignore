@@ -115,6 +115,8 @@ web_modules/
 .next
 out
 
+.cubestore
+
 # Nuxt.js build / generate output
 
 .nuxt

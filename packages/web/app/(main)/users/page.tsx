@@ -1,4 +1,4 @@
-import { dbClient } from "@/client";
+import { cubeClient, dbClient } from "@/client";
 
 
 async function UserTable() {
@@ -57,10 +57,11 @@ async function UserTable() {
     );
 }
 
-const Index = () => {
+export default async function () {
+    const response = await cubeClient.getResourceCount();
+
     return <div className="w-full">
+        <pre>{JSON.stringify(await response.json(), null, 2)}</pre>
         <UserTable />
     </div>
 }
-
-export default Index

@@ -1,0 +1,45 @@
+cubes:
+  - name: vehicles
+    sql_table: public.vehicles
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: id
+        sql: id
+        type: string
+        primary_key: true
+
+      - name: created_by_user_id
+        sql: created_by_user_id
+        type: string
+
+      - name: type
+        sql: type
+        type: string
+
+      - name: capacity
+        sql: capacity
+        type: string
+
+      - name: number
+        sql: number
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+      - name: updated_at
+        sql: updated_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

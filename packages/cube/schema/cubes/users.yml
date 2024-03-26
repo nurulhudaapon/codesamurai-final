@@ -1,0 +1,64 @@
+cubes:
+  - name: users
+    sql_table: public.users
+    data_source: default
+
+    joins:
+      - name: roles
+        sql: "{CUBE}.role_id = {roles}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: string
+        primary_key: true
+
+      - name: role_id
+        sql: role_id
+        type: string
+
+      - name: state
+        sql: state
+        type: string
+
+      - name: first_name
+        sql: first_name
+        type: string
+
+      - name: last_name
+        sql: last_name
+        type: string
+
+      - name: email
+        sql: email
+        type: string
+
+      - name: phone
+        sql: phone
+        type: string
+
+      - name: password
+        sql: password
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+      - name: updated_at
+        sql: updated_at
+        type: time
+
+      - name: last_login_at
+        sql: last_login_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

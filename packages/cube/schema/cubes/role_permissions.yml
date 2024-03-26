@@ -1,0 +1,44 @@
+cubes:
+  - name: role_permissions
+    sql_table: public.role_permissions
+    data_source: default
+
+    joins:
+      - name: roles
+        sql: "{CUBE}.role_id = {roles}.id"
+        relationship: many_to_one
+
+      - name: permissions
+        sql: "{CUBE}.permission_id = {permissions}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: string
+        primary_key: true
+
+      - name: role_id
+        sql: role_id
+        type: string
+
+      - name: permission_id
+        sql: permission_id
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+      - name: updated_at
+        sql: updated_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

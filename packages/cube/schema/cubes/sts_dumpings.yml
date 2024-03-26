@@ -1,0 +1,52 @@
+cubes:
+  - name: sts_dumpings
+    sql_table: public.sts_dumpings
+    data_source: default
+
+    joins:
+      - name: vehicles
+        sql: "{CUBE}.vehicle_id = {vehicles}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: string
+        primary_key: true
+
+      - name: created_by_user_id
+        sql: created_by_user_id
+        type: string
+
+      - name: sts_id
+        sql: sts_id
+        type: string
+
+      - name: vehicle_id
+        sql: vehicle_id
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+      - name: updated_at
+        sql: updated_at
+        type: time
+
+      - name: arrival_time
+        sql: arrival_time
+        type: time
+
+      - name: departure_time
+        sql: departure_time
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+
