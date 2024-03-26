@@ -32,6 +32,41 @@ export class EcosyncUserService {
   }
 
   /**
+   * Get a User by Email
+   * @param {string} email - The email of the User
+   */
+  getUserByEmailWithPermissions(email: string) {
+    const res = this.#client.users.findFirst({
+      where: {
+        email,
+      },
+      select: {
+        email: true,
+        id: true,
+        first_name: true,
+        last_name: true,
+        phone: true,
+        state: true,
+        password: true,
+        role: {
+          select: {
+            role_permissions: {
+              select: {
+                permission: {
+                  select: {
+                    slug: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    return res;
+  }
+
+  /**
    * Create a new User
    * @param {Entity.users} userData - The data to create a new User
    * @returns {Promise<Entity.users>} A promise that resolves to the created User object

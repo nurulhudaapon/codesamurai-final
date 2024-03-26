@@ -1,14 +1,17 @@
 import Link from "next/link";
 import React, { ButtonHTMLAttributes } from "react";
+import { Spinner } from "./spinner";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   to?: string;
+  loading?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
   children,
   className,
   to,
+  loading,
   ...rest
 }) => {
   const Wrapper = (props: { children: React.ReactNode }) => {
@@ -29,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
         }
         {...rest}
       >
+        {loading && <Spinner />}
         {children}
       </button>
     </Wrapper>

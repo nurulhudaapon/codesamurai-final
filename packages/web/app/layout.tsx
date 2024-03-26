@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import { EcosyncLogger } from "@ecosync/logger";
 import { Logger } from "@/components";
 import "../style/globals.css";
+import { AuthProvider } from "@/context/AuthContext";
+import { ToastInitializer } from "@/components/toast";
 
 globalThis.console = new EcosyncLogger({ name: "Web" }).init();
 
@@ -20,10 +22,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Logger>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </Logger>
+    <AuthProvider>
+      <Logger>
+        <html lang="en">
+          <body className={inter.className}>
+            <ToastInitializer />
+            {children}
+          </body>
+        </html>
+      </Logger>
+    </AuthProvider>
   );
 }

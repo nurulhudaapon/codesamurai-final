@@ -11,13 +11,19 @@
   },
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^3.6.0",
     "flowbite": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.363.0",
     "next": "14.1.4",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

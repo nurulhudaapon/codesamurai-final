@@ -1,0 +1,1 @@
+export type * as Entity from "@prisma/client";

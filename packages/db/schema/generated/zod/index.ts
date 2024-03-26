@@ -1,129 +1,50 @@
-import { z } from "zod";
-import type { Prisma } from "@prisma/client";
+import { z } from 'zod';
+import type { Prisma } from '@prisma/client';
 
 /////////////////////////////////////////
 // HELPER FUNCTIONS
 /////////////////////////////////////////
 
+
 /////////////////////////////////////////
 // ENUMS
 /////////////////////////////////////////
 
-export const TransactionIsolationLevelSchema = z.enum([
-  "ReadUncommitted",
-  "ReadCommitted",
-  "RepeatableRead",
-  "Serializable",
-]);
+export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const UsersScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "first_name",
-  "last_name",
-  "email",
-  "phone",
-  "last_login_at",
-  "password",
-  "role_id",
-  "state",
-]);
+export const UsersScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','first_name','last_name','email','phone','last_login_at','password','role_id','state']);
 
-export const RolesScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "slug",
-  "title",
-]);
+export const RolesScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','slug','title']);
 
-export const PermissionsScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "slug",
-  "title",
-]);
+export const PermissionsScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','slug','title']);
 
-export const Role_permissionsScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "role_id",
-  "permission_id",
-]);
+export const Role_permissionsScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','role_id','permission_id']);
 
-export const VehiclesScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "created_by_user_id",
-  "number",
-  "type",
-  "capacity",
-]);
+export const VehiclesScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','number','type','capacity']);
 
-export const StssScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "created_by_user_id",
-  "ward_number",
-  "capacity_tonnes",
-  "gps_coordinates",
-  "manager_id",
-]);
+export const StssScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','ward_number','capacity_tonnes','gps_coordinates','manager_id']);
 
-export const Sts_dumpingsScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "created_by_user_id",
-  "sts_id",
-  "vehicle_id",
-  "volume",
-  "arrival_time",
-  "departure_time",
-]);
+export const Sts_dumpingsScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','vehicle_id','volume','arrival_time','departure_time']);
 
-export const Landfill_dumpingsScalarFieldEnumSchema = z.enum([
-  "id",
-  "created_at",
-  "updated_at",
-  "created_by_user_id",
-  "volume",
-  "arrival_time",
-  "departure_time",
-]);
+export const Landfill_dumpingsScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','volume','arrival_time','departure_time']);
 
-export const SortOrderSchema = z.enum(["asc", "desc"]);
+export const SortOrderSchema = z.enum(['asc','desc']);
 
-export const QueryModeSchema = z.enum(["default", "insensitive"]);
+export const QueryModeSchema = z.enum(['default','insensitive']);
 
-export const NullsOrderSchema = z.enum(["first", "last"]);
+export const NullsOrderSchema = z.enum(['first','last']);
 
-export const users_stateSchema = z.enum(["active", "inactive"]);
+export const users_stateSchema = z.enum(['active','inactive']);
 
-export type users_stateType = `${z.infer<typeof users_stateSchema>}`;
+export type users_stateType = `${z.infer<typeof users_stateSchema>}`
 
-export const vehicles_typeSchema = z.enum([
-  "open_truck",
-  "dump_truck",
-  "compactor",
-  "container_carrier",
-]);
+export const vehicles_typeSchema = z.enum(['open_truck','dump_truck','compactor','container_carrier']);
 
-export type vehicles_typeType = `${z.infer<typeof vehicles_typeSchema>}`;
+export type vehicles_typeType = `${z.infer<typeof vehicles_typeSchema>}`
 
-export const vehicles_capacitySchema = z.enum([
-  "three_ton",
-  "five_ton",
-  "seven_ton",
-]);
+export const vehicles_capacitySchema = z.enum(['three_ton','five_ton','seven_ton']);
 
-export type vehicles_capacityType =
-  `${z.infer<typeof vehicles_capacitySchema>}`;
+export type vehicles_capacityType = `${z.infer<typeof vehicles_capacitySchema>}`
 
 /////////////////////////////////////////
 // MODELS
@@ -183,9 +104,9 @@ export const usersSchema = z.object({
    * Role of the user (default sts).
    */
   role_id: z.string().nullable(),
-});
+})
 
-export type users = z.infer<typeof usersSchema>;
+export type users = z.infer<typeof usersSchema>
 
 /////////////////////////////////////////
 // ROLES SCHEMA
@@ -216,9 +137,9 @@ export const rolesSchema = z.object({
    * Title of the role.
    */
   title: z.string(),
-});
+})
 
-export type roles = z.infer<typeof rolesSchema>;
+export type roles = z.infer<typeof rolesSchema>
 
 /////////////////////////////////////////
 // PERMISSIONS SCHEMA
@@ -249,9 +170,9 @@ export const permissionsSchema = z.object({
    * Title of the permission.
    */
   title: z.string(),
-});
+})
 
-export type permissions = z.infer<typeof permissionsSchema>;
+export type permissions = z.infer<typeof permissionsSchema>
 
 /////////////////////////////////////////
 // ROLE PERMISSIONS SCHEMA
@@ -282,9 +203,9 @@ export const role_permissionsSchema = z.object({
    * Permission ID associated with the role permission.
    */
   permission_id: z.string(),
-});
+})
 
-export type role_permissions = z.infer<typeof role_permissionsSchema>;
+export type role_permissions = z.infer<typeof role_permissionsSchema>
 
 /////////////////////////////////////////
 // VEHICLES SCHEMA
@@ -316,9 +237,9 @@ export const vehiclesSchema = z.object({
    * Vehicle number.
    */
   number: z.string(),
-});
+})
 
-export type vehicles = z.infer<typeof vehiclesSchema>;
+export type vehicles = z.infer<typeof vehiclesSchema>
 
 /////////////////////////////////////////
 // STSS SCHEMA
@@ -354,9 +275,9 @@ export const stssSchema = z.object({
    * STS manager ID associated with the STS.
    */
   manager_id: z.string(),
-});
+})
 
-export type stss = z.infer<typeof stssSchema>;
+export type stss = z.infer<typeof stssSchema>
 
 /////////////////////////////////////////
 // STS DUMPINGS SCHEMA
@@ -399,9 +320,9 @@ export const sts_dumpingsSchema = z.object({
    * Time of departure.
    */
   departure_time: z.coerce.date(),
-});
+})
 
-export type sts_dumpings = z.infer<typeof sts_dumpingsSchema>;
+export type sts_dumpings = z.infer<typeof sts_dumpingsSchema>
 
 /////////////////////////////////////////
 // LANDFILL DUMPINGS SCHEMA
@@ -436,6 +357,6 @@ export const landfill_dumpingsSchema = z.object({
    * Time of departure.
    */
   departure_time: z.coerce.date(),
-});
+})
 
-export type landfill_dumpings = z.infer<typeof landfill_dumpingsSchema>;
+export type landfill_dumpings = z.infer<typeof landfill_dumpingsSchema>

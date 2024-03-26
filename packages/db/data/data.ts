@@ -1,7 +1,10 @@
 import type * as Entity from "@prisma/client";
+import bcrypt from "bcryptjs";
 import { v4 as uuid } from "uuid";
 
 const now = new Date();
+
+const password = bcrypt.hashSync("password", 10);
 
 //======== Initial Data ========
 
@@ -62,7 +65,7 @@ const role_permissions: Entity.role_permissions[] = permissions.map(
       created_at: now,
       updated_at: now,
     };
-  },
+  }
 );
 
 const users: Entity.users[] = [
@@ -73,7 +76,7 @@ const users: Entity.users[] = [
     first_name: "Default",
     last_name: "Admin",
     state: "active",
-    password: "HASHED_PASSWORD",
+    password: password,
     created_at: now,
     updated_at: now,
     last_login_at: null,
@@ -86,7 +89,7 @@ const users: Entity.users[] = [
     first_name: "STS",
     last_name: "Manager",
     state: "active",
-    password: "HASHED_PASSWORD",
+    password: password,
     created_at: now,
     updated_at: now,
     last_login_at: null,
@@ -99,7 +102,7 @@ const users: Entity.users[] = [
     first_name: "Landfill",
     last_name: "Manager",
     state: "active",
-    password: "HASHED_PASSWORD",
+    password: password,
     created_at: now,
     updated_at: now,
     last_login_at: null,
