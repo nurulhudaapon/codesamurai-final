@@ -5,6 +5,7 @@ To install dependencies:
 ```bash
 bun install
 ```
+
 To reset DB with default content:
 
 ```bash

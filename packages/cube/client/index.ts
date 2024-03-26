@@ -5,66 +5,72 @@ const gql = String.raw;
 const console = new EcosyncLogger({ name: "Cubejs Service" }).init();
 
 /**
-* ## Cubejs Related Service
-*/
+ * ## Cubejs Related Service
+ */
 export class EcosyncCubeClient {
-    #graphQlUrl: string;
+  #graphQlUrl: string;
 
-    constructor({
-        graphQlUrl
-    }: {
-        graphQlUrl: string
-    }) {
-        this.#graphQlUrl = graphQlUrl;
-    }
+  constructor({ graphQlUrl }: { graphQlUrl: string }) {
+    this.#graphQlUrl = graphQlUrl;
+  }
 
-    async #query(query: string, variables?: object) {
-        const url = this.#graphQlUrl;
+  async #query(query: string, variables?: object) {
+    const url = this.#graphQlUrl;
 
-        const body = JSON.stringify({
-            query,
-            variables
-        });
+    const body = JSON.stringify({
+      query,
+      variables,
+    });
 
-        console.log(this.#graphQlUrl, body)
+    console.log(this.#graphQlUrl, body);
 
-        const response = await fetch(url, {
-            body, "headers": {
-                "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTE0MDgyNDksImV4cCI6MTcxMTQ5NDY0OX0.WS_p2neTuhQc2PAeX8s4Mekf3C6zzPlnrJ4ZZjRW6JE",
-                "content-type": "application/json",
+    const response = await fetch(url, {
+      body,
+      headers: {
+        authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTE0MDgyNDksImV4cCI6MTcxMTQ5NDY0OX0.WS_p2neTuhQc2PAeX8s4Mekf3C6zzPlnrJ4ZZjRW6JE",
+        "content-type": "application/json",
+      },
+      method: "POST",
+    });
 
-            },
-            method: 'POST',
-        })
+    return response;
+  }
 
-        return response;
-    }
+  /**
+   * Get All LandfillDumpings
+   */
+  getResourceCount() {
+    const query = gql`
+      query GetResrouceCount {
+        sts: cube {
+          stss {
+            count
+          }
+        }
+        role: cube {
+          role_permissions {
+            count
+          }
+        }
+        perm: cube {
+          permissions {
+            count
+          }
+        }
+        sts: cube {
+          sts_dumpings {
+            count
+          }
+        }
+        user: cube {
+          users {
+            count
+          }
+        }
+      }
+    `;
 
-    /**
-     * Get All LandfillDumpings
-     */
-    getResourceCount() {
-        const query = gql`
-        query GetResrouceCount {
-                sts: cube {
-                    sts_dumpings {
-                        count
-                    }
-                
-                }
-                user: cube {
-                    users {
-                        count
-                        
-                    }
-                }
-            
-            }
-       
-        `
-
-        return this.#query(query)
-
-    }
-
+    return this.#query(query);
+  }
 }

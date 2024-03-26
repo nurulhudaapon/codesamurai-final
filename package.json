@@ -11,10 +11,13 @@
     "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force",
     "dev": "bun run start:container && bun run start:web"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@types/uuid": "^9.0.8",
     "bun-types": "latest",
+    "prettier": "^3.2.5",
     "typescript": "^5.0.0"
   },
   "dependencies": {

@@ -28,11 +28,16 @@ export class EcosyncLogger {
     const originalConsole = globalThis.console;
     const console: typeof globalThis.console = {
       ...globalThis.console,
-      debug: (...msgs: unknown[]): void => originalConsole.debug(LOG_LEVEL_PREFIX.debug, brandTxt, ...msgs),
-      log: (...msgs: unknown[]): void => originalConsole.log(LOG_LEVEL_PREFIX.log, brandTxt, ...msgs),
-      warn: (...msgs: unknown[]): void => originalConsole.warn(LOG_LEVEL_PREFIX.warn, brandTxt, ...msgs),
-      error: (...msgs: unknown[]): void => originalConsole.error(LOG_LEVEL_PREFIX.error, brandTxt, ...msgs),
-      info: (...msgs: unknown[]): void => originalConsole.info(LOG_LEVEL_PREFIX.info, brandTxt, ...msgs),
+      debug: (...msgs: unknown[]): void =>
+        originalConsole.debug(LOG_LEVEL_PREFIX.debug, brandTxt, ...msgs),
+      log: (...msgs: unknown[]): void =>
+        originalConsole.log(LOG_LEVEL_PREFIX.log, brandTxt, ...msgs),
+      warn: (...msgs: unknown[]): void =>
+        originalConsole.warn(LOG_LEVEL_PREFIX.warn, brandTxt, ...msgs),
+      error: (...msgs: unknown[]): void =>
+        originalConsole.error(LOG_LEVEL_PREFIX.error, brandTxt, ...msgs),
+      info: (...msgs: unknown[]): void =>
+        originalConsole.info(LOG_LEVEL_PREFIX.info, brandTxt, ...msgs),
     };
 
     return console;

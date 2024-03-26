@@ -10,7 +10,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "EcoSync",
-  description: "An app to to bridge the gaps, streamline processes, and enhance accountability through technological innovation.",
+  description:
+    "An app to to bridge the gaps, streamline processes, and enhance accountability through technological innovation.",
 };
 
 export default function RootLayout({

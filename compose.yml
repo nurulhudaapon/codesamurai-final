@@ -1,37 +1,37 @@
-version: '3.7'
+version: "3.7"
 
 services:
   redis:
-      image: redis:6-alpine
-      container_name: redis
-      ports:
-          - '127.0.0.1:6379:6379'
-      expose:
-          - '6379'
+    image: redis:6-alpine
+    container_name: redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    expose:
+      - "6379"
 
   cube:
-      container_name: cube
-      image: cubejs/cube
-      ports:
-          - 4000:4000
-          - 15432:15432
-      env_file: ./packages/cube/.env
-      volumes:
-          - ./packages/cube:/cube/conf
+    container_name: cube
+    image: cubejs/cube
+    ports:
+      - 4000:4000
+      - 15432:15432
+    env_file: ./packages/cube/.env
+    volumes:
+      - ./packages/cube:/cube/conf
 
   db:
-      image: postgres:15.3
-      command: ['postgres', '-c', 'log_statement=all']
-      container_name: db
-      expose:
-          - '5432'
-      ports:
-          - '5432:5432'
-      environment:
-          POSTGRES_PASSWORD: password
-          POSTGRES_USER: user
-          POSTGRES_DB: ecosync
+    image: postgres:15.3
+    command: ["postgres", "-c", "log_statement=all"]
+    container_name: db
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: ecosync
 
-      # Map the data volume to the current directory so that it persists
-      volumes:
-          - ./packages/db/tmp/pg/data:/var/lib/postgresql/data
+    # Map the data volume to the current directory so that it persists
+    volumes:
+      - ./packages/db/tmp/pg/data:/var/lib/postgresql/data
