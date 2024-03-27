@@ -5,7 +5,8 @@ import {
 	ChevronDown,
 	ChevronLeft,
 	ChevronRight,
-	LucideProps
+	LucideProps,
+	Plus
 } from 'lucide-react';
 
 export const icons = {
@@ -14,7 +15,8 @@ export const icons = {
 	ChevronUp,
 	ChevronDown,
 	ChevronLeft,
-	ChevronRight
+	ChevronRight,
+	Plus
 };
 
 export type IconsTypes = keyof typeof icons;

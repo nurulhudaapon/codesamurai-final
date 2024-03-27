@@ -13,7 +13,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
   return (
-    <div className="flex overflow-hidden">
+    <div className="flex flex-row overflow-hidden">
       <div className="bg-green300 w-[300px] h-screen">
         <div className="flex justify-center py-10">
           <AppLogo />
@@ -34,7 +34,9 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
           ))}
         </div>
       </div>
-      <div className="h-screen overflow-auto">{children}</div>
+      <div className="h-screen w-full overflow-y-auto overflow-x-hidden pt-10 px-5">
+        {children}
+      </div>
     </div>
   );
 };

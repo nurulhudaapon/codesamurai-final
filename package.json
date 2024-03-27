@@ -21,9 +21,11 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "clsx": "^2.1.0",
     "kleur": "^4.1.5",
     "next-auth": "^4.24.7",
     "react-hot-toast": "^2.4.1",
+    "tailwind-merge": "^2.2.2",
     "uuid": "^9.0.1"
   }
 }
