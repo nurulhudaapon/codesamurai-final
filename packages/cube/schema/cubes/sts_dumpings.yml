@@ -29,6 +29,10 @@ cubes:
       - name: created_at
         sql: created_at
         type: time
+      
+      - name: volume
+        sql: volume
+        type: number
 
       - name: updated_at
         sql: updated_at
@@ -45,6 +49,10 @@ cubes:
     measures:
       - name: count
         type: count
+            
+      - name: total_volume
+        sql: volume
+        type: sum
 
     pre_aggregations:
       # Pre-aggregation definitions go here.

@@ -49,7 +49,7 @@ export default async function () {
 
   return (
     <div className="w-full">
-      <pre>{JSON.stringify(await response.json(), null, 2)}</pre>
+      <pre>{JSON.stringify(response, null, 2)}</pre>
       <UserTable />
     </div>
   );
