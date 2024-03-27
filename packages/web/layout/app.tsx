@@ -9,7 +9,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname();
   const checkActive = (path: string) => {
     if (pathName.startsWith(path)) {
-      return "bg-green400";
+      return "bg-green500";
     }
   };
   return (
@@ -23,7 +23,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <Link
               href={path}
               className={
-                "flex items-center py-5 text-white px-[40px] hover:bg-green400 cursor-pointer " +
+                "flex items-center py-5 text-white px-[40px] bg-green400 hover:bg-green500 cursor-pointer " +
                 checkActive(path)
               }
               key={key}
@@ -34,7 +34,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
           ))}
         </div>
       </div>
-      <div className="h-screen w-full overflow-y-auto overflow-x-hidden pt-10 px-5">
+      <div className="h-screen w-full overflow-y-auto overflow-x-hidden py-10 px-5">
         {children}
       </div>
     </div>

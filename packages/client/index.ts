@@ -5,6 +5,8 @@ import { EcosyncUserService } from "./services/user";
 import { EcosyncVehicleService } from "./services/vehicle";
 import { EcosyncStsDumpingService } from "./services/sts-dumping";
 import { EcosyncLandfillDumpingService } from "./services/landfill-dumping";
+import { EcosyncRoleService } from "./services/role";
+import { EcosyncPermissionService } from "./services/permission";
 
 const console = new EcosyncLogger({ name: "DbClient" }).init();
 
@@ -19,6 +21,8 @@ export class EcosyncDbClient {
   vehicle: EcosyncVehicleService;
   stsDumping: EcosyncStsDumpingService;
   landfillDumping: EcosyncLandfillDumpingService;
+  role: EcosyncRoleService;
+  permission: EcosyncPermissionService;
 
   constructor({ db }: { db: EcosyncDatabase }) {
     // Private Thingy
@@ -33,5 +37,7 @@ export class EcosyncDbClient {
     this.landfillDumping = new EcosyncLandfillDumpingService({
       client: this.#client,
     });
+    this.role = new EcosyncRoleService({ client: this.#client });
+    this.permission = new EcosyncPermissionService({ client: this.#client });
   }
 }
