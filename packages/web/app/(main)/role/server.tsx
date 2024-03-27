@@ -3,7 +3,7 @@
 import { dbClient } from "@/client";
 
 export const getRoles = async () => {
-  return dbClient.role.getRolesWithPermissions();
+  return dbClient.role.getWithPermissions();
 };
 
 export const getPermissions = async () => {

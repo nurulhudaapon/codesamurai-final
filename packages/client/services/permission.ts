@@ -1,9 +1,7 @@
-import { EcosyncLogger } from "@ecosync/logger";
-import { Schema, type EcosyncDatabase } from "@ecosync/db";
+import { type EcosyncDatabase } from "@ecosync/db";
 import type * as Entity from "@prisma/client";
 import { nameToSlug } from "../utils/slug";
 
-const console = new EcosyncLogger({ name: "Permission Service" }).init();
 
 /**
  * ## Permission entity related CRUD Operations

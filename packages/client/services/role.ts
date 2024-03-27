@@ -1,9 +1,6 @@
-import { EcosyncLogger } from "@ecosync/logger";
-import { Schema, type EcosyncDatabase } from "@ecosync/db";
-import type * as Entity from "@prisma/client";
+import { type EcosyncDatabase } from "@ecosync/db";
 import { nameToSlug } from "../utils/slug";
 
-const console = new EcosyncLogger({ name: "Role Service" }).init();
 
 /**
  * ## Role entity related CRUD Operations
@@ -15,7 +12,7 @@ export class EcosyncRoleService {
     this.#client = client;
   }
 
-  getRolesWithPermissions = async () => {
+  getWithPermissions = async () => {
     return this.#client.roles.findMany({
       include: {
         role_permissions: {
