@@ -1,6 +1,7 @@
 import { cubeClient } from "@/client";
 import { getServerAuthSession } from "@/utils/auth";
 import WaveSVG from "@/assets/wave.svg";
+import { LineChart01 } from "@/components/chart/line";
 
 const titles = ["Costing", "Wastage", "Oil Used", "Distance"];
 const Unit = [" USD", " Tons", " L", " Km"];
@@ -17,7 +18,10 @@ const MonitorPage = async () => {
 
   return (
     <main>
-      <div className={`max-w-9xl mx-auto w-full px-2 py-8 sm:px-6 lg:px-4`}>
+      <div className={`max-w-9xl mx-auto w-full px-2 py-4 sm:px-6 lg:px-4`}>
+        <div className="mb-6">
+          <h1 className="font-semibold text-lg">Monitor</h1>
+        </div>
         <div className="grid grid-cols-12 gap-4 xl:gap-6">
           {Object.keys(sum).map((key, idx) => (
             <Card
@@ -27,6 +31,16 @@ const MonitorPage = async () => {
               value={sum[key as keyof typeof sum]}
             />
           ))}
+        </div>
+
+        {/* Add line chart */}
+        <div className="mt-8">
+          <h1 className="font-semibold text-lg">Wastage Trend</h1>
+          <div className="bg-white p-4 rounded-md shadow-sm">
+            <div>
+              <LineChart />
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -60,6 +74,48 @@ const Card = ({
       <div className="absolute top-0 right-4 md:right-8">
         <WaveSVG />
       </div>
+    </div>
+  );
+};
+
+type ChartPropsData = React.ComponentProps<typeof LineChart01>["data"];
+const baseDataSet: Partial<ChartPropsData["datasets"][number]> = {
+  borderWidth: 2,
+  pointRadius: 5,
+  pointHoverRadius: 3,
+  clip: 20,
+};
+
+const LineChart = () => {
+  const currentData = [30, 10, 70, 50, 20, 40, 60];
+  const prevData = [20, 30, 40, 50, 60, 70, 80]; //{x: index, y: value, z: date}
+
+  const data: ChartPropsData = {
+    labels: ["1", "2", "3", "4", "5", "6", "7"],
+    datasets: [
+      {
+        data: currentData,
+        fill: false,
+        backgroundColor: `rgba(59, 130, 246, 0.08)`,
+        borderColor: "#6366f1",
+        pointBackgroundColor: "#6366f1",
+        tension: 0.3,
+        ...baseDataSet,
+      },
+      {
+        data: prevData,
+        fill: false,
+        backgroundColor: `rgba(203, 213, 224, 0.08)`,
+        borderColor: "#ea4a15",
+        pointBackgroundColor: "#da0e85",
+        tension: 0.3,
+        ...baseDataSet,
+      },
+    ],
+  };
+  return (
+    <div className="grow">
+      <LineChart01 data={data} width={360} height={450} />
     </div>
   );
 };

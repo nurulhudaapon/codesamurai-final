@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useEffect } from "react";
 import {
   Chart,
@@ -10,6 +11,8 @@ import {
   Tooltip,
   ChartItem,
   ChartData,
+  CategoryScale,
+  TimeSeriesScale,
 } from "chart.js";
 import "chartjs-adapter-moment";
 // import { _DeepPartialObject } from "chart.js/dist/types/utils";
@@ -22,7 +25,9 @@ Chart.register(
   PointElement,
   LinearScale,
   TimeScale,
-  Tooltip
+  Tooltip,
+  CategoryScale,
+  TimeSeriesScale
 );
 
 type LineChartProps = {
@@ -51,12 +56,19 @@ export const LineChart01 = ({
         },
         scales: {
           y: {
-            display: false,
+            // grid: {
+            //   display: false,
+            // },
             beginAtZero: true,
+            ticks: {
+              maxTicksLimit: 4,
+            },
           },
           x: {
-            type: "time",
-            display: false,
+            type: "timeseries",
+            ticks: {
+              maxTicksLimit: 6,
+            },
           },
         },
         plugins: {
