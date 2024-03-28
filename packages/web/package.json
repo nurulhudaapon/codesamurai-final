@@ -12,6 +12,9 @@
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
     "bcryptjs": "^2.4.3",
+    "chart.js": "^4.4.2",
+    "chartjs-adapter-moment": "^1.0.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
     "flowbite": "^2.3.0",

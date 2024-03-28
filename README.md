@@ -3,7 +3,7 @@
 To install dependencies:
 
 ```bash
-bun install
+npm install
 ```
 
 To reset DB with default content:
@@ -15,5 +15,5 @@ bun run reset
 To start dev:
 
 ```bash
-bun run dev
+npm run dev
 ```
