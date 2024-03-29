@@ -11,9 +11,11 @@ const MonitorPage = async () => {
   const response = await cubeClient.getTotalWaste();
   console.log({ response });
   console.log("session", session);
+  const wastage = (response?.sts_dumpings?.total_volume || 0) + (response.landfill_dumpings.total_volume || 0);
+
   const sum = {
     costing: 5223,
-    wastage: 223,
+    wastage,
     oilUsed: 105,
     distance: 522,
   };

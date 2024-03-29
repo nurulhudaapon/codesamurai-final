@@ -6,9 +6,13 @@ import { getPrismaClient } from "./client";
 const console = new EcosyncLogger({ name: "Database" }).init();
 
 export class EcosyncDatabase {
-  constructor() {}
+  #client: ReturnType<typeof getPrismaClient>;
+
+  constructor() {
+    this.#client = getPrismaClient();
+  }
 
   client() {
-    return getPrismaClient();
+    return this.#client;
   }
 }

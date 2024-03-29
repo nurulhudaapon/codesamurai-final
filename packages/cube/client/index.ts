@@ -105,7 +105,10 @@ export class EcosyncCubeClient {
       }
     `;
 
-    const result = await this.#query(query, variables);
+    const result = await this.#query(query, variables) as {
+      sts_dumpings: { total_volume: number | null },
+      landfill_dumpings: { total_volume: number | null }
+    };
 
     return result;
     
