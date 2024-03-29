@@ -71,7 +71,7 @@ export class EcosyncUserService {
    * @param {Entity.user} userData - The data to create a new User
    * @returns {Promise<Entity.user>} A promise that resolves to the created User object
    */
-  create(data: Entity.Prisma.userCreateArgs): Promise<Entity.user> {
+  async create(data: Entity.Prisma.userCreateArgs): Promise<Entity.user> {
     // Validate
     const validUserData = Schema.userSchema
       .pick({
@@ -82,8 +82,19 @@ export class EcosyncUserService {
       })
       .parse(data.data);
 
+    const findUnassignedRole = await this.#client.role.findFirst({
+      where: {
+        slug: "unassigned",
+      },
+    });
+
     // Commit
-    return this.#client.user.create({ data: validUserData });
+    return this.#client.user.create({
+      data: {
+        ...validUserData,
+        role_id: findUnassignedRole?.id,
+      },
+    });
   }
 
   /**

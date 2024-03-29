@@ -1,15 +1,18 @@
 import { cn } from "@/utils/cn";
 import React, { SelectHTMLAttributes } from "react";
 
+type OptionType = {
+  value?: string;
+  label: string;
+  isSelected?: boolean;
+}
+
 type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
-  options: {
-    value?: string;
-    label: string;
-    isSelected?: boolean;
-  }[];
+  options: (OptionType | undefined)[]
 };
 
 export const Select: React.FC<SelectProps> = ({ className, options, ...props }) => {
+  const valiedoOptions = options.filter(Boolean) as OptionType[];
   return (
     <select
       {...props}
@@ -37,7 +40,7 @@ export const Select: React.FC<SelectProps> = ({ className, options, ...props }) 
         className
       )}
     >
-      {options.map((option, idx) => (
+      {valiedoOptions.map((option, idx) => (
         <option selected={option.isSelected} key={idx} value={option.value}>
           {option.label}
         </option>

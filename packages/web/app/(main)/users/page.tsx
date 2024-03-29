@@ -83,16 +83,11 @@ const Index = () => {
                   <Select
                     onChange={(e) => onRoleChange(user.id, e.target.value)}
                     value={user.role_id || ""}
-                    options={[
-                      {
-                        label: "Unassigned",
-                      },
-                      ...roles.map((r) => ({
-                        label: r.title,
-                        value: r.id,
-                        isSelected: r.id === user.role_id,
-                      })),
-                    ]}
+                    options={roles.map((r) => ({
+                      label: r.title,
+                      value: r.id,
+                      isSelected: r.id === user.role_id,
+                    }))}
                   />
                 </TableCell>
               </TableRow>

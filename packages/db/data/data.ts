@@ -30,6 +30,13 @@ const role: Entity.role[] = [
     created_at: now,
     updated_at: now,
   },
+  {
+    id: uuid(),
+    slug: "unassigned",
+    title: "Unassigned",
+    created_at: now,
+    updated_at: now,
+  },
 ];
 
 const permission: Entity.permission[] = [
@@ -132,7 +139,7 @@ const sts: Entity.sts[] = [
     created_by_user_id: user[0].id,
     latitude: 3243.334,
     longitude: 343.343,
-    ward_number: '10',
+    ward_number: "10",
     created_at: now,
     updated_at: now,
   },
@@ -143,7 +150,7 @@ const sts: Entity.sts[] = [
     created_by_user_id: user[0].id,
     latitude: 12121.334,
     longitude: 1212.343,
-    ward_number: '11',
+    ward_number: "11",
     created_at: now,
     updated_at: now,
   },
@@ -154,11 +161,11 @@ const sts: Entity.sts[] = [
     created_by_user_id: user[0].id,
     latitude: 5656.334,
     longitude: 3445453.343,
-    ward_number: '12',
+    ward_number: "12",
     created_at: now,
     updated_at: now,
   },
-]
+];
 
 const vehicle: Entity.vehicle[] = [
   {
@@ -184,7 +191,6 @@ const vehicle: Entity.vehicle[] = [
     created_at: now,
     updated_at: now,
     sts_id: sts[1].id,
-
   },
   {
     id: uuid(),
@@ -197,9 +203,8 @@ const vehicle: Entity.vehicle[] = [
     created_at: now,
     updated_at: now,
     sts_id: sts[2].id,
-
-  }
-]
+  },
+];
 
 export const InitData = {
   permission,
