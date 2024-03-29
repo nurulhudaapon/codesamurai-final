@@ -7,7 +7,7 @@
 ## Accounts
 ```mermaid
 erDiagram
-"users" {
+"user" {
   String id PK
   DateTime created_at
   DateTime updated_at
@@ -18,37 +18,42 @@ erDiagram
   DateTime last_login_at "nullable"
   String password "nullable"
   String role_id FK "nullable"
-  users_state state
+  user_state state
 }
-"roles" {
+"role" {
   String id PK
   DateTime created_at
   DateTime updated_at
   String slug
   String title
 }
-"permissions" {
+"permission" {
   String id PK
   DateTime created_at
   DateTime updated_at
   String slug
   String title
 }
-"role_permissions" {
+"role_permission" {
   String id PK
   DateTime created_at
   DateTime updated_at
   String role_id FK
   String permission_id FK
 }
-"users" }o--o| "roles" : role
-"role_permissions" }o--|| "roles" : role
-"role_permissions" }o--|| "permissions" : permission
+"_stsTouser" {
+  String A FK
+  String B FK
+}
+"user" }o--o| "role" : role
+"role_permission" }o--|| "role" : role
+"role_permission" }o--|| "permission" : permission
+"_stsTouser" }o--|| "user" : user
 ```
 
-### `users`
-Represents users in the system.
-This model stores information about users.
+### `user`
+Represents user in the system.
+This model stores information about user.
 
 **Properties**
   - `id`: Unique identifier for the user.
@@ -63,8 +68,8 @@ This model stores information about users.
   - `role_id`: Role of the user (default sts).
   - `state`: State of the user (default active).
 
-### `roles`
-List of roles that a user can have.
+### `role`
+List of role that a user can have.
 
 **Properties**
   - `id`: Unique identifier for the role.
@@ -73,8 +78,8 @@ List of roles that a user can have.
   - `slug`: Name/slug of the role.
   - `title`: Title of the role.
 
-### `permissions`
-Represents the permissions that a role can have.
+### `permission`
+Represents the permission that a role can have.
 
 **Properties**
   - `id`: Unique identifier for the permission.
@@ -83,8 +88,8 @@ Represents the permissions that a role can have.
   - `slug`: Name/slug of the permission.
   - `title`: Title of the permission.
 
-### `role_permissions`
-Represents the relationship between roles and permissions.
+### `role_permission`
+Represents the relationship between role and permission.
 
 **Properties**
   - `id`: Unique identifier for the role permission.
@@ -93,32 +98,41 @@ Represents the relationship between roles and permissions.
   - `role_id`: Role ID associated with the role permission.
   - `permission_id`: Permission ID associated with the role permission.
 
+### `_stsTouser`
+Pair relationship table between [sts](#sts) and [user](#user)
+
+**Properties**
+  - `A`: 
+  - `B`: 
+
 
 ## default
 ```mermaid
 erDiagram
-"vehicles" {
+"vehicle" {
   String id PK
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK
+  String sts_id FK
   String number
-  vehicles_type type
-  vehicles_capacity capacity
-  Float fuel_cost_full_load "nullable"
-  Float fuel_cost_empty_load "nullable"
+  vehicle_type type
+  vehicle_capacity capacity
+  Float loaded_cost "nullable"
+  Float unloaded_cost "nullable"
 }
-"stss" {
+"sts" {
   String id PK
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK
   String ward_number
   Float capacity_tonnes
-  String gps_coordinates
-  String manager_id FK
+  Float latitude
+  Float longitude
+  String manager_id
 }
-"sts_dumpings" {
+"sts_entry" {
   String id PK
   DateTime created_at
   DateTime updated_at
@@ -129,7 +143,7 @@ erDiagram
   DateTime arrival_time
   DateTime departure_time
 }
-"landfill_dumpings" {
+"landfill_entry" {
   String id PK
   DateTime created_at
   DateTime updated_at
@@ -138,24 +152,26 @@ erDiagram
   DateTime arrival_time
   DateTime departure_time
 }
-"sts_dumpings" }o--|| "stss" : sts
-"sts_dumpings" }o--|| "vehicles" : vehicle
+"vehicle" }o--|| "sts" : sts
+"sts_entry" }o--|| "sts" : sts
+"sts_entry" }o--|| "vehicle" : vehicle
 ```
 
-### `vehicles`
+### `vehicle`
 
 **Properties**
   - `id`: Unique identifier for the vehicle.
   - `created_at`: Timestamp indicating when the vehicle was created.
   - `updated_at`: Timestamp indicating when the vehicle was last updated.
   - `created_by_user_id`: 
+  - `sts_id`: 
   - `number`: Vehicle number.
   - `type`: Type of the vehicle.
   - `capacity`: Capacity of the vehicle.
-  - `fuel_cost_full_load`: Fuel cost per Kilometer when full load.
-  - `fuel_cost_empty_load`: Fuel cost per Kilometer when empty load.
+  - `loaded_cost`: Fuel cost per Kilometer when full load.
+  - `unloaded_cost`: Fuel cost per Kilometer when empty load.
 
-### `stss`
+### `sts`
 
 **Properties**
   - `id`: Unique identifier for the STS.
@@ -164,10 +180,11 @@ erDiagram
   - `created_by_user_id`: 
   - `ward_number`: Ward number of the STS.
   - `capacity_tonnes`: Capacity of the STS.
-  - `gps_coordinates`: GPS coordinates of the STS.
+  - `latitude`: GPS coordinates of the STS.
+  - `longitude`: 
   - `manager_id`: STS manager ID associated with the STS.
 
-### `sts_dumpings`
+### `sts_entry`
 
 **Properties**
   - `id`: Unique identifier for the STS entry.
@@ -180,7 +197,7 @@ erDiagram
   - `arrival_time`: Time of arrival.
   - `departure_time`: Time of departure.
 
-### `landfill_dumpings`
+### `landfill_entry`
 
 **Properties**
   - `id`: Unique identifier for the landfill entry.

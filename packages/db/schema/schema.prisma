@@ -35,9 +35,9 @@ generator markdown {
 }
 
 /// @namespace Accounts
-/// Represents users in the system.
-/// This model stores information about users.
-model users {
+/// Represents user in the system.
+/// This model stores information about user.
+model user {
   /// Unique identifier for the user.
   id String @id @default(uuid()) @db.Uuid
 
@@ -69,23 +69,23 @@ model users {
   role_id String? @db.Uuid
 
   /// State of the user (default active).
-  state users_state @default(active)
+  state user_state @default(active)
 
   // Relation to the role
-  role                                roles?              @relation(fields: [role_id], references: [id])
-  manager_secondary_transfer_stations stss[]              @relation(name: "sts_creator")
-  landfill_dumpings                   landfill_dumpings[]
-  sts_dumpings                        sts_dumpings[]
-  vehicles                            vehicles[]
-  creator_secondary_transfer_stations stss[]
+  role                                role?              @relation(fields: [role_id], references: [id])
+  manager_secondary_transfer_stations sts[]              @relation(name: "sts_creator")
+  landfill_entry                   landfill_entry[]
+  sts_entry                        sts_entry[]
+  vehicle                            vehicle[]
+  creator_secondary_transfer_stations sts[]
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
 }
 
 /// @namespace Accounts
-/// List of roles that a user can have.
-model roles {
+/// List of role that a user can have.
+model role {
   /// Unique identifier for the role.
   id String @id @default(uuid()) @db.Uuid
 
@@ -101,16 +101,16 @@ model roles {
   /// Title of the role.
   title String @db.Text
 
-  users            users[]
-  role_permissions role_permissions[]
+  user            user[]
+  role_permission role_permission[]
 
   /// Index for searching by name
   @@index([slug])
 }
 
 /// @namespace Accounts
-/// Represents the permissions that a role can have.
-model permissions {
+/// Represents the permission that a role can have.
+model permission {
   /// Unique identifier for the permission.
   id String @id @default(uuid()) @db.Uuid
 
@@ -125,15 +125,15 @@ model permissions {
 
   /// Title of the permission.
   title            String             @db.Text
-  role_permissions role_permissions[]
+  role_permission role_permission[]
 
   /// Index for searching by name
   @@index([slug])
 }
 
 /// @namespace Accounts
-/// Represents the relationship between roles and permissions.
-model role_permissions {
+/// Represents the relationship between role and permission.
+model role_permission {
   /// Unique identifier for the role permission.
   id String @id @default(uuid()) @db.Uuid
 
@@ -150,16 +150,16 @@ model role_permissions {
   permission_id String @db.Uuid
 
   /// Relation to the role
-  role roles @relation(fields: [role_id], references: [id])
+  role role @relation(fields: [role_id], references: [id])
 
   /// Relation to the permission
-  permission permissions @relation(fields: [permission_id], references: [id])
+  permission permission @relation(fields: [permission_id], references: [id])
 
   /// Index for searching by role and permission
   @@index([role_id, permission_id])
 }
 
-enum users_state {
+enum user_state {
   /// Active state.
   active
 
@@ -168,16 +168,16 @@ enum users_state {
 }
 
 // Data Entry Interface : 
-// System admin can add vehicles with these mandatory attributes. You can store additional attributes as well.
+// System admin can add vehicle with these mandatory attributes. You can store additional attributes as well.
 // Vehicle Number
 // Type : Open Truck, Dump Truck, Compactor, Container Carrier
 // Capacity: 3 ton, 5 ton, 7 ton. 
 // System admin can create STS with ward number, capacity in Tonnes and GPS coordinates. 
 // System admin can also assign an STS manager for each STS.
-// STS managers can add entry of vehicles leaving the STS with STS ID, vehicle number, volume of waste, time of arrival and time of departure.
+// STS managers can add entry of vehicle leaving the STS with STS ID, vehicle number, volume of waste, time of arrival and time of departure.
 // Landfill managers can add entry of truck dumping with volume of waste, time of arrival and time of departure.
 
-model vehicles {
+model vehicle {
   /// Unique identifier for the vehicle.
   id String @id @default(uuid()) @db.Uuid
 
@@ -187,55 +187,33 @@ model vehicles {
   /// Timestamp indicating when the vehicle was last updated.
   updated_at         DateTime @default(now()) @db.Timestamptz(6)
   created_by_user_id String   @db.Uuid
+  sts_id             String   @db.Uuid
 
   /// Vehicle number.
   number String @db.VarChar(100)
 
   /// Type of the vehicle.
-  type vehicles_type
+  type vehicle_type
 
   /// Capacity of the vehicle.
-  capacity             vehicles_capacity
+  capacity      vehicle_capacity
   /// Fuel cost per Kilometer when full load.
-  fuel_cost_full_load  Float?
+  loaded_cost   Float?
   /// Fuel cost per Kilometer when empty load.
-  fuel_cost_empty_load Float?
+  unloaded_cost Float?
 
-  sts_dumpings sts_dumpings[]
+  sts_entry sts_entry[]
 
   /// Relation to the user who created
-  user users @relation(fields: [created_by_user_id], references: [id])
+  user user @relation(fields: [created_by_user_id], references: [id])
+  sts  sts  @relation(fields: [sts_id], references: [id])
 
   /// Index for searching by vehicle number
   @@index([number])
 }
 
-enum vehicles_type {
-  /// Open Truck type.
-  open_truck
 
-  /// Dump Truck type.
-  dump_truck
-
-  /// Compactor type.
-  compactor
-
-  /// Container Carrier type.
-  container_carrier
-}
-
-enum vehicles_capacity {
-  /// 3 ton capacity.
-  three_ton
-
-  /// 5 ton capacity.
-  five_ton
-
-  /// 7 ton capacity.
-  seven_ton
-}
-
-model stss {
+model sts {
   /// Unique identifier for the STS.
   id String @id @default(uuid()) @db.Uuid
 
@@ -254,23 +232,25 @@ model stss {
   capacity_tonnes Float
 
   /// GPS coordinates of the STS.
-  gps_coordinates String @db.Text
+  latitude Float
+  longitude Float
 
   /// STS manager ID associated with the STS.
   manager_id String @db.Uuid
 
   /// Relation to the STS manager
-  sts_manager  users          @relation(fields: [manager_id], references: [id])
-  sts_dumpings sts_dumpings[]
+  sts_managers user[]
+  sts_entry sts_entry[]
 
   /// Relation to the user who created
-  creator users @relation(fields: [created_by_user_id], references: [id], name: "sts_creator")
+  creator  user      @relation(fields: [created_by_user_id], references: [id], name: "sts_creator")
+  vehicle vehicle[]
 
   /// Index for searching by ward number
   @@index([ward_number])
 }
 
-model sts_dumpings {
+model sts_entry {
   /// Unique identifier for the STS entry.
   id String @id @default(uuid()) @db.Uuid
 
@@ -299,19 +279,19 @@ model sts_dumpings {
   departure_time DateTime
 
   /// Relation to the STS
-  sts stss @relation(fields: [sts_id], references: [id])
+  sts sts @relation(fields: [sts_id], references: [id])
 
   /// Relation to the vehicle
-  vehicle vehicles @relation(fields: [vehicle_id], references: [id])
+  vehicle vehicle @relation(fields: [vehicle_id], references: [id])
 
   /// Relation to the user who created
-  user users @relation(fields: [created_by_user_id], references: [id])
+  user user @relation(fields: [created_by_user_id], references: [id])
 
   /// Index for searching by STS ID
   @@index([sts_id])
 }
 
-model landfill_dumpings {
+model landfill_entry {
   /// Unique identifier for the landfill entry.
   id String @id @default(uuid()) @db.Uuid
 
@@ -334,5 +314,31 @@ model landfill_dumpings {
   departure_time DateTime
 
   /// Relation to the user
-  user users @relation(fields: [created_by_user_id], references: [id])
+  user user @relation(fields: [created_by_user_id], references: [id])
+}
+
+
+enum vehicle_type {
+  /// Open Truck type.
+  open_truck
+
+  /// Dump Truck type.
+  dump_truck
+
+  /// Compactor type.
+  compactor
+
+  /// Container Carrier type.
+  container_carrier
+}
+
+enum vehicle_capacity {
+  /// 3 ton capacity.
+  three_ton
+
+  /// 5 ton capacity.
+  five_ton
+
+  /// 7 ton capacity.
+  seven_ton
 }

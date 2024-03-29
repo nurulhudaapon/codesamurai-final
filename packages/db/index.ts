@@ -12,7 +12,7 @@ export class EcosyncDatabase {
     this.#client = getPrismaClient();
   }
 
-  client() {
-    return this.#client;
+  get client () {
+    return this.#client ||  getPrismaClient();
   }
 }

@@ -8,7 +8,7 @@ const password = bcrypt.hashSync("password", 10);
 
 //======== Initial Data ========
 
-const roles: Entity.roles[] = [
+const role: Entity.role[] = [
   {
     id: uuid(),
     slug: "admin",
@@ -32,7 +32,7 @@ const roles: Entity.roles[] = [
   },
 ];
 
-const permissions: Entity.permissions[] = [
+const permission: Entity.permission[] = [
   {
     id: uuid(),
     slug: "manage_users",
@@ -70,11 +70,11 @@ const permissions: Entity.permissions[] = [
   },
 ];
 
-const role_permissions: Entity.role_permissions[] = permissions.map(
+const role_permission: Entity.role_permission[] = permission.map(
   (permission) => {
     return {
       id: uuid(),
-      role_id: roles[0].id,
+      role_id: role[0].id,
       permission_id: permission.id,
       created_at: now,
       updated_at: now,
@@ -82,7 +82,7 @@ const role_permissions: Entity.role_permissions[] = permissions.map(
   }
 );
 
-const users: Entity.users[] = [
+const user: Entity.user[] = [
   {
     id: uuid(),
     email: "admin@ecosync.gov.bd",
@@ -94,7 +94,7 @@ const users: Entity.users[] = [
     created_at: now,
     updated_at: now,
     last_login_at: null,
-    role_id: roles[0].id,
+    role_id: role[0].id,
   },
   {
     id: uuid(),
@@ -107,7 +107,7 @@ const users: Entity.users[] = [
     created_at: now,
     updated_at: now,
     last_login_at: null,
-    role_id: roles[1].id,
+    role_id: role[1].id,
   },
   {
     id: uuid(),
@@ -120,50 +120,92 @@ const users: Entity.users[] = [
     created_at: now,
     updated_at: now,
     last_login_at: null,
-    role_id: roles[2].id,
+    role_id: role[2].id,
   },
 ];
 
-const vehicles: Entity.vehicles[] = [
+const sts: Entity.sts[] = [
+  {
+    id: uuid(),
+    manager_id: user[1].id,
+    capacity_tonnes: 3000,
+    created_by_user_id: user[0].id,
+    latitude: 3243.334,
+    longitude: 343.343,
+    ward_number: '10',
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: uuid(),
+    manager_id: user[1].id,
+    capacity_tonnes: 3000,
+    created_by_user_id: user[0].id,
+    latitude: 12121.334,
+    longitude: 1212.343,
+    ward_number: '11',
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: uuid(),
+    manager_id: user[1].id,
+    capacity_tonnes: 3000,
+    created_by_user_id: user[0].id,
+    latitude: 5656.334,
+    longitude: 3445453.343,
+    ward_number: '12',
+    created_at: now,
+    updated_at: now,
+  },
+]
+
+const vehicle: Entity.vehicle[] = [
   {
     id: uuid(),
     number: "1234",
-    type: Entity.vehicles_type.open_truck,
-    capacity: Entity.vehicles_capacity.three_ton,
-    fuel_cost_full_load: 10,
-    fuel_cost_empty_load: 50,
-    created_by_user_id: users[0].id,
+    type: Entity.vehicle_type.open_truck,
+    capacity: Entity.vehicle_capacity.three_ton,
+    loaded_cost: 10,
+    unloaded_cost: 50,
+    created_by_user_id: user[0].id,
     created_at: now,
     updated_at: now,
+    sts_id: sts[0].id,
   },
   {
     id: uuid(),
     number: "1235",
-    type: Entity.vehicles_type.dump_truck,
-    capacity: Entity.vehicles_capacity.five_ton,
-    fuel_cost_full_load: 15,
-    fuel_cost_empty_load: 10,
-    created_by_user_id: users[0].id,
+    type: Entity.vehicle_type.dump_truck,
+    capacity: Entity.vehicle_capacity.five_ton,
+    loaded_cost: 15,
+    unloaded_cost: 10,
+    created_by_user_id: user[0].id,
     created_at: now,
     updated_at: now,
+    sts_id: sts[1].id,
+
   },
   {
     id: uuid(),
     number: "1236",
-    type: Entity.vehicles_type.compactor,
-    capacity: Entity.vehicles_capacity.seven_ton,
-    fuel_cost_full_load: 20,
-    fuel_cost_empty_load: 15,
-    created_by_user_id: users[0].id,
+    type: Entity.vehicle_type.compactor,
+    capacity: Entity.vehicle_capacity.seven_ton,
+    loaded_cost: 20,
+    unloaded_cost: 15,
+    created_by_user_id: user[0].id,
     created_at: now,
     updated_at: now,
+    sts_id: sts[2].id,
+
   }
 ]
 
 export const InitData = {
-  permissions,
-  roles,
-  role_permissions,
-  users,
-  vehicles,
+  permission,
+  role,
+  role_permission,
+  user,
+  sts,
+  vehicle,
 };
