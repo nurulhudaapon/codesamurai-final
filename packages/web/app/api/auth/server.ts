@@ -36,3 +36,15 @@ export const login = async (user: { email: string; password: string }) => {
 
   return userData;
 };
+
+export const getPermissions = async (user: { email: string }) => {
+  const existingUser = await dbClient.user.getUserByEmailWithPermissions(
+    user.email
+  );
+
+  if (!existingUser?.id) {
+    throw new Error("User not found!");
+  }
+
+  return existingUser.role?.role_permissions.map((p) => p.permission.slug) || [];
+}

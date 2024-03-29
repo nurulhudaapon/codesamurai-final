@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
-import { login } from "./server";
+import { getPermissions, login } from "./server";
 import { SessionData } from "@/types/auth";
 import { Utils } from "@/utils";
 
@@ -26,9 +26,11 @@ export const authOptions: NextAuthOptions = {
         });
       }
     },
-    session: (props) => {
-      const token = props?.token;
+    session: async (props) => {
+      const token = props?.token as SessionData;
       let session = props?.session;
+      const permissions = await getPermissions({ email: token.email });
+      token.permissions = permissions;
       session = { ...session, ...token };
       return session;
     },

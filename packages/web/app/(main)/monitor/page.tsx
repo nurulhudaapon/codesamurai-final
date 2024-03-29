@@ -66,7 +66,7 @@ const Card = ({
       }}
     >
       <h1 className="font-semibold text-sm">{title}</h1>
-      <div className="flex items-center justify-center pt-2 pb-4">
+      <div className="flex pt-2 pb-4">
         <div className="text-2xl font-bold">
           {value.toLocaleString("en-US") + Unit[idx]}
         </div>
