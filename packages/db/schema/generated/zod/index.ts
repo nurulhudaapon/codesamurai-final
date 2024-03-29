@@ -20,7 +20,7 @@ export const PermissionsScalarFieldEnumSchema = z.enum(['id','created_at','updat
 
 export const Role_permissionsScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','role_id','permission_id']);
 
-export const VehiclesScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','number','type','capacity']);
+export const VehiclesScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','number','type','capacity','fuel_cost_full_load','fuel_cost_empty_load']);
 
 export const StssScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','ward_number','capacity_tonnes','gps_coordinates','manager_id']);
 
@@ -237,6 +237,14 @@ export const vehiclesSchema = z.object({
    * Vehicle number.
    */
   number: z.string(),
+  /**
+   * Fuel cost per Kilometer when full load.
+   */
+  fuel_cost_full_load: z.number().nullable(),
+  /**
+   * Fuel cost per Kilometer when empty load.
+   */
+  fuel_cost_empty_load: z.number().nullable(),
 })
 
 export type vehicles = z.infer<typeof vehiclesSchema>

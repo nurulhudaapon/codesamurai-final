@@ -260,13 +260,13 @@ export function CircleImageWithTitle({ src, alt, name }: CircleImageProps) {
   return (
     <div className="flex items-center">
       <div className="mr-2 grid h-6 w-6 shrink-0 items-center sm:mr-3">
-        <img
+        {/* <img
           className="rounded-full"
           src={src}
           width="32"
           height="32"
           alt={alt}
-        />
+        /> */}
       </div>
       <div className="font-medium text-slate-500">{name}</div>
     </div>

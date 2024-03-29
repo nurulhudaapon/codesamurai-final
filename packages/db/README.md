@@ -105,6 +105,8 @@ erDiagram
   String number
   vehicles_type type
   vehicles_capacity capacity
+  Float fuel_cost_full_load "nullable"
+  Float fuel_cost_empty_load "nullable"
 }
 "stss" {
   String id PK
@@ -150,6 +152,8 @@ erDiagram
   - `number`: Vehicle number.
   - `type`: Type of the vehicle.
   - `capacity`: Capacity of the vehicle.
+  - `fuel_cost_full_load`: Fuel cost per Kilometer when full load.
+  - `fuel_cost_empty_load`: Fuel cost per Kilometer when empty load.
 
 ### `stss`
 

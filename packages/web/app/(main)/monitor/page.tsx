@@ -9,6 +9,8 @@ const Unit = [" USD", " Tons", " L", " Km"];
 const MonitorPage = async () => {
   const session = await getServerAuthSession();
   const response = await cubeClient.getTotalWaste();
+  console.log({ response });
+  console.log("session", session);
   const sum = {
     costing: 5223,
     wastage: 223,

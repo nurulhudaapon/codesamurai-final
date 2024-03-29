@@ -82,8 +82,8 @@ const Index = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {roles.map((role) => (
-                <TableRow>
+              {roles.map((role, idx) => (
+                <TableRow key={idx}>
                   <TableCell className="font-bold">{role.title}</TableCell>
                   {permissions.map((permission) => {
                     const active = role.role_permissions.some(
@@ -121,8 +121,8 @@ const Index = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {permissions.map((p) => (
-                <TableRow>
+              {permissions.map((p, idx) => (
+                <TableRow key={idx}>
                   <TableCell className="font-bold">{p.title}</TableCell>
                   <TableCell className="font-bold">
                     <Badge label={p.slug} />

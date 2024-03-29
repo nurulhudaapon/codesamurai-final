@@ -29,7 +29,7 @@ services:
       - "5433:5432"
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres
+      POSTGRES_USER: user
       POSTGRES_DB: ecosync
 
     # Map the data volume to the current directory so that it persists

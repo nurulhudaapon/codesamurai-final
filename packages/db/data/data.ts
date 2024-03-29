@@ -1,4 +1,4 @@
-import type * as Entity from "@prisma/client";
+import * as Entity from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { v4 as uuid } from "uuid";
 
@@ -124,9 +124,46 @@ const users: Entity.users[] = [
   },
 ];
 
+const vehicles: Entity.vehicles[] = [
+  {
+    id: uuid(),
+    number: "1234",
+    type: Entity.vehicles_type.open_truck,
+    capacity: Entity.vehicles_capacity.three_ton,
+    fuel_cost_full_load: 10,
+    fuel_cost_empty_load: 50,
+    created_by_user_id: users[0].id,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: uuid(),
+    number: "1235",
+    type: Entity.vehicles_type.dump_truck,
+    capacity: Entity.vehicles_capacity.five_ton,
+    fuel_cost_full_load: 15,
+    fuel_cost_empty_load: 10,
+    created_by_user_id: users[0].id,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: uuid(),
+    number: "1236",
+    type: Entity.vehicles_type.compactor,
+    capacity: Entity.vehicles_capacity.seven_ton,
+    fuel_cost_full_load: 20,
+    fuel_cost_empty_load: 15,
+    created_by_user_id: users[0].id,
+    created_at: now,
+    updated_at: now,
+  }
+]
+
 export const InitData = {
   permissions,
   roles,
   role_permissions,
   users,
+  vehicles,
 };
