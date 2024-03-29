@@ -1,5 +1,7 @@
-const Index = () => {
-  return <div>Index</div>;
-};
+import { getAllSTS } from "./server";
+import StsMain from "./main-sts";
 
-export default Index;
+export default async function IndexPage() {
+  const STS = await getAllSTS();
+  return <StsMain STS={STS} />;
+}
