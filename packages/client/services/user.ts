@@ -71,12 +71,32 @@ export class EcosyncUserService {
    * @param {Entity.user} userData - The data to create a new User
    * @returns {Promise<Entity.user>} A promise that resolves to the created User object
    */
-  create(userData: Entity.user): Promise<Entity.user> {
+  create(data: Entity.Prisma.userCreateArgs): Promise<Entity.user> {
     // Validate
-    const validUserData = Schema.userSchema.parse(userData);
+    const validUserData = Schema.userSchema
+      .pick({
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+      })
+      .parse(data.data);
 
     // Commit
     return this.#client.user.create({ data: validUserData });
+  }
+
+  /**
+   * Update a User's Role
+   * @param {string} userId - The ID of the User to update
+   * @param {string} roleId - The ID of the Role to update to
+   * @returns {Promise<Entity.user>} A promise that resolves to the updated User object
+   */
+  updateRole(userId: string, roleId: string) {
+    return this.#client.user.update({
+      where: { id: userId },
+      data: { role_id: roleId },
+    });
   }
 
   /**

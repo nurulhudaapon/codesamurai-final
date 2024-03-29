@@ -1,7 +1,6 @@
 import { type EcosyncDatabase } from "@ecosync/db";
 import { nameToSlug } from "../utils/slug";
 
-
 /**
  * ## Role entity related CRUD Operations
  */
@@ -11,6 +10,10 @@ export class EcosyncRoleService {
   constructor({ client }: { client: EcosyncDatabase["client"] }) {
     this.#client = client;
   }
+
+  getAll = async () => {
+    return this.#client.role.findMany();
+  };
 
   getWithPermissions = async () => {
     return this.#client.role.findMany({

@@ -1,57 +1,113 @@
-import { cubeClient, dbClient } from "@/client";
+"use client";
 
-async function UserTable() {
-  const users = await dbClient.user.getAll();
+import Button from "@/components/button";
+import { Icon } from "@/components/icon";
+import { useEffect, useState } from "react";
+import {
+  RolesType,
+  UsersType,
+  getRoles,
+  getUsers,
+  updateUserRole,
+} from "./server";
+import CreateUserModal from "./user-modal";
+import {
+  Table,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table";
+import { Select } from "@/components/select";
+import { notify } from "@/components/toast";
+
+const Index = () => {
+  const [userModal, setUserModal] = useState<boolean>(false);
+  const [users, setUsers] = useState<UsersType>([]);
+  const [roles, setRoles] = useState<RolesType>([]);
+
+  const fetchRoles = async () => {
+    const roles = await getRoles();
+    setRoles(roles);
+  };
+
+  const fetchUsers = async () => {
+    const users = await getUsers();
+    setUsers(users);
+  };
+
+  const onRoleChange = async (userId: string, roleId: string) => {
+    await updateUserRole(userId, roleId);
+    fetchUsers()
+      .then(() => {
+        notify.success("User role updated successfully");
+      })
+      .catch(() => {
+        notify.error("Failed to update user role");
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
+    fetchRoles();
+  }, []);
+
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg m-4">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-          Users
-        </caption>
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Name
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Email
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Phone
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Role
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, idx) => (
-            <tr key={idx} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {user.first_name} {user.last_name}
-              </th>
-              <td className="px-6 py-4">{user.email}</td>
-              <td className="px-6 py-4">{user.phone}</td>
-              <td className="px-6 py-4">{user.role_id || "Unassigned"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div>
+        <div className="flex justify-between items-center mb-5">
+          <p className="text-lg font-bold">Users</p>
+          <Button onClick={() => setUserModal(true)} className="pl-3">
+            <Icon name="Plus" />
+            Add New User
+          </Button>
+        </div>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeader>Name</TableHeader>
+              <TableHeader>Email</TableHeader>
+              <TableHeader>Phone</TableHeader>
+              <TableHeader>Role</TableHeader>
+            </TableRow>
+          </TableHead>
+          <tbody>
+            {users.map((user, idx) => (
+              <TableRow key={idx}>
+                <TableCell className="font-bold">
+                  {user.first_name} {user.last_name}
+                </TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.phone}</TableCell>
+                <TableCell>
+                  <Select
+                    onChange={(e) => onRoleChange(user.id, e.target.value)}
+                    value={user.role_id || ""}
+                    options={[
+                      {
+                        label: "Unassigned",
+                      },
+                      ...roles.map((r) => ({
+                        label: r.title,
+                        value: r.id,
+                        isSelected: r.id === user.role_id,
+                      })),
+                    ]}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      {userModal && (
+        <CreateUserModal
+          onClose={() => setUserModal(false)}
+          triggerUpdate={fetchUsers}
+        />
+      )}
+    </>
   );
-}
+};
 
-const  Index = async () =>{
-  const response = await cubeClient.getResourceCount();
-
-  return (
-    <div className="w-full">
-      <pre>{JSON.stringify(response, null, 2)}</pre>
-      <UserTable />
-    </div>
-  );
-}
 export default Index;
