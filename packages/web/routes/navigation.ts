@@ -27,17 +27,15 @@ export const navigations = [
     key: "vehicles",
     icon: Truck,
     label: "Vehicles",
-    path: routes.main.vehicles.root(),
+    path: routes.main.vehicles(),
     require_permissions: ["manage_vehicles"],
-    subNavigations: [
-      {
-        key: "entry",
-        icon: ListChecks,
-        label: "Vehicle Entry",
-        path: routes.main.vehicles.entry(),
-        require_permissions: ["manage_vehicles"],
-      },
-    ],
+  },
+  {
+    key: "entry",
+    icon: ListChecks,
+    label: "Vehicle Entry",
+    path: routes.main.vehicleEntry(),
+    require_permissions: ["manage_vehicles"],
   },
   {
     key: "sts",

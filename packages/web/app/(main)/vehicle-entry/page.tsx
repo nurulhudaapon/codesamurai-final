@@ -4,7 +4,7 @@ import Input from "@/components/input";
 import { Modal } from "@/components/modal";
 import * as Entity from "@prisma/client";
 import { v4 as uuid } from "uuid";
-import { StsSelector } from "../server";
+import { StsSelector } from "../vehicles/server";
 import { getServerAuthSession } from "@/utils/auth";
 import { dbClient } from "@/client";
 

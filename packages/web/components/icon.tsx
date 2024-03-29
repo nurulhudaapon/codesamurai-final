@@ -6,7 +6,8 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	LucideProps,
-	Plus
+	Plus,
+	LogOut
 } from 'lucide-react';
 
 export const icons = {
@@ -16,7 +17,8 @@ export const icons = {
 	ChevronDown,
 	ChevronLeft,
 	ChevronRight,
-	Plus
+	Plus,
+	LogOut
 };
 
 export type IconsTypes = keyof typeof icons;
@@ -27,7 +29,7 @@ export interface IconProps extends Omit<LucideProps, 'name' | 'size'> {
 	currentColor?: boolean;
 }
 
-export const Icon = ({ size, currentColor, className, ...prop }: IconProps) => {
+export const Icon = ({ size, currentColor, ...prop }: IconProps) => {
 	const { color, ...restProps } = prop;
 	const IconComponent = icons[prop.name];
 

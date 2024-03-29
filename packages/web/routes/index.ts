@@ -11,10 +11,8 @@ export const routes = {
   main: {
     monitor: () => `/monitor` as const,
     users: () => `/users` as const,
-    vehicles: {
-      root: () => `/vehicles` as const,
-      entry: () => `${routes.main.vehicles.root()}/entry` as const,
-    },
+    vehicles: () => `/vehicles` as const,
+    vehicleEntry: () => `/vehicle-entry` as const,
     sts: () => `/sts` as const,
     role: () => `/role` as const,
   },
