@@ -1,6 +1,6 @@
 cubes:
-  - name: landfill_dumpings
-    sql_table: public.landfill_dumpings
+  - name: vehicle
+    sql_table: public.vehicle
     data_source: default
 
     joins: []
@@ -15,6 +15,18 @@ cubes:
         sql: created_by_user_id
         type: string
 
+      - name: type
+        sql: type
+        type: string
+
+      - name: capacity
+        sql: capacity
+        type: string
+
+      - name: number
+        sql: number
+        type: string
+
       - name: created_at
         sql: created_at
         type: time
@@ -23,25 +35,9 @@ cubes:
         sql: updated_at
         type: time
 
-      - name: arrival_time
-        sql: arrival_time
-        type: time
-      
-      - name: volume
-        sql: volume
-        type: number
-
-      - name: departure_time
-        sql: departure_time
-        type: time
-
     measures:
       - name: count
         type: count
-      
-      - name: total_volume
-        sql: volume
-        type: sum
 
     pre_aggregations:
       # Pre-aggregation definitions go here.

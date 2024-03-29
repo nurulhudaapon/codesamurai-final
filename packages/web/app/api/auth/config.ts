@@ -29,8 +29,8 @@ export const authOptions: NextAuthOptions = {
     session: async (props) => {
       const token = props?.token as SessionData;
       let session = props?.session;
-      const permissions = await getPermissions({ email: token.email });
-      token.permissions = permissions;
+      const permission = await getPermissions({ email: token.email });
+      token.permission = permission;
       session = { ...session, ...token };
       return session;
     },

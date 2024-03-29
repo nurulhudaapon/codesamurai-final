@@ -1,11 +1,15 @@
 cubes:
-  - name: users
-    sql_table: public.users
+  - name: role_permission
+    sql_table: public.role_permission
     data_source: default
 
     joins:
-      - name: roles
-        sql: "{CUBE}.role_id = {roles}.id"
+      - name: role
+        sql: "{CUBE}.role_id = {role}.id"
+        relationship: many_to_one
+
+      - name: permission
+        sql: "{CUBE}.permission_id = {permission}.id"
         relationship: many_to_one
 
     dimensions:
@@ -18,28 +22,8 @@ cubes:
         sql: role_id
         type: string
 
-      - name: state
-        sql: state
-        type: string
-
-      - name: first_name
-        sql: first_name
-        type: string
-
-      - name: last_name
-        sql: last_name
-        type: string
-
-      - name: email
-        sql: email
-        type: string
-
-      - name: phone
-        sql: phone
-        type: string
-
-      - name: password
-        sql: password
+      - name: permission_id
+        sql: permission_id
         type: string
 
       - name: created_at
@@ -48,10 +32,6 @@ cubes:
 
       - name: updated_at
         sql: updated_at
-        type: time
-
-      - name: last_login_at
-        sql: last_login_at
         type: time
 
     measures:

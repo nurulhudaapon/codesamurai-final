@@ -6,14 +6,14 @@ const console = new EcosyncLogger({ name: "RBAC" }).init();
 /**
 * ## Role-Based Access Control (RBAC) Endpoints
     - `/rbac/roles` - For defining and managing roles.
-    - `/rbac/permissions` - For defining and managing permissions.
-    - `/rbac/roles/{roleId}/permissions` - For assigning permissions to a role.
+    - `/rbac/permission` - For defining and managing permission.
+    - `/rbac/roles/{roleId}/permission` - For assigning permission to a role.
     - `/rbac/users/{userId}/roles` - For assigning roles to a user (System Admin access). By default, after user creation, the role is unassigned. This role should not have any access. The user can only login and update their profile with this role. 
 */
 export class EcosyncRbacService {
-  #client: ReturnType<EcosyncDatabase["client"]>;
+  #client: EcosyncDatabase["client"];
 
-  constructor({ client }: { client: ReturnType<EcosyncDatabase["client"]> }) {
+  constructor({ client }: { client: EcosyncDatabase["client"] }) {
     this.#client = client;
   }
 
@@ -23,24 +23,24 @@ export class EcosyncRbacService {
    * @returns Roles
    */
   getRoles() {
-    return this.#client.roles.findMany();
+    return this.#client.role.findMany();
   }
 
   /**
-   * /rbac/permissions - For defining and managing permissions.
+   * /rbac/permission - For defining and managing permission.
    * @returns Permissions
    */
   getPermissions() {
-    return this.#client.permissions.findMany();
+    return this.#client.permission.findMany();
   }
 
   /**
-   * /rbac/roles/{roleId}/permissions - For assigning permissions to a role.
+   * /rbac/roles/{roleId}/permission - For assigning permission to a role.
    * @param roleId Role ID
    * @returns Role Permissions
    */
   getRolePermissions(roleId: string) {
-    return this.#client.role_permissions.findMany({
+    return this.#client.role_permission.findMany({
       where: {
         role_id: roleId,
       },
@@ -54,7 +54,7 @@ export class EcosyncRbacService {
    */
 
   getUserRoles(userId: string) {
-    return this.#client.users.findMany({
+    return this.#client.user.findMany({
       where: {
         id: userId,
       },
@@ -71,7 +71,7 @@ export class EcosyncRbacService {
    * @returns Role
    */
   createRole(data: { slug: string; title: string }) {
-    return this.#client.roles.create({
+    return this.#client.role.create({
       data: {
         slug: data.slug,
         title: data.title,
@@ -80,12 +80,12 @@ export class EcosyncRbacService {
   }
 
   /**
-   * /rbac/permissions - For defining and managing permissions.
+   * /rbac/permission - For defining and managing permission.
    * @param data Permission Data
    * @returns Permission
    */
   createPermission(data: { slug: string; title: string }) {
-    return this.#client.permissions.create({
+    return this.#client.permission.create({
       data: {
         slug: data.slug,
         title: data.title,
@@ -94,13 +94,13 @@ export class EcosyncRbacService {
   }
 
   /**
-   * /rbac/roles/{roleId}/permissions - For assigning permissions to a role.
+   * /rbac/roles/{roleId}/permission - For assigning permission to a role.
    * @param roleId Role ID
    * @param permissionId Permission ID
    * @returns Role Permission
    */
   createRolePermission(roleId: string, permissionId: string) {
-    return this.#client.role_permissions.create({
+    return this.#client.role_permission.create({
       data: {
         role_id: roleId,
         permission_id: permissionId,
@@ -115,7 +115,7 @@ export class EcosyncRbacService {
    * @returns User Role
    */
   assignUserRole(userId: string, roleId: string) {
-    return this.#client.users.update({
+    return this.#client.user.update({
       data: {
         role_id: roleId,
       },
@@ -140,7 +140,7 @@ export class EcosyncRbacService {
       title: string;
     },
   ) {
-    return this.#client.roles.update({
+    return this.#client.role.update({
       data: {
         slug: data.slug,
         title: data.title,
@@ -152,7 +152,7 @@ export class EcosyncRbacService {
   }
 
   /**
-   * /rbac/permissions - For defining and managing permissions.
+   * /rbac/permission - For defining and managing permission.
    * @param permissionId Permission ID
    * @param data Permission Data
    * @returns Permission
@@ -165,7 +165,7 @@ export class EcosyncRbacService {
       title: string;
     },
   ) {
-    return this.#client.permissions.update({
+    return this.#client.permission.update({
       data: {
         slug: data.slug,
         title: data.title,
@@ -184,7 +184,7 @@ export class EcosyncRbacService {
    * @returns Role
    */
   deleteRole(roleId: string) {
-    return this.#client.roles.delete({
+    return this.#client.role.delete({
       where: {
         id: roleId,
       },
@@ -192,13 +192,13 @@ export class EcosyncRbacService {
   }
 
   /**
-   * /rbac/permissions - For defining and managing permissions.
+   * /rbac/permission - For defining and managing permission.
    * @param permissionId Permission ID
    * @returns Permission
    */
 
   deletePermission(permissionId: string) {
-    return this.#client.permissions.delete({
+    return this.#client.permission.delete({
       where: {
         id: permissionId,
       },
@@ -206,12 +206,12 @@ export class EcosyncRbacService {
   }
 
   /**
-   * /rbac/roles/{roleId}/permissions - For assigning permissions to a role.
+   * /rbac/roles/{roleId}/permission - For assigning permission to a role.
    * @param rolePermissionId Role Permission ID
    * @returns Role Permission
    */
   deleteRolePermission(rolePermissionId: string) {
-    return this.#client.role_permissions.delete({
+    return this.#client.role_permission.delete({
       where: {
         id: rolePermissionId,
       },
@@ -225,7 +225,7 @@ export class EcosyncRbacService {
    */
 
   unassignUserRole(userId: string) {
-    return this.#client.users.update({
+    return this.#client.user.update({
       data: {
         role_id: null,
       },

@@ -47,37 +47,37 @@ export class EcosyncCubeClient {
     const query = gql`
       query GetResrouceCount {
         v: cube {
-          vehicles {
+          vehicle {
             count
           }
         }
         lf: cube {
-          landfill_dumpings {
+          landfill_entry {
             count
           }
         }
         sts: cube {
-          stss {
+          sts {
             count
           }
         }
         sts_d: cube {
-          sts_dumpings {
+          sts_entry {
             count
           }
         }
         user: cube {
-          users {
+          user {
             count
           }
         }
         role: cube {
-          role_permissions {
+          role_permission {
             count
           }
         }
         perm: cube {
-          permissions {
+          permission {
             count
           }
         }
@@ -93,12 +93,12 @@ export class EcosyncCubeClient {
     const query = gql`
       query GetTotalWaste($where: RootWhereInput = {}) {
         cube(where: $where) {
-          landfill_dumpings {
+          landfill_entry {
             total_volume
           }
         }
         sts: cube(where: $where) {
-          sts_dumpings {
+          sts_entry {
             total_volume
           }
         }
@@ -106,8 +106,8 @@ export class EcosyncCubeClient {
     `;
 
     const result = await this.#query(query, variables) as {
-      sts_dumpings: { total_volume: number | null },
-      landfill_dumpings: { total_volume: number | null }
+      sts_entry: { total_volume: number | null },
+      landfill_entry: { total_volume: number | null }
     };
 
     return result;

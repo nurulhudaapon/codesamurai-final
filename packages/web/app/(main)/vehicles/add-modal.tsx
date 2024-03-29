@@ -1,57 +1,44 @@
-import React, { FormEventHandler, useState } from "react";
+import React from "react";
 import Button from "@/components/button";
 import Input from "@/components/input";
 import { Modal } from "@/components/modal";
-import { Checkbox } from "@/components/checkbox";
-import { Dropdown } from "flowbite-react";
 import * as Entity from "@prisma/client";
 import { v4 as uuid } from "uuid";
-import { addVehicle } from "./server";
+import { StsSelector } from "./server";
+import { getServerAuthSession } from "@/utils/auth";
+import { dbClient } from "@/client";
 
 type AddVehicleModalProps = {
-  onClose: () => void;
   userId: string;
 };
 
-// eslint-disable-next-line @next/next/no-async-client-component
-const AddVehicleModal = ({ onClose, userId }: AddVehicleModalProps) => {
-  const [inputValue, setInputValue] = useState<Entity.vehicles>({
+export async function addVehicle(formData: FormData) {
+  'use server'
+  const session = await getServerAuthSession();
+  const data = Object.fromEntries(formData.entries());
+  const entity = {
+    ...data,
     id: uuid(),
-    number: "",
-    fuel_cost_full_load: 0,
-    fuel_cost_empty_load: 0,
-    created_by_user_id: userId,
-    capacity: Entity.vehicles_capacity.three_ton,
-    type: Entity.vehicles_type.open_truck,
+
+    created_by_user_id: session.id,
+    loaded_cost: +data.loaded_cost,
+    unloaded_cost: +data.unloaded_cost,
+
     created_at: new Date(),
     updated_at: new Date(),
-  });
-  const [loading, setLoading] = useState(false);
+  } as Entity.vehicle;
 
-  const handleInputChange = (value: string | number, type: string) => {
-    setInputValue({
-      ...inputValue,
-      [type]: value,
-    });
-  };
+  return await dbClient.vehicle.create(entity)
+}
 
-  const handleCreate: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    addVehicle(inputValue).then(() => {
-      setLoading(false);
-      onClose();
-    });
-  };
-
+async function AddVehicleModal ({ userId }: AddVehicleModalProps) {
   return (
-    <form onSubmit={handleCreate}>
+    <form action={addVehicle} >
       <Modal
-        onClose={onClose}
+        // onClose={onClose}
         header={<h3>Add New Vehicle</h3>}
         footer={
-          <Button loading={loading} type="submit">
+          <Button type="submit">
             Create
           </Button>
         }
@@ -61,34 +48,20 @@ const AddVehicleModal = ({ onClose, userId }: AddVehicleModalProps) => {
             placeholder="Number"
             name="number"
             type="text"
-            onChange={(e) => {
-              handleInputChange(e.target.value, "number");
-            }}
             required
           />
           <div className="mt-4 flex gap-4">
             <Input
               placeholder="Fuel Cost Per KM Fully Loaded"
-              type="text"
-              name="fuel_cost_full_load"
-              onChange={(e) => {
-                handleInputChange(
-                  Number(e.target.value),
-                  "fuel_cost_full_load"
-                );
-              }}
+              type="number"
+              name="loaded_cost"
               required
             />
             <Input
               placeholder="Fuel Cost Per KM Empty Load"
-              type="text"
-              name="fuel_cost_empty_load"
-              onChange={(e) => {
-                handleInputChange(
-                  Number(e.target.value),
-                  "fuel_cost_empty_load"
-                );
-              }}
+              type="number"
+              name="unloaded_cost"
+
               required
             />
           </div>
@@ -96,7 +69,6 @@ const AddVehicleModal = ({ onClose, userId }: AddVehicleModalProps) => {
             <div className="">
               <select
                 name="capacity"
-                onChange={(e) => handleInputChange(e.target.value, "capacity")}
               >
                 <option value="three_ton">3 Ton</option>
                 <option value="five_ton">5 Ton</option>
@@ -106,7 +78,6 @@ const AddVehicleModal = ({ onClose, userId }: AddVehicleModalProps) => {
             <div className="">
               <select
                 name="type"
-                onChange={(e) => handleInputChange(e.target.value, "type")}
               >
                 <option value="open_truck">Open Truck</option>
                 <option value="dump_truck">Dump Truck</option>
@@ -114,6 +85,12 @@ const AddVehicleModal = ({ onClose, userId }: AddVehicleModalProps) => {
                 <option value="container_carrier">Container Carrier</option>
               </select>
             </div>
+          </div>
+          <div className="mt-4 flex flex-row gap-4">
+            <div className="">
+              <StsSelector />
+            </div>
+
           </div>
         </div>
       </Modal>

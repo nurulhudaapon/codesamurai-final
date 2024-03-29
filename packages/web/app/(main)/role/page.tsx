@@ -27,7 +27,7 @@ import RoleModal from "./role-modal";
 const Index = () => {
   const [roles, setRoles] = useState<RolesWithPermissionType>([]);
   const [roleModal, setRoleModal] = useState<boolean>(false);
-  const [permissions, setPermissions] = useState<PermissionsType>([]);
+  const [permission, setPermissions] = useState<PermissionsType>([]);
   const [permissionModal, setPermissionModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const Index = () => {
             <TableHead>
               <TableRow>
                 <TableHeader>Name</TableHeader>
-                {permissions.map((permission) => (
+                {permission.map((permission) => (
                   <TableHeader key={permission.id}>
                     {permission.title}
                   </TableHeader>
@@ -85,8 +85,8 @@ const Index = () => {
               {roles.map((role, idx) => (
                 <TableRow key={idx}>
                   <TableCell className="font-bold">{role.title}</TableCell>
-                  {permissions.map((permission) => {
-                    const active = role.role_permissions.some(
+                  {permission.map((permission) => {
+                    const active = role.role_permission.some(
                       (p) => p.permission.slug === permission.slug
                     );
                     return (
@@ -121,7 +121,7 @@ const Index = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {permissions.map((p, idx) => (
+              {permission.map((p, idx) => (
                 <TableRow key={idx}>
                   <TableCell className="font-bold">{p.title}</TableCell>
                   <TableCell className="font-bold">
@@ -135,7 +135,7 @@ const Index = () => {
       </div>
       {roleModal && (
         <RoleModal
-          permissions={permissions}
+          permission={permission}
           onClose={() => setRoleModal(false)}
           triggerUpdate={fetchRoles}
         />

@@ -13,6 +13,6 @@ export class EcosyncDatabase {
   }
 
   get client () {
-    return this.#client ||  getPrismaClient();
+    return this.#client;
   }
 }

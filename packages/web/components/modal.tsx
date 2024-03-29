@@ -1,24 +1,24 @@
-"use client";
+// "use client";
 
 import React, { useState } from "react";
 
 interface ModalProps {
   children: React.ReactNode;
-  onClose?: () => void;
+  // onClose?: () => void;
   header?: React.ReactNode;
   footer?: React.ReactNode;
 }
 
 export const Modal: React.FC<ModalProps> = ({
   children,
-  onClose,
+  // onClose,
   footer,
   header,
 }: ModalProps) => {
   return (
     <div className="overflow-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-screen">
       <div
-        onClick={onClose}
+        // onClick={onClose}
         className="overflow-hidden fixed top-0 right-0 left-0 flex justify-center items-center w-full h-screen bg-black opacity-80"
       />
       <div className="relative p-4 w-full max-w-2xl max-h-full">

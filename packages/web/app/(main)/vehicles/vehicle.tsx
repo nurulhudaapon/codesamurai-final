@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import Button from "@/components/button";
 import { Icon } from "@/components/icon";
 import { Badge } from "@/components/chip";
@@ -107,7 +107,7 @@ const data = [
 ];
 
 const VehiclesPage = ({ currentUserId }: { currentUserId: string }) => {
-  const [isVehicleModel, setIsVehicleModal] = useState<boolean>(false);
+  // const [isVehicleModel, setIsVehicleModal] = useState<boolean>(false);
   // const [Vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   // useEffect(() => {
@@ -125,10 +125,10 @@ const VehiclesPage = ({ currentUserId }: { currentUserId: string }) => {
     <div>
       <div className="flex justify-between items-center mb-5">
         <p className="text-lg font-bold">Manage Vehicles</p>
-        <Button onClick={() => setIsVehicleModal(true)} className="pl-3">
+        {/* <Button onClick={() => setIsVehicleModal(true)} className="pl-3">
           <Icon name="Plus" />
           Add New Vehicles
-        </Button>
+        </Button> */}
       </div>
       <Table>
         <TableHead>
@@ -150,14 +150,14 @@ const VehiclesPage = ({ currentUserId }: { currentUserId: string }) => {
           ))}
         </TableBody>
       </Table>
-      {isVehicleModel && (
+      {/* {isVehicleModel && ( */}
         <VehicleModel
-          // permissions={permissions}
-          onClose={() => setIsVehicleModal(false)}
+          // permission={permission}
+          // onClose={() => setIsVehicleModal(false)}
           // triggerUpdate={fetchRoles}
           userId={currentUserId}
         />
-      )}
+      {/* )} */}
     </div>
   );
 };

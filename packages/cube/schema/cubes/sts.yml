@@ -1,6 +1,6 @@
 cubes:
-  - name: roles
-    sql_table: public.roles
+  - name: sts
+    sql_table: public.sts
     data_source: default
 
     joins: []
@@ -11,12 +11,20 @@ cubes:
         type: string
         primary_key: true
 
-      - name: slug
-        sql: slug
+      - name: created_by_user_id
+        sql: created_by_user_id
         type: string
 
-      - name: title
-        sql: title
+      - name: manager_id
+        sql: manager_id
+        type: string
+
+      - name: ward_number
+        sql: ward_number
+        type: string
+
+      - name: gps_coordinates
+        sql: gps_coordinates
         type: string
 
       - name: created_at

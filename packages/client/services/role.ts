@@ -6,16 +6,16 @@ import { nameToSlug } from "../utils/slug";
  * ## Role entity related CRUD Operations
  */
 export class EcosyncRoleService {
-  #client: ReturnType<EcosyncDatabase["client"]>;
+  #client: EcosyncDatabase["client"];
 
-  constructor({ client }: { client: ReturnType<EcosyncDatabase["client"]> }) {
+  constructor({ client }: { client: EcosyncDatabase["client"] }) {
     this.#client = client;
   }
 
   getWithPermissions = async () => {
-    return this.#client.roles.findMany({
+    return this.#client.role.findMany({
       include: {
-        role_permissions: {
+        role_permission: {
           select: {
             permission: {
               select: {
@@ -30,15 +30,15 @@ export class EcosyncRoleService {
 
   createWithPermissions = async (role: {
     name: string;
-    permissions: string[];
+    permission: string[];
   }) => {
-    return this.#client.roles.create({
+    return this.#client.role.create({
       data: {
         title: role.name,
         slug: nameToSlug(role.name),
-        role_permissions: {
+        role_permission: {
           createMany: {
-            data: role.permissions.map((id) => ({
+            data: role.permission.map((id) => ({
               permission_id: id,
             })),
           },
@@ -48,7 +48,7 @@ export class EcosyncRoleService {
   };
 
   addPermission = async (role: string, permission: string) => {
-    return this.#client.role_permissions.createMany({
+    return this.#client.role_permission.createMany({
       data: {
         role_id: role,
         permission_id: permission,
@@ -57,7 +57,7 @@ export class EcosyncRoleService {
   };
 
   removePermission = async (role: string, permission: string) => {
-    return this.#client.role_permissions.deleteMany({
+    return this.#client.role_permission.deleteMany({
       where: {
         role_id: role,
         permission_id: permission,

@@ -12,7 +12,7 @@ export const getPermissions = async () => {
 
 export const createNewRole = async (role: {
   name: string;
-  permissions: string[];
+  permission: string[];
 }) => {
   return await dbClient.role.createWithPermissions(role);
 };

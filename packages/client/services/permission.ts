@@ -7,18 +7,18 @@ import { nameToSlug } from "../utils/slug";
  * ## Permission entity related CRUD Operations
  */
 export class EcosyncPermissionService {
-  #client: ReturnType<EcosyncDatabase["client"]>;
+  #client: EcosyncDatabase["client"];
 
-  constructor({ client }: { client: ReturnType<EcosyncDatabase["client"]> }) {
+  constructor({ client }: { client: EcosyncDatabase["client"] }) {
     this.#client = client;
   }
 
-  getAll(): Promise<Array<Entity.permissions>> {
-    return this.#client.permissions.findMany();
+  getAll(): Promise<Array<Entity.permission>> {
+    return this.#client.permission.findMany();
   }
 
   create(name: string) {
-    return this.#client.permissions.create({
+    return this.#client.permission.create({
       data: {
         title: name,
         slug: nameToSlug(name),

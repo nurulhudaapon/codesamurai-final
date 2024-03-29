@@ -6,12 +6,12 @@ import React, { FormEventHandler, useState } from "react";
 import { PermissionsType, createNewRole } from "./server";
 
 type RoleModalProps = {
-  permissions: PermissionsType;
+  permission: PermissionsType;
   onClose: () => void;
   triggerUpdate?: () => void;
 };
 
-const RoleModal = ({ permissions, onClose, triggerUpdate }: RoleModalProps) => {
+const RoleModal = ({ permission, onClose, triggerUpdate }: RoleModalProps) => {
   const [inputValue, setInputValue] = useState("");
   const [selectedPermissions, setSelecedPermissions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const RoleModal = ({ permissions, onClose, triggerUpdate }: RoleModalProps) => {
     setLoading(true);
     createNewRole({
       name: inputValue,
-      permissions: selectedPermissions,
+      permission: selectedPermissions,
     }).then(() => {
       setLoading(false);
       triggerUpdate?.();
@@ -62,7 +62,7 @@ const RoleModal = ({ permissions, onClose, triggerUpdate }: RoleModalProps) => {
           />
           <p className="text-sm mt-6 mb-1 font-bold">Permissions</p>
           <hr className="mb-4" />
-          {permissions.map((permission) => (
+          {permission.map((permission) => (
             <Checkbox
               key={permission.id}
               label={permission.title}

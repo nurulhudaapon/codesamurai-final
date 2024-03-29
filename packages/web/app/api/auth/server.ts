@@ -30,8 +30,8 @@ export const login = async (user: { email: string; password: string }) => {
     last_name: existingUser.last_name,
     phone: existingUser.phone,
     state: existingUser.state,
-    permissions:
-      existingUser.role?.role_permissions.map((p) => p.permission.slug) || []
+    permission:
+      existingUser.role?.role_permission.map((p) => p.permission.slug) || []
   };
 
   return userData;
@@ -46,5 +46,5 @@ export const getPermissions = async (user: { email: string }) => {
     throw new Error("User not found!");
   }
 
-  return existingUser.role?.role_permissions.map((p) => p.permission.slug) || [];
+  return existingUser.role?.role_permission.map((p) => p.permission.slug) || [];
 }

@@ -1,6 +1,6 @@
 cubes:
-  - name: permissions
-    sql_table: public.permissions
+  - name: landfill_entry
+    sql_table: public.landfill_entry
     data_source: default
 
     joins: []
@@ -11,12 +11,8 @@ cubes:
         type: string
         primary_key: true
 
-      - name: slug
-        sql: slug
-        type: string
-
-      - name: title
-        sql: title
+      - name: created_by_user_id
+        sql: created_by_user_id
         type: string
 
       - name: created_at
@@ -27,9 +23,25 @@ cubes:
         sql: updated_at
         type: time
 
+      - name: arrival_time
+        sql: arrival_time
+        type: time
+      
+      - name: volume
+        sql: volume
+        type: number
+
+      - name: departure_time
+        sql: departure_time
+        type: time
+
     measures:
       - name: count
         type: count
+      
+      - name: total_volume
+        sql: volume
+        type: sum
 
     pre_aggregations:
       # Pre-aggregation definitions go here.

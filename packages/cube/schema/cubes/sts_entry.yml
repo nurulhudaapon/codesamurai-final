@@ -1,9 +1,12 @@
 cubes:
-  - name: stss
-    sql_table: public.stss
+  - name: sts_entry
+    sql_table: public.sts_entry
     data_source: default
 
-    joins: []
+    joins:
+      - name: vehicle
+        sql: "{CUBE}.vehicle_id = {vehicles}.id"
+        relationship: many_to_one
 
     dimensions:
       - name: id
@@ -15,29 +18,41 @@ cubes:
         sql: created_by_user_id
         type: string
 
-      - name: manager_id
-        sql: manager_id
+      - name: sts_id
+        sql: sts_id
         type: string
 
-      - name: ward_number
-        sql: ward_number
-        type: string
-
-      - name: gps_coordinates
-        sql: gps_coordinates
+      - name: vehicle_id
+        sql: vehicle_id
         type: string
 
       - name: created_at
         sql: created_at
         type: time
+      
+      - name: volume
+        sql: volume
+        type: number
 
       - name: updated_at
         sql: updated_at
         type: time
 
+      - name: arrival_time
+        sql: arrival_time
+        type: time
+
+      - name: departure_time
+        sql: departure_time
+        type: time
+
     measures:
       - name: count
         type: count
+            
+      - name: total_volume
+        sql: volume
+        type: sum
 
     pre_aggregations:
       # Pre-aggregation definitions go here.

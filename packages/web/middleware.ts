@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
   if (currentNavigation) {
     const isPermitted = currentNavigation?.require_permissions.some((p) =>
-      session.permissions?.includes(p)
+      session.permission?.includes(p)
     );
 
     if (!isPermitted) {

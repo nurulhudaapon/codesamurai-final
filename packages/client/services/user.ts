@@ -8,27 +8,27 @@ const console = new EcosyncLogger({ name: "User Service" }).init();
  * ## User entity related CRUD Operations
  */
 export class EcosyncUserService {
-  #client: ReturnType<EcosyncDatabase["client"]>;
+  #client: EcosyncDatabase["client"];
 
-  constructor({ client }: { client: ReturnType<EcosyncDatabase["client"]> }) {
+  constructor({ client }: { client: EcosyncDatabase["client"] }) {
     this.#client = client;
   }
 
   /**
-   * Get All Users
-   * @returns {Promise<Array<Entity.users>>} A promise that resolves to an array of User objects
+   * Get All User
+   * @returns {Promise<Array<Entity.user>>} A promise that resolves to an array of User objects
    */
-  getAll(): Promise<Array<Entity.users>> {
-    return this.#client.users.findMany();
+  getAll(): Promise<Array<Entity.user>> {
+    return this.#client.user.findMany();
   }
 
   /**
    * Get a User by ID
    * @param {string} id - The ID of the User
-   * @returns {Promise<Entity.users | null>} A promise that resolves to a User object or null if not found
+   * @returns {Promise<Entity.user | null>} A promise that resolves to a User object or null if not found
    */
-  getById(id: string): Promise<Entity.users | null> {
-    return this.#client.users.findUnique({ where: { id } });
+  getById(id: string): Promise<Entity.user | null> {
+    return this.#client.user.findUnique({ where: { id } });
   }
 
   /**
@@ -36,7 +36,7 @@ export class EcosyncUserService {
    * @param {string} email - The email of the User
    */
   getUserByEmailWithPermissions(email: string) {
-    const res = this.#client.users.findFirst({
+    const res = this.#client.user.findFirst({
       where: {
         email,
       },
@@ -50,7 +50,7 @@ export class EcosyncUserService {
         password: true,
         role: {
           select: {
-            role_permissions: {
+            role_permission: {
               select: {
                 permission: {
                   select: {
@@ -68,37 +68,37 @@ export class EcosyncUserService {
 
   /**
    * Create a new User
-   * @param {Entity.users} userData - The data to create a new User
-   * @returns {Promise<Entity.users>} A promise that resolves to the created User object
+   * @param {Entity.user} userData - The data to create a new User
+   * @returns {Promise<Entity.user>} A promise that resolves to the created User object
    */
-  create(userData: Entity.users): Promise<Entity.users> {
+  create(userData: Entity.user): Promise<Entity.user> {
     // Validate
-    const validUserData = Schema.usersSchema.parse(userData);
+    const validUserData = Schema.userSchema.parse(userData);
 
     // Commit
-    return this.#client.users.create({ data: validUserData });
+    return this.#client.user.create({ data: validUserData });
   }
 
   /**
    * Update a User
    * @param {string} id - The ID of the User to update
-   * @param {Entity.users} userData - The data to update the User
-   * @returns {Promise<Entity.users | null>} A promise that resolves to the updated User object or null if not found
+   * @param {Entity.user} userData - The data to update the User
+   * @returns {Promise<Entity.user | null>} A promise that resolves to the updated User object or null if not found
    */
-  update(id: string, userData: object): Promise<Entity.users | null> {
+  update(id: string, userData: object): Promise<Entity.user | null> {
     // Validate
-    const validUserData = Schema.usersSchema.parse(userData);
+    const validUserData = Schema.userSchema.parse(userData);
 
     // Commit
-    return this.#client.users.update({ where: { id }, data: validUserData });
+    return this.#client.user.update({ where: { id }, data: validUserData });
   }
 
   /**
    * Delete a User
    * @param {string} id - The ID of the User to delete
-   * @returns {Promise<Entity.users | null>} A promise that resolves to the deleted User object or null if not found
+   * @returns {Promise<Entity.user | null>} A promise that resolves to the deleted User object or null if not found
    */
-  delete(id: string): Promise<Entity.users | null> {
-    return this.#client.users.delete({ where: { id } });
+  delete(id: string): Promise<Entity.user | null> {
+    return this.#client.user.delete({ where: { id } });
   }
 }

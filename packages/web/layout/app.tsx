@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
 
-  const permissions = session.data?.permissions as string[];
+  const permission = session.data?.permission as string[];
 
   const pathName = usePathname();
 
@@ -21,7 +21,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const permittedNavigations = navigations.filter((n) =>
-    n.require_permissions.some((p) => permissions?.includes(p))
+    n.require_permissions.some((p) => permission?.includes(p))
   );
 
   return (

@@ -1,6 +1,6 @@
 cubes:
-  - name: vehicles
-    sql_table: public.vehicles
+  - name: permission
+    sql_table: public.permission
     data_source: default
 
     joins: []
@@ -11,20 +11,12 @@ cubes:
         type: string
         primary_key: true
 
-      - name: created_by_user_id
-        sql: created_by_user_id
+      - name: slug
+        sql: slug
         type: string
 
-      - name: type
-        sql: type
-        type: string
-
-      - name: capacity
-        sql: capacity
-        type: string
-
-      - name: number
-        sql: number
+      - name: title
+        sql: title
         type: string
 
       - name: created_at
