@@ -11,9 +11,15 @@ globalThis.console = new EcosyncLogger({ name: "Web" }).init();
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EcoSync",
-  description:
-    "An app to to bridge the gaps, streamline processes, and enhance accountability through technological innovation.",
+  title: "EcoSync code-samurai",
+  description: "Codesamurai's Ecosync project - 2 phase competition",
+  icons: [
+    {
+      url: "./favicon.ico",
+      sizes: "32x32",
+      type: "image/x-icon",
+    },
+  ],
 };
 
 export default function RootLayout({
