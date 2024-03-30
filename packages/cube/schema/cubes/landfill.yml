@@ -1,6 +1,6 @@
 cubes:
-  - name: sts
-    sql_table: public.sts
+  - name: landfill
+    sql_table: public.landfill
     data_source: default
 
     joins: []
@@ -15,20 +15,20 @@ cubes:
         sql: created_by_user_id
         type: string
 
-      - name: capacity_tonnes
-        sql: capacity_tonnes
-        type: number
-
-      - name: manager_id
-        sql: manager_id
-        type: string
-
       - name: name
         sql: name
         type: string
 
-      - name: ward_number
-        sql: ward_number
+      - name: capacity_tonnes
+        sql: capacity_tonnes
+        type: number
+
+      - name: opens_at
+        sql: opens_at
+        type: string
+
+      - name: closes_at
+        sql: closes_at
         type: string
 
       - name: created_at

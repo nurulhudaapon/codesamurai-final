@@ -3,7 +3,18 @@ cubes:
     sql_table: public.transportation
     data_source: default
 
-    joins: []
+    joins:
+      - name: sts
+        sql: "{CUBE}.sts_id = {sts}.id"
+        relationship: many_to_one
+
+      - name: landfill
+        sql: "{CUBE}.landfill_id = {landfill}.id"
+        relationship: many_to_one
+
+      - name: vehicle
+        sql: "{CUBE}.vehicle_id = {vehicle}.id"
+        relationship: many_to_one
 
     dimensions:
       - name: id
@@ -13,6 +24,18 @@ cubes:
 
       - name: created_by_user_id
         sql: created_by_user_id
+        type: string
+
+      - name: sts_id
+        sql: sts_id
+        type: string
+
+      - name: landfill_id
+        sql: landfill_id
+        type: string
+
+      - name: vehicle_id
+        sql: vehicle_id
         type: string
 
       - name: created_at
@@ -46,3 +69,4 @@ cubes:
     pre_aggregations:
       # Pre-aggregation definitions go here.
       # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

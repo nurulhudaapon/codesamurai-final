@@ -236,7 +236,7 @@ model sts {
   /// Relation to the STS manager
   // sts_managers        user[]
 
-  transportation_logs transportation[]
+  transportations transportation[]
 
   /// Relation to the user who created
   creator user      @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
