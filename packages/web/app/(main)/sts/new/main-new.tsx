@@ -112,7 +112,14 @@ const NewStsMain = ({ currentUserId, managers }: NewStsMainProps) => {
         </div>
       </div>
       <div className="mb-5">
+        <label
+          htmlFor="manager"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          STS Manager
+        </label>
         <Select
+          name="manager"
           options={managers.map((user) => ({
             value: user.id,
             label: user.first_name + " " + user.last_name,

@@ -42,7 +42,7 @@ export const vehicle_typeSchema = z.enum(['open_truck','dump_truck','compactor',
 
 export type vehicle_typeType = `${z.infer<typeof vehicle_typeSchema>}`
 
-export const vehicle_capacitySchema = z.enum(['three_ton','five_ton','seven_ton']);
+export const vehicle_capacitySchema = z.enum(['three_ton','five_ton','seven_ton','fifteen_ton']);
 
 export type vehicle_capacityType = `${z.infer<typeof vehicle_capacitySchema>}`
 
