@@ -26,8 +26,8 @@ export default async function IndexPage() {
 
   return (
     <div>
-      <h1 className="text-lg font-bold my-4">Manage Vehicle</h1>
-      <div className="flex justify-end">
+      <h1 className="text-xl font-bold my-4">Manage Vehicle</h1>
+      <div className="flex justify-end mb-4">
         <a href="/vehicles/new">
           <Button className="pl-3">
             <Icon name="Plus" />
@@ -56,14 +56,14 @@ export default async function IndexPage() {
           ))}
         </TableBody>
       </Table>
-      <div className="flex justify-end my-4 gap-1">
+      <div className="flex justify-end my-4 gap-2">
         <button>
-          <div className="bg-green-600 rounded-sm text-white">
+          <div className="bg-green-600 p-1 rounded-sm text-white">
             <ChevronLeft />
           </div>
         </button>
         <button>
-          <div className="bg-green-600 rounded-sm text-white">
+          <div className="bg-green-600 p-1 rounded-sm text-white">
             <ChevronRight />
           </div>
         </button>

@@ -76,14 +76,14 @@ const StsMain = ({ STS }: { STS: Entity.sts[] }) => {
             ))}
           </TableBody>
         </Table>
-        <div className="flex justify-end my-4 gap-1">
+        <div className="flex justify-end my-4 gap-2">
           <button>
-            <div className="bg-green-600 rounded-sm text-white">
+            <div className="bg-green-600 p-1 rounded-sm text-white">
               <ChevronLeft />
             </div>
           </button>
           <button>
-            <div className="bg-green-600 rounded-sm text-white">
+            <div className="bg-green-600 p-1 rounded-sm text-white">
               <ChevronRight />
             </div>
           </button>
