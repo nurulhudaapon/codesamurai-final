@@ -72,11 +72,11 @@ model user {
   state user_state @default(active)
 
   // Relation to the role
-  role                                role?              @relation(fields: [role_id], references: [id])
-  manager_secondary_transfer_stations sts[]              @relation(name: "sts_creator")
-  landfill_entry                   landfill_entry[]
-  sts_entry                        sts_entry[]
-  vehicle                            vehicle[]
+  role                                role?            @relation(fields: [role_id], references: [id])
+  manager_secondary_transfer_stations sts[]            @relation(name: "sts_creator")
+  landfill_entry                      landfill_entry[]
+  sts_entry                           sts_entry[]
+  vehicle                             vehicle[]
   creator_secondary_transfer_stations sts[]
 
   /// Index for searching by HubSpot ID
@@ -124,7 +124,7 @@ model permission {
   slug String @db.VarChar(100)
 
   /// Title of the permission.
-  title            String             @db.Text
+  title           String            @db.Text
   role_permission role_permission[]
 
   /// Index for searching by name
@@ -212,7 +212,6 @@ model vehicle {
   @@index([number])
 }
 
-
 model sts {
   /// Unique identifier for the STS.
   id String @id @default(uuid()) @db.Uuid
@@ -232,7 +231,7 @@ model sts {
   capacity_tonnes Float
 
   /// GPS coordinates of the STS.
-  latitude Float
+  latitude  Float
   longitude Float
 
   /// STS manager ID associated with the STS.
@@ -240,10 +239,10 @@ model sts {
 
   /// Relation to the STS manager
   sts_managers user[]
-  sts_entry sts_entry[]
+  sts_entry    sts_entry[]
 
   /// Relation to the user who created
-  creator  user      @relation(fields: [created_by_user_id], references: [id], name: "sts_creator")
+  creator user      @relation(fields: [created_by_user_id], references: [id], name: "sts_creator")
   vehicle vehicle[]
 
   /// Index for searching by ward number
@@ -317,7 +316,6 @@ model landfill_entry {
   user user @relation(fields: [created_by_user_id], references: [id])
 }
 
-
 enum vehicle_type {
   /// Open Truck type.
   open_truck
@@ -341,4 +339,6 @@ enum vehicle_capacity {
 
   /// 7 ton capacity.
   seven_ton
+  /// 15 ton capacity.
+  fifteen_ton
 }

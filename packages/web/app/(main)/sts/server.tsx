@@ -1,14 +1,20 @@
 "use server";
 import { dbClient } from "@/client";
+import { Entity } from "@/types/prisma";
 
-export const getAllSTS = async () => {
-  return dbClient.sts.getAll();
-};
-export const getStss = async () => {
+export const getAllSts = async () => {
   return dbClient.sts.getAll();
 };
 
-export type VehiclesType = Awaited<ReturnType<typeof getAllSTS>>;
+export const getStsById = async (id: string) => {
+  return dbClient.sts.getById(id);
+};
+
+export const createSts = async (stsData: Entity.sts) => {
+  return dbClient.sts.create(stsData);
+};
+
+export type VehiclesType = Awaited<ReturnType<typeof getAllSts>>;
 
 export async function StsSelector() {
   return (

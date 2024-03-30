@@ -1,7 +1,7 @@
-import { getAllSTS } from "./server";
+import { getAllSts } from "./server";
 import StsMain from "./main-sts";
 
 export default async function IndexPage() {
-  const STS = await getAllSTS();
+  const STS = await getAllSts();
   return <StsMain STS={STS} />;
 }

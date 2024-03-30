@@ -19,7 +19,12 @@ export class EcosyncStsService {
    * @returns {Promise<Array<Entity.sts>>} A promise that resolves to an array of Sts objects
    */
   getAll(): Promise<Array<Entity.sts>> {
-    return this.#client.sts.findMany();
+    //return manager info as well
+    return this.#client.sts.findMany(
+      { 
+        orderBy: { created_at: "desc" },
+      }
+    );
   }
 
   /**
@@ -41,7 +46,7 @@ export class EcosyncStsService {
     const validStsData = Schema.stsSchema.parse(stsData);
 
     // Commit
-    return this.#client.sts.create({ data: validStsData });
+    return this.#client.sts.create({ data: validStsData});
   }
 
   /**

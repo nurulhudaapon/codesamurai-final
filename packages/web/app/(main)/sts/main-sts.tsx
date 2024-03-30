@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/table";
 import { Toggle } from "@/components/toggle";
-import { getAllSTS } from "./server";
 import { useState } from "react";
 import * as Entity from "@prisma/client";
 import { v4 as uuid } from "uuid";
@@ -26,7 +25,6 @@ const tableHeaders = [
 ];
 
 const StsMain = ({ STS }: { STS: Entity.sts[] }) => {
-  const [isVehicleModel, setIsVehicleModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const newSTS = STS.filter((data) =>
     JSON.stringify(data)
@@ -49,10 +47,12 @@ const StsMain = ({ STS }: { STS: Entity.sts[] }) => {
           />
           <Search className="absolute top-2 left-2" />
         </div>
-        <Button onClick={() => setIsVehicleModal(true)} className="pl-3">
-          <Icon name="Plus" />
-          Add New STS
-        </Button>
+        <a href="/sts/new">
+          <Button className="pl-3">
+            <Icon name="Plus" />
+            Add New STS
+          </Button>
+        </a>
       </div>
 
       <div>

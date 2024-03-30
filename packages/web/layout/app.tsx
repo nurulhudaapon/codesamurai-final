@@ -38,14 +38,13 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="divide-y-[1px] divide-green-400">
             {permittedNavigations.map(
               ({ icon: NavIcon, key, label, path }, index) => (
-                <div>
+                <div key={key}>
                   <Link
                     href={path}
                     className={
                       "flex items-center justify-between py-5 text-white px-[40px] bg-green400 hover:bg-green500 cursor-pointer " +
                       checkActive(path)
                     }
-                    key={key}
                   >
                     <div className="flex items-center gap-3">
                       <NavIcon />
