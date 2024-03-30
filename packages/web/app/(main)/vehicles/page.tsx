@@ -26,9 +26,16 @@ export default async function IndexPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-5">
-        <p className="text-lg font-bold">Manage Vehicles</p>
+      <h1 className="text-lg font-bold my-4">Manage Vehicle</h1>
+      <div className="flex justify-end">
+        <a href="/sts/new">
+          <Button className="pl-3">
+            <Icon name="Plus" />
+            Add New Vehicle
+          </Button>
+        </a>
       </div>
+
       <Table>
         <TableHead>
           <TableRow>

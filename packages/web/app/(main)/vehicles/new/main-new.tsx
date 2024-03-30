@@ -2,7 +2,7 @@
 import React, { FormEventHandler, useState } from "react";
 import * as Entity from "@prisma/client";
 import { v4 as uuid } from "uuid";
-import { createVehicle, StsSelector } from "../server";
+import { createVehicle } from "../server";
 import { notify } from "@/components/toast";
 import { Select } from "@/components/select";
 import Button from "@/components/button";
@@ -11,11 +11,12 @@ import Input from "@/components/input";
 const now = new Date();
 type VehicleProps = {
   currentUserId: string;
+  Sts: Entity.sts[];
 };
 
-const NewVehicleEntry = ({ currentUserId }: VehicleProps) => {
+const NewVehicleEntry = ({ currentUserId, Sts }: VehicleProps) => {
   const [loading, setLoading] = useState(false);
-  const [newVehicle, setNewSts] = useState<Entity.vehicle>({
+  const [newVehicle, setNewVehicle] = useState<Entity.vehicle>({
     id: uuid(),
     sts_id: "",
     number: "",
@@ -54,7 +55,15 @@ const NewVehicleEntry = ({ currentUserId }: VehicleProps) => {
           >
             Ward Number
           </label>
-          <Input placeholder="F11243" name="number" type="text" required />
+          <Input
+            placeholder="F11243"
+            name="number"
+            type="text"
+            required
+            onChange={(e) =>
+              setNewVehicle({ ...newVehicle, number: e.target.value })
+            }
+          />
         </div>
         <div className="mb-4">
           <label
@@ -68,6 +77,9 @@ const NewVehicleEntry = ({ currentUserId }: VehicleProps) => {
             type="number"
             name="loaded_cost"
             required
+            onChange={(e) =>
+              setNewVehicle({ ...newVehicle, loaded_cost: +e.target.value })
+            }
           />
         </div>
         <div className="mb-4">
@@ -82,6 +94,9 @@ const NewVehicleEntry = ({ currentUserId }: VehicleProps) => {
             type="number"
             name="unloaded_cost"
             required
+            onChange={(e) =>
+              setNewVehicle({ ...newVehicle, unloaded_cost: +e.target.value })
+            }
           />
         </div>
         <div className="mb-4 flex flex-row gap-4">
@@ -101,6 +116,12 @@ const NewVehicleEntry = ({ currentUserId }: VehicleProps) => {
                 { value: "seven_ton", label: "7 Ton" },
                 { value: "fifteen_ton", label: "15 Ton" },
               ]}
+              onChange={(e) =>
+                setNewVehicle({
+                  ...newVehicle,
+                  capacity: e.target.value as Entity.vehicle_capacity,
+                })
+              }
             />
           </div>
           <div className="w-full">
@@ -119,15 +140,28 @@ const NewVehicleEntry = ({ currentUserId }: VehicleProps) => {
                 { value: "compactor", label: "Compactor" },
                 { value: "container_carrier", label: "Container Carrier" },
               ]}
+              onChange={(e) =>
+                setNewVehicle({
+                  ...newVehicle,
+                  type: e.target.value as Entity.vehicle_type,
+                })
+              }
             />
           </div>
         </div>
         <div className="mb-4 flex flex-row gap-4">
-          <StsSelector />
+          <Select
+            name="sts_id"
+            className="w-full"
+            options={Sts.map((sts) => ({
+              value: sts.id,
+              label: `Ward Number ${sts.ward_number} (${sts.capacity_tonnes} Ton)`,
+            }))}
+          />
         </div>
       </div>
       <div className="flex justify-center mt-8">
-        <Button className="w-[100%]" type="submit">
+        <Button loading={loading} className="w-[100%]" type="submit">
           Add Vehicle
         </Button>
       </div>
