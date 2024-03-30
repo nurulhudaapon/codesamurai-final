@@ -33,6 +33,8 @@ const NewVehicleEntry = ({ currentUserId, Sts }: VehicleProps) => {
     e.preventDefault();
     setLoading(true);
 
+    console.log({ newVehicleInfo: newVehicle }); // Add this line to see the newVehicle object
+
     createVehicle(newVehicle)
       .then(() => {
         setLoading(false);
@@ -50,10 +52,10 @@ const NewVehicleEntry = ({ currentUserId, Sts }: VehicleProps) => {
       <div>
         <div className="mb-4">
           <label
-            htmlFor="ward-name"
+            htmlFor="number"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Ward Number
+            Vehicle Number
           </label>
           <Input
             placeholder="F11243"
@@ -149,7 +151,13 @@ const NewVehicleEntry = ({ currentUserId, Sts }: VehicleProps) => {
             />
           </div>
         </div>
-        <div className="mb-4 flex flex-row gap-4">
+        <div className="mb-4">
+          <label
+            htmlFor="type"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Select STS
+          </label>
           <Select
             name="sts_id"
             className="w-full"
@@ -157,6 +165,12 @@ const NewVehicleEntry = ({ currentUserId, Sts }: VehicleProps) => {
               value: sts.id,
               label: `Ward Number ${sts.ward_number} (${sts.capacity_tonnes} Ton)`,
             }))}
+            onChange={(e) =>
+              setNewVehicle({
+                ...newVehicle,
+                sts_id: e.target.value,
+              })
+            }
           />
         </div>
       </div>

@@ -1,6 +1,5 @@
 "use server";
 import { dbClient } from "@/client";
-import { Select } from "@/components/select";
 import { Entity } from "@/types/prisma";
 
 export const getAllVehicles = async () => {

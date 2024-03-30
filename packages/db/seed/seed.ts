@@ -1,6 +1,7 @@
 import { EcosyncLogger } from "@ecosync/logger";
 import { InitData } from "../data";
 import { getPrismaClient } from "../client";
+import { Prisma } from "@prisma/client";
 
 const console = new EcosyncLogger({ name: "Database" }).init();
 
@@ -13,7 +14,7 @@ export const main = async () => {
     // eslint-disable-next-line
     // @ts-ignore
     const response = await prismaClient[
-      resource as keyof typeof prisma
+      resource as keyof typeof Prisma
     ].createMany({
       data: InitData[resource as keyof typeof InitData],
       skipDuplicates: true,
