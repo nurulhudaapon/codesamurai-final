@@ -17,6 +17,7 @@ import * as Entity from "@prisma/client";
 import { v4 as uuid } from "uuid";
 
 const tableHeaders = [
+  "Name",
   "Ward Number",
   "Capacity",
   "Latitude",
@@ -67,6 +68,7 @@ const StsMain = ({ STS }: { STS: Entity.sts[] }) => {
           <TableBody>
             {newSTS.map((item, idx) => (
               <TableRow key={idx}>
+                <TableCell>{item.name}</TableCell>
                 <TableCell>{item.ward_number}</TableCell>
                 <TableCell>{item.capacity_tonnes} tons</TableCell>
                 <TableCell>{item.latitude}</TableCell>

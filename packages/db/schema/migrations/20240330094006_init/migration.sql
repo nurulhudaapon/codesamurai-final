@@ -5,7 +5,7 @@ CREATE TYPE "user_state" AS ENUM ('active', 'inactive');
 CREATE TYPE "vehicle_type" AS ENUM ('open_truck', 'dump_truck', 'compactor', 'container_carrier');
 
 -- CreateEnum
-CREATE TYPE "vehicle_capacity" AS ENUM ('three_ton', 'five_ton', 'seven_ton');
+CREATE TYPE "vehicle_capacity" AS ENUM ('three_ton', 'five_ton', 'seven_ton', 'fifteen_ton');
 
 -- CreateTable
 CREATE TABLE "user" (
@@ -76,6 +76,7 @@ CREATE TABLE "vehicle" (
 -- CreateTable
 CREATE TABLE "sts" (
     "id" UUID NOT NULL,
+    "name" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "created_by_user_id" UUID NOT NULL,
@@ -89,37 +90,35 @@ CREATE TABLE "sts" (
 );
 
 -- CreateTable
-CREATE TABLE "sts_entry" (
+CREATE TABLE "landfill" (
+    "id" UUID NOT NULL,
+    "name" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_by_user_id" UUID NOT NULL,
+    "capacity_tonnes" DOUBLE PRECISION NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
+    "opens_at" TEXT NOT NULL,
+    "closes_at" TEXT NOT NULL,
+
+    CONSTRAINT "landfill_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "transportation" (
     "id" UUID NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "created_by_user_id" UUID NOT NULL,
     "sts_id" UUID NOT NULL,
+    "landfill_id" UUID,
     "vehicle_id" UUID NOT NULL,
     "volume" DOUBLE PRECISION NOT NULL,
     "arrival_time" TIMESTAMP(3) NOT NULL,
     "departure_time" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "sts_entry_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "landfill_entry" (
-    "id" UUID NOT NULL,
-    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "created_by_user_id" UUID NOT NULL,
-    "volume" DOUBLE PRECISION NOT NULL,
-    "arrival_time" TIMESTAMP(3) NOT NULL,
-    "departure_time" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "landfill_entry_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "_stsTouser" (
-    "A" UUID NOT NULL,
-    "B" UUID NOT NULL
+    CONSTRAINT "transportation_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -141,13 +140,7 @@ CREATE INDEX "vehicle_number_idx" ON "vehicle"("number");
 CREATE INDEX "sts_ward_number_idx" ON "sts"("ward_number");
 
 -- CreateIndex
-CREATE INDEX "sts_entry_sts_id_idx" ON "sts_entry"("sts_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_stsTouser_AB_unique" ON "_stsTouser"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_stsTouser_B_index" ON "_stsTouser"("B");
+CREATE INDEX "transportation_sts_id_idx" ON "transportation"("sts_id");
 
 -- AddForeignKey
 ALTER TABLE "user" ADD CONSTRAINT "user_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -168,19 +161,16 @@ ALTER TABLE "vehicle" ADD CONSTRAINT "vehicle_sts_id_fkey" FOREIGN KEY ("sts_id"
 ALTER TABLE "sts" ADD CONSTRAINT "sts_created_by_user_id_fkey" FOREIGN KEY ("created_by_user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "sts_entry" ADD CONSTRAINT "sts_entry_sts_id_fkey" FOREIGN KEY ("sts_id") REFERENCES "sts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "landfill" ADD CONSTRAINT "landfill_created_by_user_id_fkey" FOREIGN KEY ("created_by_user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "sts_entry" ADD CONSTRAINT "sts_entry_vehicle_id_fkey" FOREIGN KEY ("vehicle_id") REFERENCES "vehicle"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "transportation" ADD CONSTRAINT "transportation_sts_id_fkey" FOREIGN KEY ("sts_id") REFERENCES "sts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "sts_entry" ADD CONSTRAINT "sts_entry_created_by_user_id_fkey" FOREIGN KEY ("created_by_user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "transportation" ADD CONSTRAINT "transportation_landfill_id_fkey" FOREIGN KEY ("landfill_id") REFERENCES "landfill"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "landfill_entry" ADD CONSTRAINT "landfill_entry_created_by_user_id_fkey" FOREIGN KEY ("created_by_user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "transportation" ADD CONSTRAINT "transportation_vehicle_id_fkey" FOREIGN KEY ("vehicle_id") REFERENCES "vehicle"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_stsTouser" ADD CONSTRAINT "_stsTouser_A_fkey" FOREIGN KEY ("A") REFERENCES "sts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_stsTouser" ADD CONSTRAINT "_stsTouser_B_fkey" FOREIGN KEY ("B") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "transportation" ADD CONSTRAINT "transportation_created_by_user_id_fkey" FOREIGN KEY ("created_by_user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

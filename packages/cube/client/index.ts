@@ -52,7 +52,7 @@ export class EcosyncCubeClient {
           }
         }
         lf: cube {
-          landfill_entry {
+          transportation {
             count
           }
         }
@@ -93,7 +93,7 @@ export class EcosyncCubeClient {
     const query = gql`
       query GetTotalWaste($where: RootWhereInput = {}) {
         cube(where: $where) {
-          landfill_entry {
+          transportation {
             total_volume
           }
         }
@@ -107,7 +107,7 @@ export class EcosyncCubeClient {
 
     const result = await this.#query(query, variables) as {
       sts_entry: { total_volume: number | null },
-      landfill_entry: { total_volume: number | null }
+      transportation: { total_volume: number | null }
     };
 
     return result;

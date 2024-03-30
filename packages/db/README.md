@@ -41,14 +41,9 @@ erDiagram
   String role_id FK
   String permission_id FK
 }
-"_stsTouser" {
-  String A FK
-  String B FK
-}
 "user" }o--o| "role" : role
 "role_permission" }o--|| "role" : role
 "role_permission" }o--|| "permission" : permission
-"_stsTouser" }o--|| "user" : user
 ```
 
 ### `user`
@@ -98,13 +93,6 @@ Represents the relationship between role and permission.
   - `role_id`: Role ID associated with the role permission.
   - `permission_id`: Permission ID associated with the role permission.
 
-### `_stsTouser`
-Pair relationship table between [sts](#sts) and [user](#user)
-
-**Properties**
-  - `A`: 
-  - `B`: 
-
 
 ## default
 ```mermaid
@@ -123,6 +111,7 @@ erDiagram
 }
 "sts" {
   String id PK
+  String name
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK
@@ -132,29 +121,34 @@ erDiagram
   Float longitude
   String manager_id
 }
-"sts_entry" {
+"landfill" {
+  String id PK
+  String name
+  DateTime created_at
+  DateTime updated_at
+  String created_by_user_id FK
+  Float capacity_tonnes
+  Float latitude
+  Float longitude
+  String opens_at
+  String closes_at
+}
+"transportation" {
   String id PK
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK
   String sts_id FK
+  String landfill_id FK "nullable"
   String vehicle_id FK
   Float volume
   DateTime arrival_time
   DateTime departure_time
 }
-"landfill_entry" {
-  String id PK
-  DateTime created_at
-  DateTime updated_at
-  String created_by_user_id FK
-  Float volume
-  DateTime arrival_time
-  DateTime departure_time
-}
 "vehicle" }o--|| "sts" : sts
-"sts_entry" }o--|| "sts" : sts
-"sts_entry" }o--|| "vehicle" : vehicle
+"transportation" }o--|| "sts" : sts
+"transportation" }o--o| "landfill" : landfill
+"transportation" }o--|| "vehicle" : vehicle
 ```
 
 ### `vehicle`
@@ -175,6 +169,7 @@ erDiagram
 
 **Properties**
   - `id`: Unique identifier for the STS.
+  - `name`: 
   - `created_at`: Timestamp indicating when the STS was created.
   - `updated_at`: Timestamp indicating when the STS was last updated.
   - `created_by_user_id`: 
@@ -184,7 +179,21 @@ erDiagram
   - `longitude`: 
   - `manager_id`: STS manager ID associated with the STS.
 
-### `sts_entry`
+### `landfill`
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `name`: Name of the landfill
+  - `created_at`: Timestamp indicating when the STS was created.
+  - `updated_at`: 
+  - `created_by_user_id`: 
+  - `capacity_tonnes`: Capacity of the STS.
+  - `latitude`: GPS coordinates of the STS.
+  - `longitude`: 
+  - `opens_at`: Operational time
+  - `closes_at`: 
+
+### `transportation`
 
 **Properties**
   - `id`: Unique identifier for the STS entry.
@@ -192,18 +201,8 @@ erDiagram
   - `updated_at`: Timestamp indicating when the STS entry was last updated.
   - `created_by_user_id`: User ID associated with the landfill entry.
   - `sts_id`: STS ID associated with the STS entry.
+  - `landfill_id`: Landfill ID where the wast is dumped
   - `vehicle_id`: Vehicle ID associated with the STS entry.
-  - `volume`: Volume of waste.
-  - `arrival_time`: Time of arrival.
-  - `departure_time`: Time of departure.
-
-### `landfill_entry`
-
-**Properties**
-  - `id`: Unique identifier for the landfill entry.
-  - `created_at`: Timestamp indicating when the landfill entry was created.
-  - `updated_at`: Timestamp indicating when the landfill entry was last updated.
-  - `created_by_user_id`: User ID associated with the landfill entry.
   - `volume`: Volume of waste.
   - `arrival_time`: Time of arrival.
   - `departure_time`: Time of departure.

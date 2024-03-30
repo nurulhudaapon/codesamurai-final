@@ -70,6 +70,13 @@ const permission: Entity.permission[] = [
   },
   {
     id: uuid(),
+    slug: "manage_landfill",
+    title: "Manage Landfill",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: uuid(),
     slug: "view_monitor",
     title: "View Monitor",
     created_at: now,
@@ -134,6 +141,7 @@ const user: Entity.user[] = [
 const sts: Entity.sts[] = [
   {
     id: uuid(),
+    name: 'Gausia',
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -145,6 +153,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
+    name: 'Kuril',
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -156,12 +165,40 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
+    name: 'Kanchan',
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
     latitude: 5656.334,
     longitude: 3445453.343,
     ward_number: "12",
+    created_at: now,
+    updated_at: now,
+  },
+];
+
+const landfill: Entity.landfill[] = [
+  {
+    id: uuid(),
+    name: 'DNCC',
+    closes_at: "8:00",
+    opens_at: "18:00",
+    capacity_tonnes: 3000,
+    created_by_user_id: user[0].id,
+    latitude: 3243.334,
+    longitude: 343.343,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: uuid(),
+    name: 'DNSS',
+    closes_at: "8:00",
+    opens_at: "18:00",
+    capacity_tonnes: 3000,
+    created_by_user_id: user[0].id,
+    latitude: 12121.334,
+    longitude: 1212.343,
     created_at: now,
     updated_at: now,
   },
@@ -212,5 +249,6 @@ export const InitData = {
   role_permission,
   user,
   sts,
+  landfill,
   vehicle,
 };

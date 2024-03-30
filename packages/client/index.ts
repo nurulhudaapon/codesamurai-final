@@ -1,46 +1,46 @@
-import { EcosyncLogger } from "@ecosync/logger";
 import { EcosyncDatabase } from "@ecosync/db";
+import { EcosyncLandfillService } from "./services/landfill";
+import { EcosyncLogger } from "@ecosync/logger";
+import { EcosyncPermissionService } from "./services/permission";
 import { EcosyncRbacService } from "./services/rbac";
+import { EcosyncRoleService } from "./services/role";
+import { EcosyncStsService } from "./services/sts";
+import { EcosyncTransportationService } from "./services/transportation";
 import { EcosyncUserService } from "./services/user";
 import { EcosyncVehicleService } from "./services/vehicle";
-import { EcosyncStsDumpingService } from "./services/sts-entry";
-import { EcosyncLandfillEntryService } from "./services/landfill-entry";
-import { EcosyncRoleService } from "./services/role";
-import { EcosyncPermissionService } from "./services/permission";
-import { EcosyncStsService } from "./services/sts";
 
 const console = new EcosyncLogger({ name: "DbClient" }).init();
 
 export class EcosyncDbClient {
+
   // ==== Private Thingy ==== //
-  #db: EcosyncDatabase;
   #client: EcosyncDatabase["client"];
+  #db: EcosyncDatabase;
 
   // ==== Public Services ==== //
+  landfill: EcosyncLandfillService;
+  permission: EcosyncPermissionService;
   rbac: EcosyncRbacService;
+  role: EcosyncRoleService;
+  sts: EcosyncStsService;
+  transportation: EcosyncTransportationService;
   user: EcosyncUserService;
   vehicle: EcosyncVehicleService;
-  stsDumping: EcosyncStsDumpingService;
-  landfillDumping: EcosyncLandfillEntryService;
-  role: EcosyncRoleService;
-  permission: EcosyncPermissionService;
-  sts: EcosyncStsService;
 
   constructor({ db }: { db: EcosyncDatabase }) {
+
     // Private Thingy
     this.#db = db;
     this.#client = this.#db.client;
 
     // Public Services
+    this.landfill = new EcosyncLandfillService({ client: this.#client });
+    this.permission = new EcosyncPermissionService({ client: this.#client });
     this.rbac = new EcosyncRbacService({ client: this.#client });
+    this.role = new EcosyncRoleService({ client: this.#client });
+    this.sts = new EcosyncStsService({ client: this.#client });
+    this.transportation = new EcosyncTransportationService({ client: this.#client });
     this.user = new EcosyncUserService({ client: this.#client });
     this.vehicle = new EcosyncVehicleService({ client: this.#client });
-    this.stsDumping = new EcosyncStsDumpingService({ client: this.#client });
-    this.sts = new EcosyncStsService({ client: this.#client });
-    this.landfillDumping = new EcosyncLandfillEntryService({
-      client: this.#client,
-    });
-    this.role = new EcosyncRoleService({ client: this.#client });
-    this.permission = new EcosyncPermissionService({ client: this.#client });
   }
 }

@@ -3,6 +3,7 @@ import {
   Users,
   Truck,
   Factory,
+  LandPlot,
   Award,
   ListChecks,
 } from "lucide-react";
@@ -36,6 +37,13 @@ export const navigations = [
     label: "STS",
     path: routes.main.sts(),
     require_permissions: ["manage_sts"],
+  },
+  {
+    key: "landfill",
+    icon: LandPlot,
+    label: "Landfill",
+    path: routes.main.landfill(),
+    require_permissions: ["manage_landfill"],
   },
   {
     key: "role",

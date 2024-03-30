@@ -1,12 +1,9 @@
 cubes:
-  - name: sts_entry
-    sql_table: public.sts_entry
+  - name: transportation
+    sql_table: public.transportation
     data_source: default
 
-    joins:
-      - name: vehicle
-        sql: "{CUBE}.vehicle_id = {vehicles}.id"
-        relationship: many_to_one
+    joins: []
 
     dimensions:
       - name: id
@@ -18,21 +15,9 @@ cubes:
         sql: created_by_user_id
         type: string
 
-      - name: sts_id
-        sql: sts_id
-        type: string
-
-      - name: vehicle_id
-        sql: vehicle_id
-        type: string
-
       - name: created_at
         sql: created_at
         type: time
-      
-      - name: volume
-        sql: volume
-        type: number
 
       - name: updated_at
         sql: updated_at
@@ -41,6 +26,10 @@ cubes:
       - name: arrival_time
         sql: arrival_time
         type: time
+      
+      - name: volume
+        sql: volume
+        type: number
 
       - name: departure_time
         sql: departure_time
@@ -49,7 +38,7 @@ cubes:
     measures:
       - name: count
         type: count
-            
+      
       - name: total_volume
         sql: volume
         type: sum

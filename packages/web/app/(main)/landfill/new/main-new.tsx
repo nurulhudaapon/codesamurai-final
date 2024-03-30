@@ -2,24 +2,24 @@
 import React, { FormEventHandler, useState } from "react";
 import * as Entity from "@prisma/client";
 import { v4 as uuid } from "uuid";
-import { createSts } from "../server";
+import { create } from "../server";
 import { notify } from "@/components/toast";
 import { Select } from "@/components/select";
 import Button from "@/components/button";
 const now = new Date();
 
-type NewStsMainProps = {
+type CreationFormProps = {
   currentUserId: string;
   managers: Entity.user[];
 };
 
-const NewStsMain = ({ currentUserId, managers }: NewStsMainProps) => {
+const CreationForm = ({ currentUserId, managers }: CreationFormProps) => {
   const [loading, setLoading] = useState(false);
-  const [newSts, setNewSts] = useState<Entity.sts>({
+  const [newData, setNew] = useState<Entity.landfill>({
     id: uuid(),
     name: "",
-    manager_id: "",
-    ward_number: "",
+    closes_at: '18:00',
+    opens_at: '8:00',
     capacity_tonnes: 0,
     created_at: now,
     updated_at: now,
@@ -32,20 +32,20 @@ const NewStsMain = ({ currentUserId, managers }: NewStsMainProps) => {
     e.preventDefault();
     setLoading(true);
 
-    createSts(newSts)
+    create(newData)
       .then(() => {
         setLoading(false);
-        notify.success("STS added successfully!");
+        notify.success("Landfill added successfully!");
       })
       .catch((e) => {
         setLoading(false);
-        notify.error("Failed to add STS and Manager ID is invalid!");
+        notify.error("Failed to add Landfill and Manager ID is invalid!");
       });
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-      <h1 className="text-xl text-center font-bold my-4">Add A New Ward/STS</h1>
+      <h1 className="text-xl text-center font-bold my-4">Create a new landfill</h1>
       <div className="mb-5">
         <label
           htmlFor="name"
@@ -60,25 +60,7 @@ const NewStsMain = ({ currentUserId, managers }: NewStsMainProps) => {
           placeholder="F1032"
           required
           onChange={(e) =>
-            setNewSts({ ...newSts, name: e.target.value })
-          }
-        />
-      </div>
-      <div className="mb-5">
-        <label
-          htmlFor="ward-name"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Ward Number
-        </label>
-        <input
-          type="text"
-          id="ward-number"
-          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-          placeholder="F1032"
-          required
-          onChange={(e) =>
-            setNewSts({ ...newSts, ward_number: e.target.value })
+            setNew({ ...newData, name: e.target.value })
           }
         />
       </div>
@@ -90,13 +72,13 @@ const NewStsMain = ({ currentUserId, managers }: NewStsMainProps) => {
           Capacity in tons
         </label>
         <input
-          type="text"
+          type="number"
           id="capacity"
           placeholder="1005"
           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
           required
           onChange={(e) =>
-            setNewSts({ ...newSts, capacity_tonnes: Number(e.target.value) })
+            setNew({ ...newData, capacity_tonnes: Number(e.target.value) })
           }
         />
       </div>
@@ -109,55 +91,68 @@ const NewStsMain = ({ currentUserId, managers }: NewStsMainProps) => {
         </label>
         <div className="grid grid-cols-2 gap-2">
           <input
-            type="text"
+            type="number"
             id="latitude"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Latitude"
             required
             onChange={(e) =>
-              setNewSts({ ...newSts, latitude: Number(e.target.value) })
+              setNew({ ...newData, latitude: Number(e.target.value) })
             }
           />
           <input
-            type="text"
+            type="number"
             id="longitude"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Longitude"
             required
             onChange={(e) =>
-              setNewSts({ ...newSts, longitude: Number(e.target.value) })
+              setNew({ ...newData, longitude: Number(e.target.value) })
             }
           />
         </div>
       </div>
       <div className="mb-5">
         <label
-          htmlFor="manager"
+          htmlFor="opens_at"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          STS Manager
+          Operational Time
         </label>
-        <Select
-          name="manager"
-          options={managers.map((user) => ({
-            value: user.id,
-            label: user.first_name + " " + user.last_name,
-          }))}
-          onChange={(e) => setNewSts({ ...newSts, manager_id: e.target.value })}
-          required
-        />
+        <div className="grid grid-cols-2 gap-2">
+          <input
+            type="time"
+            id="opens_at"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            placeholder="Opens At"
+            required
+            onChange={(e) =>
+              setNew({ ...newData, opens_at: e.target.value })
+            }
+          />
+          <input
+            type="time"
+            id="closes_at"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            placeholder="Closes At"
+            required
+            onChange={(e) =>
+              setNew({ ...newData, closes_at: e.target.value })
+            }
+          />
+        </div>
       </div>
       <div className="flex justify-center items-center mt-8">
         <Button
           type="submit"
           loading={loading}
-          className="w-[100%] text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="w-[100%]"
         >
-          Add new STS
+          Add new landfill
         </Button>
       </div>
     </form>
   );
 };
 
-export default NewStsMain;
+export default CreationForm;

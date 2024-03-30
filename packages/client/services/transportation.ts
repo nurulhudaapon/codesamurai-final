@@ -7,7 +7,7 @@ const console = new EcosyncLogger({ name: "Landfill-Dumping Service" }).init();
 /**
  * ## Landfill Dumping entity related CRUD Operations
  */
-export class EcosyncLandfillEntryService {
+export class EcosyncTransportationService {
   #client: EcosyncDatabase["client"];
 
   constructor({ client }: { client: EcosyncDatabase["client"] }) {
@@ -16,10 +16,10 @@ export class EcosyncLandfillEntryService {
 
   /**
    * Get All LandfillDumpings
-   * @returns {Promise<Array<Entity.landfill_entry>>} A promise that resolves to an array of LandfillDumping objects
+   * @returns {Promise<Array<Entity.transportation>>} A promise that resolves to an array of LandfillDumping objects
    */
-  getAll(): Promise<Array<Entity.landfill_entry>> {
-    return this.#client.landfill_entry.findMany();
+  getAll(): Promise<Array<Entity.transportation>> {
+    return this.#client.transportation.findMany();
   }
 
   /**
@@ -27,8 +27,8 @@ export class EcosyncLandfillEntryService {
    * @param {string} id - The ID of the LandfillDumping
    * @returns {Promise<Entity.landfilldumpings | null>} A promise that resolves to a LandfillDumping object or null if not found
    */
-  getById(id: string): Promise<Entity.landfill_entry | null> {
-    return this.#client.landfill_entry.findUnique({ where: { id } });
+  getById(id: string): Promise<Entity.transportation | null> {
+    return this.#client.transportation.findUnique({ where: { id } });
   }
 
   /**
@@ -37,14 +37,14 @@ export class EcosyncLandfillEntryService {
    * @returns {Promise<Entity.landfilldumpings>} A promise that resolves to the created LandfillDumping object
    */
   create(
-    landfilldumpingData: Entity.landfill_entry,
-  ): Promise<Entity.landfill_entry> {
+    landfilldumpingData: Entity.transportation,
+  ): Promise<Entity.transportation> {
     // Validate
     const validLandfillDumpingData =
       Schema.landfill_entrySchema.parse(landfilldumpingData);
 
     // Commit
-    return this.#client.landfill_entry.create({
+    return this.#client.transportation.create({
       data: validLandfillDumpingData,
     });
   }
@@ -52,19 +52,19 @@ export class EcosyncLandfillEntryService {
   /**
    * Update a LandfillDumping
    * @param {string} id - The ID of the LandfillDumping to update
-   * @param {Entity.landfill_entry} landfilldumpingData - The data to update the LandfillDumping
-   * @returns {Promise<Entity.landfill_entry | null>} A promise that resolves to the updated LandfillDumping object or null if not found
+   * @param {Entity.transportation} landfilldumpingData - The data to update the LandfillDumping
+   * @returns {Promise<Entity.transportation | null>} A promise that resolves to the updated LandfillDumping object or null if not found
    */
   update(
     id: string,
     landfilldumpingData: object,
-  ): Promise<Entity.landfill_entry | null> {
+  ): Promise<Entity.transportation | null> {
     // Validate
     const validLandfillDumpingData =
-      Schema.landfill_entrySchema.parse(landfilldumpingData);
+      Schema.transportationSchema.parse(landfilldumpingData);
 
     // Commit
-    return this.#client.landfill_entry.update({
+    return this.#client.transportation.update({
       where: { id },
       data: validLandfillDumpingData,
     });
@@ -73,9 +73,9 @@ export class EcosyncLandfillEntryService {
   /**
    * Delete a LandfillDumping
    * @param {string} id - The ID of the LandfillDumping to delete
-   * @returns {Promise<Entity.landfill_entry | null>} A promise that resolves to the deleted LandfillDumping object or null if not found
+   * @returns {Promise<Entity.transportation | null>} A promise that resolves to the deleted LandfillDumping object or null if not found
    */
-  delete(id: string): Promise<Entity.landfill_entry | null> {
-    return this.#client.landfill_entry.delete({ where: { id } });
+  delete(id: string): Promise<Entity.transportation | null> {
+    return this.#client.transportation.delete({ where: { id } });
   }
 }

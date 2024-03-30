@@ -14,6 +14,7 @@ export const routes = {
     vehicles: () => `/vehicles` as const,
     vehicleEntry: () => `/vehicle-entry` as const,
     sts: () => `/sts` as const,
+    landfill: () => `/landfill` as const,
     role: () => `/role` as const,
   },
   status: {

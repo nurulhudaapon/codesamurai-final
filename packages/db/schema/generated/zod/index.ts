@@ -22,11 +22,11 @@ export const Role_permissionScalarFieldEnumSchema = z.enum(['id','created_at','u
 
 export const VehicleScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','number','type','capacity','loaded_cost','unloaded_cost']);
 
-export const StsScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','ward_number','capacity_tonnes','latitude','longitude','manager_id']);
+export const StsScalarFieldEnumSchema = z.enum(['id','name','created_at','updated_at','created_by_user_id','ward_number','capacity_tonnes','latitude','longitude','manager_id']);
 
-export const Sts_entryScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','vehicle_id','volume','arrival_time','departure_time']);
+export const LandfillScalarFieldEnumSchema = z.enum(['id','name','created_at','updated_at','created_by_user_id','capacity_tonnes','latitude','longitude','opens_at','closes_at']);
 
-export const Landfill_entryScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','volume','arrival_time','departure_time']);
+export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','volume','arrival_time','departure_time']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -259,6 +259,7 @@ export const stsSchema = z.object({
    * Unique identifier for the STS.
    */
   id: z.string().uuid(),
+  name: z.string(),
   /**
    * Timestamp indicating when the STS was created.
    */
@@ -290,10 +291,47 @@ export const stsSchema = z.object({
 export type sts = z.infer<typeof stsSchema>
 
 /////////////////////////////////////////
-// STS ENTRY SCHEMA
+// LANDFILL SCHEMA
 /////////////////////////////////////////
 
-export const sts_entrySchema = z.object({
+export const landfillSchema = z.object({
+  /**
+   * Unique identifier for the STS.
+   */
+  id: z.string().uuid(),
+  /**
+   * Name of the landfill
+   */
+  name: z.string(),
+  /**
+   * Timestamp indicating when the STS was created.
+   */
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
+  created_by_user_id: z.string(),
+  /**
+   * Capacity of the STS.
+   */
+  capacity_tonnes: z.number(),
+  /**
+   * GPS coordinates of the STS.
+   */
+  latitude: z.number(),
+  longitude: z.number(),
+  /**
+   * Operational time
+   */
+  opens_at: z.string(),
+  closes_at: z.string(),
+})
+
+export type landfill = z.infer<typeof landfillSchema>
+
+/////////////////////////////////////////
+// TRANSPORTATION SCHEMA
+/////////////////////////////////////////
+
+export const transportationSchema = z.object({
   /**
    * Unique identifier for the STS entry.
    */
@@ -315,6 +353,10 @@ export const sts_entrySchema = z.object({
    */
   sts_id: z.string(),
   /**
+   * Landfill ID where the wast is dumped
+   */
+  landfill_id: z.string().nullable(),
+  /**
    * Vehicle ID associated with the STS entry.
    */
   vehicle_id: z.string(),
@@ -332,41 +374,4 @@ export const sts_entrySchema = z.object({
   departure_time: z.coerce.date(),
 })
 
-export type sts_entry = z.infer<typeof sts_entrySchema>
-
-/////////////////////////////////////////
-// LANDFILL ENTRY SCHEMA
-/////////////////////////////////////////
-
-export const landfill_entrySchema = z.object({
-  /**
-   * Unique identifier for the landfill entry.
-   */
-  id: z.string().uuid(),
-  /**
-   * Timestamp indicating when the landfill entry was created.
-   */
-  created_at: z.coerce.date(),
-  /**
-   * Timestamp indicating when the landfill entry was last updated.
-   */
-  updated_at: z.coerce.date(),
-  /**
-   * User ID associated with the landfill entry.
-   */
-  created_by_user_id: z.string(),
-  /**
-   * Volume of waste.
-   */
-  volume: z.number(),
-  /**
-   * Time of arrival.
-   */
-  arrival_time: z.coerce.date(),
-  /**
-   * Time of departure.
-   */
-  departure_time: z.coerce.date(),
-})
-
-export type landfill_entry = z.infer<typeof landfill_entrySchema>
+export type transportation = z.infer<typeof transportationSchema>

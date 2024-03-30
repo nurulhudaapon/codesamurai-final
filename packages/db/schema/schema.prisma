@@ -72,12 +72,16 @@ model user {
   state user_state @default(active)
 
   // Relation to the role
-  role                                role?            @relation(fields: [role_id], references: [id])
-  manager_secondary_transfer_stations sts[]            @relation(name: "sts_creator")
-  landfill_entry                      landfill_entry[]
-  sts_entry                           sts_entry[]
-  vehicle                             vehicle[]
-  creator_secondary_transfer_stations sts[]
+  role role? @relation(fields: [role_id], references: [id])
+
+  creator_transportation transportation[]
+  vehicle                vehicle[]
+
+  // manager_sts sts[] @relation(name: "manager_sts")
+  creator_sts sts[] @relation(name: "creator_sts")
+
+  createor_landfill landfill[]       @relation(name: "creator_landfill")
+  // manager_landfill  landfill[] @relation(name: "manager_landfill")
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
@@ -167,16 +171,6 @@ enum user_state {
   inactive
 }
 
-// Data Entry Interface : 
-// System admin can add vehicle with these mandatory attributes. You can store additional attributes as well.
-// Vehicle Number
-// Type : Open Truck, Dump Truck, Compactor, Container Carrier
-// Capacity: 3 ton, 5 ton, 7 ton. 
-// System admin can create STS with ward number, capacity in Tonnes and GPS coordinates. 
-// System admin can also assign an STS manager for each STS.
-// STS managers can add entry of vehicle leaving the STS with STS ID, vehicle number, volume of waste, time of arrival and time of departure.
-// Landfill managers can add entry of truck dumping with volume of waste, time of arrival and time of departure.
-
 model vehicle {
   /// Unique identifier for the vehicle.
   id String @id @default(uuid()) @db.Uuid
@@ -202,7 +196,7 @@ model vehicle {
   /// Fuel cost per Kilometer when empty load.
   unloaded_cost Float?
 
-  sts_entry sts_entry[]
+  transportation_logs transportation[]
 
   /// Relation to the user who created
   user user @relation(fields: [created_by_user_id], references: [id])
@@ -215,6 +209,8 @@ model vehicle {
 model sts {
   /// Unique identifier for the STS.
   id String @id @default(uuid()) @db.Uuid
+
+  name String
 
   /// Timestamp indicating when the STS was created.
   created_at DateTime @default(now()) @db.Timestamptz(6)
@@ -238,18 +234,51 @@ model sts {
   manager_id String @db.Uuid
 
   /// Relation to the STS manager
-  sts_managers user[]
-  sts_entry    sts_entry[]
+  // sts_managers        user[]
+
+  transportation_logs transportation[]
 
   /// Relation to the user who created
-  creator user      @relation(fields: [created_by_user_id], references: [id], name: "sts_creator")
-  vehicle vehicle[]
+  creator user      @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
+  vehicles vehicle[]
 
   /// Index for searching by ward number
   @@index([ward_number])
 }
 
-model sts_entry {
+model landfill {
+  /// Unique identifier for the STS.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Name of the landfill
+  name String
+
+  /// Timestamp indicating when the STS was created.
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  created_by_user_id String @db.Uuid
+
+  /// Capacity of the STS.
+  capacity_tonnes Float
+
+  /// GPS coordinates of the STS.
+  latitude  Float
+  longitude Float
+
+  /// Operational time
+  opens_at   String
+  closes_at String
+
+  /// Relation to the STS manager
+  // managers            user[]
+  transportations transportation[]
+
+  /// Relation to the user who created
+  creator user    @relation(fields: [created_by_user_id], references: [id], name: "creator_landfill")
+}
+
+model transportation {
   /// Unique identifier for the STS entry.
   id String @id @default(uuid()) @db.Uuid
 
@@ -265,6 +294,9 @@ model sts_entry {
   /// STS ID associated with the STS entry.
   sts_id String @db.Uuid
 
+  /// Landfill ID where the wast is dumped
+  landfill_id String? @db.Uuid
+
   /// Vehicle ID associated with the STS entry.
   vehicle_id String @db.Uuid
 
@@ -278,43 +310,19 @@ model sts_entry {
   departure_time DateTime
 
   /// Relation to the STS
-  sts sts @relation(fields: [sts_id], references: [id])
+  sts      sts      @relation(fields: [sts_id], references: [id])
+  landfill landfill? @relation(fields: [landfill_id], references: [id])
 
   /// Relation to the vehicle
   vehicle vehicle @relation(fields: [vehicle_id], references: [id])
 
   /// Relation to the user who created
-  user user @relation(fields: [created_by_user_id], references: [id])
+  creator user @relation(fields: [created_by_user_id], references: [id])
 
   /// Index for searching by STS ID
   @@index([sts_id])
 }
 
-model landfill_entry {
-  /// Unique identifier for the landfill entry.
-  id String @id @default(uuid()) @db.Uuid
-
-  /// Timestamp indicating when the landfill entry was created.
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-
-  /// Timestamp indicating when the landfill entry was last updated.
-  updated_at DateTime @default(now()) @db.Timestamptz(6)
-
-  /// User ID associated with the landfill entry.
-  created_by_user_id String @db.Uuid
-
-  /// Volume of waste.
-  volume Float
-
-  /// Time of arrival.
-  arrival_time DateTime
-
-  /// Time of departure.
-  departure_time DateTime
-
-  /// Relation to the user
-  user user @relation(fields: [created_by_user_id], references: [id])
-}
 
 enum vehicle_type {
   /// Open Truck type.
@@ -339,6 +347,7 @@ enum vehicle_capacity {
 
   /// 7 ton capacity.
   seven_ton
+
   /// 15 ton capacity.
   fifteen_ton
 }

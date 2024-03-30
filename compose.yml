@@ -1,6 +1,15 @@
 version: "3.7"
 
 services:
+  # web:
+  #   container_name: web
+  #   build:
+  #     dockerfile: Dockerfile.web
+  #   ports:
+  #     - 3000:3000
+  #   # Map local cache directory
+  #   volumes:
+  #     - 
   redis:
     image: redis:6-alpine
     container_name: redis
