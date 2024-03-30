@@ -11,12 +11,24 @@ export class EcosyncCubeClient {
   #graphQlUrl: string;
   #getToken: () => Promise<string>;
 
-  constructor({ graphQlUrl, tokenGetter }: { graphQlUrl: string; tokenGetter: () => Promise<string>}) {
+  constructor({
+    graphQlUrl,
+    tokenGetter,
+  }: {
+    graphQlUrl: string;
+    tokenGetter: () => Promise<string>;
+  }) {
     this.#graphQlUrl = graphQlUrl;
     this.#getToken = tokenGetter;
   }
 
-  async #query(query: string, variables?: object) {
+  async #query(
+    query: string,
+    variables?: object,
+    option?: {
+      raw: boolean;
+    }
+  ) {
     const url = this.#graphQlUrl;
 
     const body = JSON.stringify({
@@ -24,12 +36,12 @@ export class EcosyncCubeClient {
       variables,
     });
 
-    console.log({t: await this.#getToken()})
+    console.log({ t: await this.#getToken() });
 
     // @ts-ignore
     const response = await fetch(url, {
       body,
-      cache: 'no-store',
+      cache: "no-store",
       headers: {
         authorization: await this.#getToken(),
         "content-type": "application/json",
@@ -38,7 +50,9 @@ export class EcosyncCubeClient {
     });
 
     const result = (await response.json()) as { data: unknown };
-    console.log(result);
+
+    if (option?.raw) return result;
+
     const flattened = this.#flattenCubeResponse(result);
 
     return flattened;
@@ -114,13 +128,7 @@ export class EcosyncCubeClient {
             total_capacity_tonnes
           }
         }
-        tp: cube(where: {
-          transportation: {
-            landfill_id: {
-              set: true
-            }
-          }
-        }) {
+        tp: cube(where: { transportation: { landfill_id: { set: true } } }) {
           transportation {
             total_volume
             count
@@ -139,19 +147,17 @@ export class EcosyncCubeClient {
 
   async getTransportationStats(variables?: object) {
     const query = gql`
-      query GetLandfillStats($where: RootWhereInput = {}) {
-        landfill: cube(where: $where) {
-          landfill {
-            total_capacity_tonnes
+      query GetLandfillStats {
+        dumped: cube(
+          where: { transportation: { landfill_id: { set: true } } }
+        ) {
+          transportation {
+            total_volume
+            count
           }
         }
-        tp: cube(where: {
-          transportation: {
-            landfill_id: {
-              set: true
-            }
-          }
-        }) {
+
+        way: cube(where: { transportation: { landfill_id: { set: false } } }) {
           transportation {
             total_volume
             count
@@ -160,9 +166,21 @@ export class EcosyncCubeClient {
       }
     `;
 
-    const result = (await this.#query(query, variables)) as {
-      transportation: { total_volume: number | null; count: number | null };
-      landfill: { total_capacity_tonnes: number | null; count: number | null };
+    const result = (await this.#query(query, variables, { raw: true })) as {
+      data: {
+        dumped: {
+          transportation: {
+            total_volume: number;
+            count: number;
+          };
+        }[];
+        way: {
+          transportation: {
+            total_volume: null;
+            count: number;
+          };
+        }[];
+      };
     };
 
     return result;

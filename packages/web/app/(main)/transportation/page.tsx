@@ -6,24 +6,24 @@ export default async function IndexPage() {
   const data = await dbClient.transportation.getAll();
   const stats = await cubeClient.getTransportationStats();
 
+  const way = stats?.data.way?.[0]?.transportation
+  const transported = stats?.data.dumped?.[0].transportation;
+
   return (
     <>
       <div className="mb-6">
         <h1 className="font-semibold text-lg">Overview</h1>
       </div>
-      <div className="grid grid-cols-9 gap-4 xl:gap-6">
+      <div className="grid grid-cols-6 gap-4 xl:gap-6">
         <StatsCard
-          title={"Total Capacity"}
-          value={stats.landfill.total_capacity_tonnes + " Tons"}
+          title={"On the way"}
+          value={`${way.total_volume || 0} Tons | ${way.count || 0} Vehicles`}
         />
         <StatsCard
-          title={"Total Volume"}
-          value={stats.transportation.total_volume + " Tons"}
+          title={"Transported"}
+          value={`${transported.total_volume || 0} Tons | ${transported.count || 0} Vehicles`}
         />
-        <StatsCard
-          title={"Total Dumped"}
-          value={stats.transportation.count + " Times"}
-        />
+  
       </div>
       <MainListing data={data} />
     </>

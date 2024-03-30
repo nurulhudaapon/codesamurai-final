@@ -22,7 +22,7 @@ const MonitorPage = async () => {
 
   return (
     <main>
-      <div className={`max-w-9xl mx-auto w-full px-2 py-4 sm:px-6 lg:px-4`}>
+      <div className={`max-w-9xl mx-auto w-full`}>
         <div className="mb-6">
           <h1 className="font-semibold text-lg">Monitor</h1>
         </div>
