@@ -12,7 +12,7 @@ type AddVehicleModalProps = {
   userId: string;
 };
 
-export async function EntryVehicle(formData: FormData) {
+export async function addVehicle(formData: FormData) {
   "use server";
   const session = await getServerAuthSession();
   const data = Object.fromEntries(formData.entries());
@@ -31,9 +31,9 @@ export async function EntryVehicle(formData: FormData) {
   return await dbClient.vehicle.create(entity);
 }
 
-async function AddVehicleModal({ userId }: AddVehicleModalProps) {
+export default async function AddVehicleModal({ userId }: AddVehicleModalProps) {
   return (
-    <form action={EntryVehicle}>
+    <form action={addVehicle}>
       <h3>Add New Vehicle</h3>
       <div>
         <Input placeholder="Number" name="number" type="text" required />
@@ -74,8 +74,7 @@ async function AddVehicleModal({ userId }: AddVehicleModalProps) {
           </div>
         </div>
       </div>
+      <Button className="mt-3" type="submit">Create</Button>
     </form>
   );
 }
-
-export default EntryVehicle;
