@@ -61,11 +61,6 @@ export class EcosyncCubeClient {
             count
           }
         }
-        sts_d: cube {
-          sts_entry {
-            count
-          }
-        }
         user: cube {
           user {
             count
@@ -92,13 +87,8 @@ export class EcosyncCubeClient {
   async getTotalWaste(variables?: object) {
     const query = gql`
       query GetTotalWaste($where: RootWhereInput = {}) {
-        cube(where: $where) {
+        transportation: cube(where: $where) {
           transportation {
-            total_volume
-          }
-        }
-        sts: cube(where: $where) {
-          sts_entry {
             total_volume
           }
         }
@@ -106,7 +96,6 @@ export class EcosyncCubeClient {
     `;
 
     const result = await this.#query(query, variables) as {
-      sts_entry: { total_volume: number | null },
       transportation: { total_volume: number | null }
     };
 

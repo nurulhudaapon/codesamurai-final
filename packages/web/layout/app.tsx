@@ -21,7 +21,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const permittedNavigations = navigations.filter((n) =>
-    n.require_permissions.some((p) => permission?.includes(p))
+    !n.require_permissions.length || n.require_permissions.some((p) => permission?.includes(p))
   );
 
   const logout = () => {

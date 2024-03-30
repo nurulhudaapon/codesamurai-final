@@ -4,7 +4,9 @@ import {
   Truck,
   Factory,
   LandPlot,
+  Caravan,
   Award,
+BaggageClaim,
   ListChecks,
 } from "lucide-react";
 import { routes } from ".";
@@ -18,15 +20,15 @@ export const navigations = [
     require_permissions: ["view_monitor"],
   },
   {
-    key: "users",
-    icon: Users,
-    label: "Users",
-    path: routes.main.users(),
-    require_permissions: ["manage_users"],
+    key: "transportation",
+    icon: BaggageClaim,
+    label: "Transportation",
+    path: routes.main.transportation(),
+    require_permissions: [],
   },
   {
     key: "vehicles",
-    icon: Truck,
+    icon: Caravan,
     label: "Vehicles",
     path: routes.main.vehicles(),
     require_permissions: ["manage_vehicles"],
@@ -44,6 +46,13 @@ export const navigations = [
     label: "Landfill",
     path: routes.main.landfill(),
     require_permissions: ["manage_landfill"],
+  },
+  {
+    key: "users",
+    icon: Users,
+    label: "Users",
+    path: routes.main.users(),
+    require_permissions: ["manage_users"],
   },
   {
     key: "role",
