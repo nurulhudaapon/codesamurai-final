@@ -28,7 +28,7 @@ export default async function IndexPage() {
     <div>
       <h1 className="text-lg font-bold my-4">Manage Vehicle</h1>
       <div className="flex justify-end">
-        <a href="/sts/new">
+        <a href="/vehicles/new">
           <Button className="pl-3">
             <Icon name="Plus" />
             Add New Vehicle

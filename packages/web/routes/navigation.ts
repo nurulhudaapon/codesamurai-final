@@ -31,13 +31,6 @@ export const navigations = [
     require_permissions: ["manage_vehicles"],
   },
   {
-    key: "entry",
-    icon: ListChecks,
-    label: "Vehicle Entry",
-    path: routes.main.vehicleEntry(),
-    require_permissions: ["manage_vehicles"],
-  },
-  {
     key: "sts",
     icon: Factory,
     label: "STS",

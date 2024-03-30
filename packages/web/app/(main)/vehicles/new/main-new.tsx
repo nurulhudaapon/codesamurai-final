@@ -160,7 +160,7 @@ const NewVehicleEntry = ({ currentUserId, Sts }: VehicleProps) => {
           />
         </div>
       </div>
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center items-center mt-8">
         <Button loading={loading} className="w-[100%]" type="submit">
           Add Vehicle
         </Button>
