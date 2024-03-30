@@ -80,7 +80,7 @@ model user {
   // manager_sts sts[] @relation(name: "manager_sts")
   creator_sts sts[] @relation(name: "creator_sts")
 
-  createor_landfill landfill[]       @relation(name: "creator_landfill")
+  createor_landfill landfill[] @relation(name: "creator_landfill")
   // manager_landfill  landfill[] @relation(name: "manager_landfill")
 
   /// Index for searching by HubSpot ID
@@ -239,7 +239,7 @@ model sts {
   transportations transportation[]
 
   /// Relation to the user who created
-  creator user      @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
+  creator  user      @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
   vehicles vehicle[]
 
   /// Index for searching by ward number
@@ -267,7 +267,7 @@ model landfill {
   longitude Float
 
   /// Operational time
-  opens_at   String
+  opens_at  String
   closes_at String
 
   /// Relation to the STS manager
@@ -275,7 +275,7 @@ model landfill {
   transportations transportation[]
 
   /// Relation to the user who created
-  creator user    @relation(fields: [created_by_user_id], references: [id], name: "creator_landfill")
+  creator user @relation(fields: [created_by_user_id], references: [id], name: "creator_landfill")
 }
 
 model transportation {
@@ -292,13 +292,16 @@ model transportation {
   created_by_user_id String @db.Uuid
 
   /// STS ID associated with the STS entry.
-  sts_id String @db.Uuid
+  sts_id String? @db.Uuid
 
   /// Landfill ID where the wast is dumped
   landfill_id String? @db.Uuid
 
   /// Vehicle ID associated with the STS entry.
   vehicle_id String @db.Uuid
+
+  /// Type of the location.
+  location_type transportation_location_type
 
   /// Volume of waste.
   volume Float
@@ -310,7 +313,7 @@ model transportation {
   departure_time DateTime
 
   /// Relation to the STS
-  sts      sts      @relation(fields: [sts_id], references: [id])
+  sts      sts?      @relation(fields: [sts_id], references: [id])
   landfill landfill? @relation(fields: [landfill_id], references: [id])
 
   /// Relation to the vehicle
@@ -323,6 +326,13 @@ model transportation {
   @@index([sts_id])
 }
 
+enum transportation_location_type {
+  /// STS location type.
+  sts
+
+  /// Landfill location type.
+  landfill
+}
 
 enum vehicle_type {
   /// Open Truck type.

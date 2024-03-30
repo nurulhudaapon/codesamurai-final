@@ -4,7 +4,7 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import { Modal } from "@/components/modal";
 import React, { useState } from "react";
-import { createUser } from "./server";
+import { CreateNewUserType, createUser } from "./server";
 import { notify } from "@/components/toast";
 
 type CreateUserModalProps = {
@@ -17,13 +17,9 @@ const CreateUserModal = ({ triggerUpdate, onClose }: CreateUserModalProps) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const user = {
-      first_name: data.get("first_name") as string,
-      last_name: data.get("last_name") as string,
-      email: data.get("email") as string,
-      phone: data.get("phone") as string,
-    };
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries()) as unknown as CreateNewUserType;
+
     setLoading(true);
     await createUser(user)
       .then(() => {

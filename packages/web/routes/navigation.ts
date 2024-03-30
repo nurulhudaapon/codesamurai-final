@@ -20,11 +20,18 @@ export const navigations = [
     require_permissions: ["view_monitor"],
   },
   {
-    key: "transportation",
+    key: "sts_transportation",
     icon: BaggageClaim,
-    label: "Transportation",
-    path: routes.main.transportation(),
-    require_permissions: [],
+    label: "STS Transportation",
+    path: routes.main.transportation.sts(),
+    require_permissions: ['sts_transportation'],
+  },
+  {
+    key: "landfill_transportation",
+    icon: BaggageClaim,
+    label: "Landfill Transportation",
+    path: routes.main.transportation.landfill(),
+    require_permissions: ['landfill_transportation'],
   },
   {
     key: "vehicles",

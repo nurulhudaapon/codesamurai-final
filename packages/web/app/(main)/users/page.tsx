@@ -10,7 +10,7 @@ import {
   getUsers,
   updateUserRole,
 } from "./server";
-import CreateUserModal from "./user-modal";
+import CreateUserModal from "./modal";
 import {
   Table,
   TableCell,

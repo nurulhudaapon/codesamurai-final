@@ -15,15 +15,15 @@ export default async function IndexPage() {
       <div className="grid grid-cols-9 gap-4 xl:gap-6">
         <StatsCard
           title={"Total Capacity"}
-          value={stats.sts.total_capacity_tonnes + " Tons"}
+          value={stats.sts?.total_capacity_tonnes + " Tons"}
         />
         <StatsCard
           title={"Total Volume Disposed"}
-          value={stats.transportation.total_volume + " Tons"}
+          value={stats.transportation?.total_volume + " Tons"}
         />
         <StatsCard
           title={"Total Waste Disposed"}
-          value={stats.transportation.count + " Times"}
+          value={stats.transportation?.count + " Times"}
         />
       </div>
       <StsMain STS={STS} />

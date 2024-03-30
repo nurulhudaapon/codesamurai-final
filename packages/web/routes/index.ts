@@ -12,7 +12,11 @@ export const routes = {
     monitor: () => `/monitor` as const,
     users: () => `/users` as const,
     vehicles: () => `/vehicles` as const,
-    transportation: () => `/transportation` as const,
+    transportation: {
+      root: () => `/transportation` as const,
+      sts: () => `${routes.main.transportation.root()}/sts` as const,
+      landfill: () => `${routes.main.transportation.root()}/landfill` as const,
+    },
     vehicleEntry: () => `/vehicle-entry` as const,
     sts: () => `/sts` as const,
     landfill: () => `/landfill` as const,

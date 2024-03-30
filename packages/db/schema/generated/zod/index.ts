@@ -26,7 +26,7 @@ export const StsScalarFieldEnumSchema = z.enum(['id','name','created_at','update
 
 export const LandfillScalarFieldEnumSchema = z.enum(['id','name','created_at','updated_at','created_by_user_id','capacity_tonnes','latitude','longitude','opens_at','closes_at']);
 
-export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','volume','arrival_time','departure_time']);
+export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','location_type','volume','arrival_time','departure_time']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -37,6 +37,10 @@ export const NullsOrderSchema = z.enum(['first','last']);
 export const user_stateSchema = z.enum(['active','inactive']);
 
 export type user_stateType = `${z.infer<typeof user_stateSchema>}`
+
+export const transportation_location_typeSchema = z.enum(['sts','landfill']);
+
+export type transportation_location_typeType = `${z.infer<typeof transportation_location_typeSchema>}`
 
 export const vehicle_typeSchema = z.enum(['open_truck','dump_truck','compactor','container_carrier']);
 
@@ -333,6 +337,10 @@ export type landfill = z.infer<typeof landfillSchema>
 
 export const transportationSchema = z.object({
   /**
+   * Type of the location.
+   */
+  location_type: transportation_location_typeSchema,
+  /**
    * Unique identifier for the STS entry.
    */
   id: z.string().uuid(),
@@ -351,7 +359,7 @@ export const transportationSchema = z.object({
   /**
    * STS ID associated with the STS entry.
    */
-  sts_id: z.string(),
+  sts_id: z.string().nullable(),
   /**
    * Landfill ID where the wast is dumped
    */

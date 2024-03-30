@@ -23,6 +23,21 @@ export class EcosyncTransportationService {
   }
 
   /**
+   * Get All Transportations with user details
+   */
+  getAllWithUserData(where: Entity.Prisma.transportationFindManyArgs['where'] = {}) {
+    return this.#client.transportation.findMany({
+      where,
+      include: {
+        creator: true,
+        landfill: true,
+        sts: true,
+        vehicle: true,
+      }
+    });
+  }
+
+  /**
    * Get a Transportation by ID
    * @param {string} id - The ID of the Transportation
    * @returns {Promise<Entity.transportations | null>} A promise that resolves to a Transportation object or null if not found
@@ -34,18 +49,27 @@ export class EcosyncTransportationService {
   /**
    * Create a new Transportation
    * @param {Entity.transportations} transportationData - The data to create a new Transportation
-   * @returns {Promise<Entity.transportations>} A promise that resolves to the created Transportation object
    */
   create(
-    transportationData: Entity.transportation,
-  ): Promise<Entity.transportation> {
+    data: Entity.Prisma.transportationCreateArgs['data'],
+  ) {
     // Validate
-    const validTransportationData =
-      Schema.transportationSchema.parse(transportationData);
+    const validTransportationData = Schema.transportationSchema.pick({
+      sts_id: true,
+      landfill_id: true,
+      created_by_user_id: true,
+      arrival_time: true,
+      departure_time: true,
+      vehicle_id: true,
+      volume: true,
+    }).parse(data);
 
     // Commit
     return this.#client.transportation.create({
-      data: validTransportationData,
+      data: {
+        ...validTransportationData,
+        location_type: validTransportationData.sts_id ? "sts" : "landfill",
+      },
     });
   }
 

@@ -71,7 +71,7 @@ export class EcosyncUserService {
    * @param {Entity.user} userData - The data to create a new User
    * @returns {Promise<Entity.user>} A promise that resolves to the created User object
    */
-  async create(data: Entity.Prisma.userCreateArgs): Promise<Entity.user> {
+  async create(data: Entity.Prisma.userCreateArgs['data']): Promise<Entity.user> {
     // Validate
     const validUserData = Schema.userSchema
       .pick({
@@ -80,7 +80,7 @@ export class EcosyncUserService {
         email: true,
         phone: true,
       })
-      .parse(data.data);
+      .parse(data);
 
     const findUnassignedRole = await this.#client.role.findFirst({
       where: {

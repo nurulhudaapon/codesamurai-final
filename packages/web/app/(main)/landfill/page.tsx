@@ -17,15 +17,15 @@ export default async function IndexPage() {
       <div className="grid grid-cols-9 gap-4 xl:gap-6">
         <StatsCard
           title={"Total Capacity"}
-          value={stats.landfill.total_capacity_tonnes + " Tons"}
+          value={stats.landfill?.total_capacity_tonnes + " Tons"}
         />
         <StatsCard
           title={"Total Volume"}
-          value={stats.transportation.total_volume + " Tons"}
+          value={stats.transportation?.total_volume + " Tons"}
         />
         <StatsCard
           title={"Total Dumped"}
-          value={stats.transportation.count + " Times"}
+          value={stats.transportation?.count + " Times"}
         />
       </div>
       <MainListing data={data} />;

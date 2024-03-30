@@ -1,5 +1,4 @@
 import { StatsCard } from "@/components/card";
-import MainListing from "./listing";
 import { cubeClient, dbClient } from "@/client";
 
 export default async function IndexPage() {
@@ -23,9 +22,8 @@ export default async function IndexPage() {
           title={"Transported"}
           value={`${transported.total_volume || 0} Tons | ${transported.count || 0} Vehicles`}
         />
-  
+
       </div>
-      <MainListing data={data} />
     </>
   );
 }

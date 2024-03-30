@@ -23,6 +23,7 @@ import {
 } from "./server";
 import PermissionModal from "./permission-modal";
 import RoleModal from "./role-modal";
+import { notify } from "@/components/toast";
 
 const Index = () => {
   const [roles, setRoles] = useState<RolesWithPermissionType>([]);
@@ -55,6 +56,8 @@ const Index = () => {
     (!active ? addPermission : removePermission)(role, permission).then(
       (res) => {
         fetchRoles();
+        const notifier = !active ? notify.success : notify.error;
+        notifier(`Permission ${!active ? 'added' : 'removed'}`);
       }
     );
   };

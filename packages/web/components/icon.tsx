@@ -7,7 +7,8 @@ import {
 	ChevronRight,
 	LucideProps,
 	Plus,
-	LogOut
+	LogOut,
+	LoaderCircle
 } from 'lucide-react';
 
 export const icons = {
@@ -18,7 +19,8 @@ export const icons = {
 	ChevronLeft,
 	ChevronRight,
 	Plus,
-	LogOut
+	LogOut,
+	LoaderCircle
 };
 
 export type IconsTypes = keyof typeof icons;
