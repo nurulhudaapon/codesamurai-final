@@ -18,11 +18,10 @@ import { v4 as uuid } from "uuid";
 import Link from "next/link";
 
 const tableHeaders = [
-  "Name",
-  "Capacity",
-  "Latitude",
-  "Longitude",
-  "Operational Time",
+  "Time",
+  "Volume",
+  "Departure Time",
+  "Arrival Time",
 ];
 
 const MainListing = ({ data }: { data: Entity.transportation[] }) => {
@@ -69,11 +68,10 @@ const MainListing = ({ data }: { data: Entity.transportation[] }) => {
           <TableBody>
             {filteredData.map((item, idx) => (
               <TableRow key={idx}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.capacity_tonnes} tons</TableCell>
-                <TableCell>{item.latitude}</TableCell>
-                <TableCell>{item.longitude}</TableCell>
-                <TableCell>{item.opens_at} - {item.closes_at}</TableCell>
+                <TableCell>{item.created_at.toLocaleString()}</TableCell>
+                <TableCell>{item.volume} tons</TableCell>
+                <TableCell>{item.departure_time.toLocaleString()}</TableCell>
+                <TableCell>{item.arrival_time?.toLocaleString() || '-'}</TableCell>
               </TableRow>
             ))}
           </TableBody>

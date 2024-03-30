@@ -9,9 +9,11 @@ const console = new EcosyncLogger({ name: "Cubejs Service" }).init();
  */
 export class EcosyncCubeClient {
   #graphQlUrl: string;
+  #getToken: () => Promise<string>;
 
-  constructor({ graphQlUrl }: { graphQlUrl: string }) {
+  constructor({ graphQlUrl, tokenGetter }: { graphQlUrl: string; tokenGetter: () => Promise<string>}) {
     this.#graphQlUrl = graphQlUrl;
+    this.#getToken = tokenGetter;
   }
 
   async #query(query: string, variables?: object) {
@@ -22,13 +24,14 @@ export class EcosyncCubeClient {
       variables,
     });
 
-    console.log(this.#graphQlUrl, body);
+    console.log({t: await this.#getToken()})
 
+    // @ts-ignore
     const response = await fetch(url, {
       body,
+      cache: 'no-store',
       headers: {
-        authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTE0ODE5MjYsImV4cCI6MTkxMTU2ODMyNn0.fgCWcMbI8vwtWazlJvPUbva2PgbSs-xDbPMazv2BiFI",
+        authorization: await this.#getToken(),
         "content-type": "application/json",
       },
       method: "POST",
@@ -104,6 +107,37 @@ export class EcosyncCubeClient {
   }
 
   async getLandfillStats(variables?: object) {
+    const query = gql`
+      query GetLandfillStats($where: RootWhereInput = {}) {
+        landfill: cube(where: $where) {
+          landfill {
+            total_capacity_tonnes
+          }
+        }
+        tp: cube(where: {
+          transportation: {
+            landfill_id: {
+              set: true
+            }
+          }
+        }) {
+          transportation {
+            total_volume
+            count
+          }
+        }
+      }
+    `;
+
+    const result = (await this.#query(query, variables)) as {
+      transportation: { total_volume: number | null; count: number | null };
+      landfill: { total_capacity_tonnes: number | null; count: number | null };
+    };
+
+    return result;
+  }
+
+  async getTransportationStats(variables?: object) {
     const query = gql`
       query GetLandfillStats($where: RootWhereInput = {}) {
         landfill: cube(where: $where) {
