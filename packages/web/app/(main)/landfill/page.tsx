@@ -7,8 +7,6 @@ export default async function IndexPage() {
   const data = await dbClient.landfill.getAll();
   const stats = await cubeClient.getLandfillStats();
 
-  console.log(stats);
-
   return (
     <>
       <div className="mb-6">
@@ -32,3 +30,5 @@ export default async function IndexPage() {
     </>
   );
 }
+
+export const dynamic = "force-dynamic";

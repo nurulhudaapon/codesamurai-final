@@ -71,3 +71,5 @@ export default async function IndexPage() {
     </div>
   );
 }
+
+export const dynamic = "force-dynamic";

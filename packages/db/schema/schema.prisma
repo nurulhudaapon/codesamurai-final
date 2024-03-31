@@ -26,6 +26,7 @@ generator zod {
 // generate prisma client
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 generator markdown {
