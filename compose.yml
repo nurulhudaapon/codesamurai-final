@@ -47,8 +47,6 @@ services:
       dockerfile: Dockerfile.web
     ports:
       - 3000:3000
-    environment:
-      - DATABASE_URL="postgresql://user:password@db/ecosync"
 
     networks:
       - backend

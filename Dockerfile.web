@@ -9,17 +9,17 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY . ./
 RUN npm ci
+# RUN npm run reset -w @ecosync/db
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npm run build -w @ecosync/web
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm run reset
-RUN npm run reset -w @ecosync/db
 
 # Production image, copy all the files and run next
 FROM base AS runner
