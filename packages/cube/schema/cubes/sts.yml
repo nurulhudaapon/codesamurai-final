@@ -30,6 +30,14 @@ cubes:
       - name: ward_number
         sql: ward_number
         type: string
+      
+      - name: latitude
+        sql: latitude
+        type: number
+
+      - name: longitude
+        sql: longitude
+        type: number
 
       - name: created_at
         sql: created_at

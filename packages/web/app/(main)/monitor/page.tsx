@@ -3,8 +3,8 @@ import { getServerAuthSession } from "@/utils/auth";
 import WaveSVG from "@/assets/wave.svg";
 import { LineChart01 } from "@/components/chart/line";
 
-const titles = ["Costing", "Wastage", "Oil Used", "Distance"];
-const Unit = [" USD", " Tons", " L", " Km"];
+const titles = ["Costing (TODO)", "Wastage", "Oil Used (TODO)", "Distance"];
+const Unit = ["", " Tons", " L", " Km"];
 
 const MonitorPage = async () => {
   const session = await getServerAuthSession();
@@ -14,10 +14,10 @@ const MonitorPage = async () => {
   const wastage = (response?.transportation?.total_volume || 0);
 
   const sum = {
-    costing: 5223,
+    costing: 0,
     wastage,
-    oilUsed: 105,
-    distance: 522,
+    oilUsed: 0,
+    distance: Math.round((((response?.transportation?.total_distance_meters || 0) /1000) || 0)),
   };
 
   return (
@@ -31,7 +31,7 @@ const MonitorPage = async () => {
             <Card
               idx={idx}
               key={key}
-              title={"Total " + titles[idx]}
+              title={titles[idx]}
               value={sum[key as keyof typeof sum]}
             />
           ))}

@@ -56,7 +56,7 @@ export class EcosyncTransportationService {
     // Validate
     const validTransportationData = Schema.transportationSchema.pick({
       sts_id: true,
-      landfill_id: true,
+      landfill_id: data.landfill_id ? true : undefined,
       created_by_user_id: true,
       arrival_time: true,
       departure_time: true,

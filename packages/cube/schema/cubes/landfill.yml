@@ -22,7 +22,15 @@ cubes:
       - name: capacity_tonnes
         sql: capacity_tonnes
         type: number
+      
+      - name: latitude
+        sql: latitude
+        type: number
 
+      - name: longitude
+        sql: longitude
+        type: number
+        
       - name: opens_at
         sql: opens_at
         type: string
