@@ -41,15 +41,17 @@ services:
     networks:
       - backend
 
-  web:
-    container_name: web
-    build:
-      dockerfile: Dockerfile.web
-    ports:
-      - 3000:3000
+  # web:
+  #   container_name: web
+  #   build:
+  #     dockerfile: Dockerfile.web
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - DATABASE_URL=postgresql://user:password@db:5432/ecosync
 
-    networks:
-      - backend
+  #   networks:
+  #     - backend
 
 networks:
   backend:
