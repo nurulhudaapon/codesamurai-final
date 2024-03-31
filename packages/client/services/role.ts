@@ -11,10 +11,18 @@ export class EcosyncRoleService {
     this.#client = client;
   }
 
+  /**
+   * Get All Roles
+   * @returns {Promise<Array<Entity.role>>} A promise that resolves to an array of Role objects
+   */
   getAll = async () => {
     return this.#client.role.findMany();
   };
 
+  /**
+   * Get All Roles with Permissions
+   * @returns {Promise<Array<Entity.role>>} A promise that resolves to an array of Role objects
+   */
   getWithPermissions = async () => {
     return this.#client.role.findMany({
       include: {
@@ -31,6 +39,12 @@ export class EcosyncRoleService {
     });
   };
 
+  /**
+   * Create role by name and permissions
+   * @param {string} name - Role Name
+   * @param {string[]} permission - Permission IDs
+   * @returns {Promise<Entity.role>} A promise that resolves to a Role object
+   */
   createWithPermissions = async (role: {
     name: string;
     permission: string[];
@@ -50,6 +64,12 @@ export class EcosyncRoleService {
     });
   };
 
+  /**
+   * Add permission to a role
+   * @param {string} roll - Role Name
+   * @param {string} permission - Permission ID
+   * @returns {Promise<Entity.role>} A promise that resolves to a Role object
+   */
   addPermission = async (role: string, permission: string) => {
     return this.#client.role_permission.createMany({
       data: {
@@ -59,6 +79,12 @@ export class EcosyncRoleService {
     });
   };
 
+  /**
+   * Remove permission from a role
+   * @param {string} roll - Role Name
+   * @param {string} permission - Permission ID
+   * @returns {Promise<Entity.role>} A promise that resolves to a Role object
+   */
   removePermission = async (role: string, permission: string) => {
     return this.#client.role_permission.deleteMany({
       where: {

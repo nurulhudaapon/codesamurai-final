@@ -157,7 +157,6 @@ export class EcosyncRbacService {
    * @param data Permission Data
    * @returns Permission
    */
-
   updatePermission(
     permissionId: string,
     data: {
@@ -196,7 +195,6 @@ export class EcosyncRbacService {
    * @param permissionId Permission ID
    * @returns Permission
    */
-
   deletePermission(permissionId: string) {
     return this.#client.permission.delete({
       where: {
@@ -223,7 +221,6 @@ export class EcosyncRbacService {
    * @param userId User ID
    * @returns User Role
    */
-
   unassignUserRole(userId: string) {
     return this.#client.user.update({
       data: {
