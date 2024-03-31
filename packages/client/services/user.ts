@@ -30,6 +30,15 @@ export class EcosyncUserService {
   getById(id: string): Promise<Entity.user | null> {
     return this.#client.user.findUnique({ where: { id } });
   }
+  
+  /**
+   * Get a User by Email
+   * @param {string} email - The email of the User
+   * @returns {Promise<Entity.user | null>} A promise that resolves to a User object or null if not found
+   */
+  getByEmail(email: string): Promise<Entity.user | null> {
+    return this.#client.user.findFirst({ where: { email } });
+  }
 
   /**
    * Get a User by Email

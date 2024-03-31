@@ -14,6 +14,10 @@ export const createSts = async (stsData: Entity.sts) => {
   return dbClient.sts.create(stsData);
 };
 
+export const getUserByEmail = async (email: string) => {
+  return dbClient.user.getByEmail(email);
+};
+
 export type VehiclesType = Awaited<ReturnType<typeof getAllSts>>;
 
 export async function StsSelector() {
