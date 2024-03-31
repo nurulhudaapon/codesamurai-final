@@ -13,9 +13,5 @@ export const createVehicle = async (vehicle: Entity.vehicle) => {
   return dbClient.vehicle.create(vehicle);
 };
 
-export const getUserByEmail = async (email: string) => {
-  return dbClient.user.getByEmail(email);
-};
-
 export type VehiclesType = Awaited<ReturnType<typeof getAllVehicles>>;
 export type StssType = Awaited<ReturnType<typeof getStss>>;
