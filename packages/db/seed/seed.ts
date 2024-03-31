@@ -1,9 +1,9 @@
-// import { EcosyncLogger } from "@ecosync/logger";
+import { EcosyncLogger } from "@ecosync/logger";
 import { InitData } from "../data";
 import { getPrismaClient } from "../client";
 import { Prisma } from "@prisma/client";
 
-// const console = new EcosyncLogger({ name: "Database" }).init();
+const console = new EcosyncLogger({ name: "Database" }).init();
 
 const main = async () => {
   console.log("🪫 Seeding database...");
@@ -30,6 +30,6 @@ const main = async () => {
   }
 };
 
-main()
+await main()
   .then(() => console.log("🔋 Done seeding database!\n\n\n"))
   .catch((e) => console.error(" ❌ Error seeding database", e));
