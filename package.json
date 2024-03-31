@@ -15,7 +15,6 @@
   ],
   "devDependencies": {
     "@types/uuid": "^9.0.8",
-    "bun": "^1.0.36",
     "bun-types": "latest",
     "prettier": "^3.2.5",
     "typescript": "^5.0.0"
