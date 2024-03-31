@@ -1,22 +1,14 @@
 version: "3.7"
 
 services:
-  # web:
-  #   container_name: web
-  #   build:
-  #     dockerfile: Dockerfile.web
-  #   ports:
-  #     - 3000:3000
-  #   # Map local cache directory
-  #   volumes:
-  #     - 
   redis:
     image: redis:6-alpine
     container_name: redis
     ports:
-      - "127.0.0.1:6379:6379"
-    expose:
-      - "6379"
+      - "6379:6379"
+
+    networks:
+      - backend
 
   cube:
     container_name: cube
@@ -28,19 +20,38 @@ services:
     volumes:
       - ./packages/cube:/cube/conf
 
+    networks:
+      - backend
+
   db:
     image: postgres:15.3
-    command: ["postgres", "-c", "log_statement=all"]
+    command: [ "postgres", "-c", "log_statement=all" ]
     container_name: db
-    expose:
-      - "5433"
     ports:
-      - "5433:5432"
+      - "5432:5432"
+
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: user
       POSTGRES_DB: ecosync
 
-    # Map the data volume to the current directory so that it persists
     volumes:
       - ./packages/db/tmp/pg/data:/var/lib/postgresql/data
+
+    networks:
+      - backend
+
+  web:
+    container_name: web
+    build:
+      dockerfile: Dockerfile.web
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL="postgresql://user:password@db/ecosync"
+
+    networks:
+      - backend
+
+networks:
+  backend:

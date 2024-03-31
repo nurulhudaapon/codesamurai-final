@@ -7,8 +7,7 @@
   "type": "module",
   "scripts": {
     "start:container": "docker compose up -d",
-    "start:web": "cd packages/web && npm run dev",
-    "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force",
+    "start:web": "npm run dev -w @ecosync/web",
     "dev": "npm run start:container && npm run start:web"
   },
   "workspaces": [
