@@ -50,6 +50,7 @@ export default function Transportations(props: TransportatioProps) {
                             <TableHeader>Weight of waste</TableHeader>
                             <TableHeader>Arrival</TableHeader>
                             <TableHeader>Deperture</TableHeader>
+                            <TableHeader>Distance</TableHeader>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -60,6 +61,7 @@ export default function Transportations(props: TransportatioProps) {
                                 <TableCell>{item.volume} tons</TableCell>
                                 <TableCell>{Utils.Time.formatDateTime(item.arrival_time)}</TableCell>
                                 <TableCell>{Utils.Time.formatDateTime(item.departure_time)}</TableCell>
+                                <TableCell>{Math.round((item.total_distance_meters || 0)/1000).toLocaleString()}km</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

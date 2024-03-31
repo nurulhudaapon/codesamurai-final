@@ -108,13 +108,14 @@ export class EcosyncCubeClient {
         transportation: cube(where: $where) {
           transportation {
             total_volume
+            total_distance_meters
           }
         }
       }
     `;
 
     const result = (await this.#query(query, variables)) as {
-      transportation: { total_volume: number | null };
+      transportation: { total_volume: number | null, total_distance_meters: number | null };
     };
 
     return result;
@@ -153,6 +154,7 @@ export class EcosyncCubeClient {
         ) {
           transportation {
             total_volume
+            total_distance_meters
             count
           }
         }
@@ -178,6 +180,35 @@ export class EcosyncCubeClient {
           transportation: {
             total_volume: null;
             count: number;
+          };
+        }[];
+      };
+    };
+
+    return result;
+  }
+
+  async getTransportationTableStats(variables?: {
+    transportationIds: string[];
+  }) {
+    const query = gql`
+      query GetTransportationTableStats($transportationIds: [String]) {
+        cube(where: { transportation: { id: { in: $transportationIds } } }) {
+          transportation {
+            id
+            total_distance_meters
+          }
+        }
+      }
+    `;
+
+    const result = (await this.#query(query, variables, { raw: true })) as {
+      data: {
+        cube: {
+          transportation: {
+            id: string;
+            total_distance_meters: number | null;
+            count: number | null;
           };
         }[];
       };

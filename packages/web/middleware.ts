@@ -1,19 +1,19 @@
-import { getSession } from "next-auth/react";
+import { withAuth } from "next-auth/middleware"
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { routes } from "./routes";
 import { SessionData } from "./types/auth";
 import { navigations } from "./routes/navigation";
 
-export async function middleware(request: NextRequest) {
+export default withAuth(function middleware(request: NextRequest) {
   const requestForNextAuth = {
     headers: {
       cookie: request.headers.get("cookie") ?? undefined,
     },
   };
-  const session = (await getSession({
-    req: requestForNextAuth,
-  })) as SessionData;
+
+  // @ts-ignore
+  const session = request?.nextauth?.token as SessionData;
 
   if (!session && !request.nextUrl.pathname.includes(routes.auth.root())) {
     return NextResponse.redirect(new URL(routes.auth.login(), request.url));
@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
+});
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
