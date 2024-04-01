@@ -36,6 +36,15 @@ export class EcosyncLandfillService {
     return this.#client.landfill.findUnique({ where: { id } });
   }
 
+    /**
+   * Get a Landfill by ID
+   * @param {string} id - The ID of the Landfill
+   * @returns {Promise<Entity.landfill | null>} A promise that resolves to a Landfill object or null if not found
+   */
+    getByCreatedUser(id: string): Promise<Entity.landfill | null> {
+      return this.#client.landfill.findFirst({ where: { created_by_user_id: id } });
+    }
+  
   /**
    * Create a new Landfill
    * @param {Entity.landfill} landfillData - The data to create a new Landfill

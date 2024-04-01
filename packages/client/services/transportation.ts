@@ -18,8 +18,14 @@ export class EcosyncTransportationService {
    * Get All Transportations
    * @returns {Promise<Array<Entity.transportation>>} A promise that resolves to an array of Transportation objects
    */
-  getAll(): Promise<Array<Entity.transportation>> {
-    return this.#client.transportation.findMany();
+  getAll() {
+    return this.#client.transportation.findMany({
+      include: {
+        vehicle: true,
+        sts: true,
+        landfill: true,
+      },
+    });
   }
 
   /**
@@ -50,27 +56,11 @@ export class EcosyncTransportationService {
    * Create a new Transportation
    * @param {Entity.transportations} transportationData - The data to create a new Transportation
    */
-  create(
-    data: Entity.Prisma.transportationCreateArgs['data'],
-  ) {
+  create(data: Entity.transportation) {
     // Validate
-    const validTransportationData = Schema.transportationSchema.pick({
-      sts_id: true,
-      landfill_id: data.landfill_id ? true : undefined,
-      created_by_user_id: true,
-      arrival_time: true,
-      departure_time: true,
-      vehicle_id: true,
-      volume: true,
-    }).parse(data);
-
+    const validTransportationData = Schema.transportationSchema.parse(data);
     // Commit
-    return this.#client.transportation.create({
-      data: {
-        ...validTransportationData,
-        location_type: validTransportationData.sts_id ? "sts" : "landfill",
-      },
-    });
+    return this.#client.transportation.create({data: validTransportationData});
   }
 
   /**

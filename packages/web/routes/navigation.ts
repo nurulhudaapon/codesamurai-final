@@ -29,7 +29,7 @@ export const navigations = [
   {
     key: "landfill_transportation",
     icon: BaggageClaim,
-    label: "Landfill Transportation",
+    label: "Landfill and Billing",
     path: routes.main.transportation.landfill(),
     require_permissions: ['landfill_transportation'],
   },

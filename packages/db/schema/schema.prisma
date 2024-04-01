@@ -25,7 +25,7 @@ generator zod {
 
 // generate prisma client
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -258,7 +258,9 @@ model landfill {
   created_at DateTime @default(now()) @db.Timestamptz(6)
   updated_at DateTime @default(now()) @db.Timestamptz(6)
 
-  created_by_user_id String @db.Uuid
+  // User ID associated with the landfill entry.
+  // Meaning the user is manager of the landfill
+  created_by_user_id String @db.Uuid //TODO: Rename to manager_id
 
   /// Capacity of the STS.
   capacity_tonnes Float
@@ -301,17 +303,24 @@ model transportation {
   /// Vehicle ID associated with the STS entry.
   vehicle_id String @db.Uuid
 
-  /// Type of the location.
-  location_type transportation_location_type
-
   /// Volume of waste.
   volume Float
 
   /// Time of arrival.
-  arrival_time DateTime
+  arrival_time DateTime?
 
   /// Time of departure.
-  departure_time DateTime
+  departure_time DateTime?
+
+  // padding for the vehicle to reach the location - true if the vehicle is already at the location
+  // false if the vehicle is on the way to the location
+  padding Boolean
+
+  /// Distance from the STS to the landfill.
+  distance Float
+
+  /// Type of the location.
+  location_type transportation_location_type?
 
   /// Relation to the STS
   sts      sts?      @relation(fields: [sts_id], references: [id])

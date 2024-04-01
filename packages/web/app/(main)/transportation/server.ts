@@ -3,6 +3,20 @@
 import { cubeClient, dbClient } from "@/client";
 import { Entity } from "@/types/prisma";
 
+
+export const getAllTransportationStats = async () => {
+  return await dbClient.transportation.getAll();
+}
+
+export const updateTransportation = async (id: string, transportationData: Entity.transportation) => {
+  return await dbClient.transportation.update(id, transportationData);
+}
+
+export type getAllTransportationStatsType = Awaited<ReturnType<typeof getAllTransportationStats>>;
+
+//----------------------  end ----------------------------
+
+
 export const getUsers = async () => {
   return dbClient.user.getAll();
 };
@@ -42,6 +56,10 @@ export const getAllSts = async () => {
 export const getAllLandfills = async () => {
   return dbClient.landfill.getAll();
 };
+
+export const getLandByCreatedUser = async (id: string) => {
+  return dbClient.landfill.getByCreatedUser(id);
+}
 
 export const getAllVehicles = async () => {
   return dbClient.vehicle.getAll();

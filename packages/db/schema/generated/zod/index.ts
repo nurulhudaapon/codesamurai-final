@@ -26,7 +26,7 @@ export const StsScalarFieldEnumSchema = z.enum(['id','name','created_at','update
 
 export const LandfillScalarFieldEnumSchema = z.enum(['id','name','created_at','updated_at','created_by_user_id','capacity_tonnes','latitude','longitude','opens_at','closes_at']);
 
-export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','location_type','volume','arrival_time','departure_time']);
+export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','volume','arrival_time','departure_time','padding','distance','location_type']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -339,7 +339,7 @@ export const transportationSchema = z.object({
   /**
    * Type of the location.
    */
-  location_type: transportation_location_typeSchema,
+  location_type: transportation_location_typeSchema.nullable(),
   /**
    * Unique identifier for the STS entry.
    */
@@ -375,11 +375,16 @@ export const transportationSchema = z.object({
   /**
    * Time of arrival.
    */
-  arrival_time: z.coerce.date(),
+  arrival_time: z.coerce.date().nullable(),
   /**
    * Time of departure.
    */
-  departure_time: z.coerce.date(),
+  departure_time: z.coerce.date().nullable(),
+  padding: z.boolean(),
+  /**
+   * Distance from the STS to the landfill.
+   */
+  distance: z.number(),
 })
 
 export type transportation = z.infer<typeof transportationSchema>
