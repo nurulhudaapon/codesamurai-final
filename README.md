@@ -20,13 +20,29 @@ docker exec -it web bash
 # To seed the database with inital data (including some dummy data)
 npm run seed -w @ecosync/db
 ```
+### Open the App
 
-**Runs on: http://localhost:3000**
+Runs on: 
+```
+http://localhost:3000
+```
 
-**Credentials (email/password): admin@ecosync.gov.bd/password**
+Credentials
+```
+Email: admin@ecosync.gov.bd
+Password: password
+```
 
-### Local Instruction
-Have Node v20 and Bun v1 installed
+### Local Instruction (If docker fails)
+
+Prerequisite
+- Have Node v20
+- Bun v1 installed
+
+To start other service except web
+```bash
+docker compose up -d db redis cube
+```
 
 To install dependancies
 ```bash
@@ -43,23 +59,14 @@ To seed the database with inital data (including some dummy data)
 npm run seed -w @ecosync/db
 ```
 
-**Runs on: http://localhost:3000**
-
-**Credentials (email/password): admin@ecosync.gov.bd/password**
-
-
-### App Host
-The app will be running on http://localhost:3000
-
-### Credentials
-Default Admin: 
-```
-admin@ecosync.gov.bd
+To build web app
+```bash
+npm run build -w @ecosync/web
 ```
 
-Default Admin Password: 
-```
-password
+To start web app
+```bash
+npm start -w @ecosync/web
 ```
 
 ### Technologies
