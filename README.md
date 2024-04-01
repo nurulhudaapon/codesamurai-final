@@ -76,3 +76,9 @@ Default Admin Password:
 ```
 password
 ```
+
+### Technologies
+- NextJS 14: As the frontend framework as well as the backend
+- Postgresql: As the core database for OLTP storage
+- CubeJs: As the OLAP DB to pre-aggregate statistics for speed and scalibity
+- TailwindCSS: As the CSS Utility for styling
