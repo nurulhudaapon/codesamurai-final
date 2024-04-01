@@ -56,7 +56,7 @@ export default async function IndexPage() {
           ))}
         </TableBody>
       </Table>
-      <div className="flex justify-end my-4 gap-2">
+      {/* <div className="flex justify-end my-4 gap-2">
         <button>
           <div className="bg-green-600 p-1 rounded-sm text-white">
             <ChevronLeft />
@@ -67,7 +67,7 @@ export default async function IndexPage() {
             <ChevronRight />
           </div>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -52,7 +52,7 @@ const MonitorPage = async () => {
         <div className="mb-6">
           <h1 className="font-semibold text-lg">Monitor</h1>
         </div>
-        <div className="grid grid-cols-12 gap-4 xl:gap-6">
+        <div className="grid grid-cols-6 gap-2 xl:gap-6">
           {Object.keys(sum).map((key, idx) => (
             <Card
               idx={idx}
@@ -64,14 +64,14 @@ const MonitorPage = async () => {
         </div>
 
         {/* Add line chart */}
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <h1 className="font-semibold text-lg">Wastage Trend</h1>
           <div className="bg-white p-4 rounded-md shadow-sm">
             <div>
               <LineChart />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </main>
   );

@@ -31,7 +31,7 @@ export default async function IndexPage() {
         <StatsCard title={"Total Volume"} value={totalVolume + " Tons"} />
         <StatsCard title={"Total Dumped"} value={totalDumped + " Times"} />
       </div>
-      <MainListing data={data} />;
+      <MainListing data={data} />
     </>
   );
 }

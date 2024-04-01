@@ -131,7 +131,7 @@ export default function LandFill({
                 <TableHeader>Cost</TableHeader>
                 <TableHeader>Distance Travel</TableHeader>
                 <TableHeader>Arrival Time</TableHeader>
-                <TableHeader>Download Slip</TableHeader>
+                {/* <TableHeader>Download Slip</TableHeader> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -170,11 +170,11 @@ export default function LandFill({
                         {item.arrival_time &&
                           Utils.Time.formatDateTime(item.arrival_time)}
                       </TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         <div className="flex justify-center items-center mr-8">
                           <Download size={16} />
                         </div>
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   );
                 })}

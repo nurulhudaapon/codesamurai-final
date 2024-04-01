@@ -2,6 +2,7 @@ export const routes = {
   auth: {
     root: () => `/auth` as const,
     login: () => `${routes.auth.root()}/login` as const,
+    createPassword: () => `${routes.auth.root()}/create-password` as const,
     resetPassword: {
       root: () => `${routes.auth.root()}/reset-password` as const,
       initiate: () => `${routes.auth.resetPassword.root()}/initiate` as const,

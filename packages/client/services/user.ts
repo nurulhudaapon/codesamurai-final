@@ -71,7 +71,9 @@ export class EcosyncUserService {
    * @param {Entity.user} userData - The data to create a new User
    * @returns {Promise<Entity.user>} A promise that resolves to the created User object
    */
-  async create(data: Entity.Prisma.userCreateArgs['data']): Promise<Entity.user> {
+  async create(
+    data: Entity.Prisma.userCreateArgs["data"]
+  ): Promise<Entity.user> {
     // Validate
     const validUserData = Schema.userSchema
       .pick({
@@ -122,6 +124,27 @@ export class EcosyncUserService {
 
     // Commit
     return this.#client.user.update({ where: { id }, data: validUserData });
+  }
+
+  async updatePassword(email: string, password: string) {
+    const user = await this.#client.user.findFirst({
+      where: {
+        email,
+        role: {
+          slug: "unassigned",
+        }
+      },
+    });
+    if (user) {
+      return this.#client.user.update({
+        where: { id: user.id },
+        data: {
+          password,
+        },
+      });
+    } else {
+      throw new Error("User not found");
+    }
   }
 
   /**

@@ -1,3 +1,6 @@
+'use client';
+
+import { signOut } from "next-auth/react";
 import React from "react";
 
 const Index: React.FC = () => {
@@ -7,6 +10,7 @@ const Index: React.FC = () => {
       <p className="text-gray-600">
         You are not authorized to access this page.
       </p>
+      <u><p onClick={() => signOut()} className="mt-4 cursor-pointer">logout</p></u>
     </div>
   );
 };
