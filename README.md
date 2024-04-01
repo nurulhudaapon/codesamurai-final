@@ -3,37 +3,22 @@
 
 ### Docker Instruction
 
-To build, deploy db schema and seed database with initial data
+Step 1: To build, deploy db schema
 ```bash
 # To build and run all docker containers
 docker compose up -d --build
 
 # To deploy the database schema
 docker container exec -d web npm run deploy -w @ecosync/db
+```
+
+Step 2: To seed database with initial data
+```bash
+# To go inside docker container
+docker exec -it web bash
 
 # To seed the database with inital data (including some dummy data)
-docker container exec -d web npm run seed -w @ecosync/db
-```
-
-**Runs on: http://localhost:3000**
-
-**Credentials (email/password): admin@ecosync.gov.bd/password**
-
-
-### Docker Instruction (detailed - Not neccessary to execute, the above will do all at once)
-To build and run all docker containers
-```bash
-docker compose up -d --build
-```
-
-To deploy the database schema
-```bash
-docker container exec -d web npm run deploy -w @ecosync/db
-```
-
-To seed the database with inital data (including some dummy data)
-```bash
-docker container exec -d web npm run seed -w @ecosync/db
+npm run seed -w @ecosync/db
 ```
 
 **Runs on: http://localhost:3000**
