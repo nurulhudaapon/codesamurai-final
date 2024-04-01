@@ -150,4 +150,6 @@ const LineChart = () => {
   );
 };
 
+export const dynamic = "force-dynamic";
+
 export default MonitorPage;

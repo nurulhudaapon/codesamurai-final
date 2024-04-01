@@ -41,14 +41,14 @@ services:
     networks:
       - backend
 
-  # web:
-  #   container_name: web
-  #   build:
-  #     dockerfile: Dockerfile.web
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - backend
+  web:
+    container_name: web
+    build:
+      dockerfile: Dockerfile.web
+    ports:
+      - 3000:3000
+    networks:
+      - backend
 
 networks:
   backend:
