@@ -390,6 +390,21 @@ const transportation: Entity.transportation[] = [
     distance: 16.00,
     location_type: Entity.transportation_location_type.landfill,
   },
+  {
+    id: uuid(),
+    created_at: now,
+    updated_at: now,
+    created_by_user_id: user[0].id,
+    sts_id: sts[1].id,
+    landfill_id: landfill[1].id,
+    vehicle_id: vehicle[3].id,
+    volume: 7,
+    arrival_time: new Date(),
+    departure_time: new Date(),
+    padding: false,
+    distance: 45.00,
+    location_type: Entity.transportation_location_type.sts,
+  },
 ];
 
 export const InitData = {

@@ -2,32 +2,33 @@ import { getAllSts } from "./server";
 import StsMain from "./main";
 import { StatsCard } from "@/components/card";
 import { cubeClient } from "@/client";
+import { ST } from "next/dist/shared/lib/utils";
 
 export default async function IndexPage() {
   const STS = await getAllSts();
-  const stats = await cubeClient.getStsStats();
+  var capacity_sts = 0;
+  STS.map((sts) => {
+    capacity_sts += sts.capacity_tonnes;
+  });
 
   return (
     <>
       <div className="mb-6">
         <h1 className="font-semibold text-lg">Overview</h1>
       </div>
-      <div className="grid grid-cols-9 gap-4 xl:gap-6">
+      <div className="flex gap-4">
         <StatsCard
-          title={"Total Capacity"}
-          value={stats.sts?.total_capacity_tonnes + " Tons"}
+          title={"Total Secondary Transport Stations"}
+          value={STS.length}
         />
         <StatsCard
-          title={"Total Volume Disposed"}
-          value={stats.transportation?.total_volume + " Tons"}
+          title={"Total STS Capacity"}
+          value={capacity_sts + " Tons"}
         />
-        <StatsCard
-          title={"Total Waste Disposed"}
-          value={stats.transportation?.count + " Times"}
-        />
+        {/* <StatsCard title={"Total Waste Disposed"} value={" Times"} /> */}
       </div>
       <StsMain STS={STS} />
-      </>
+    </>
   );
 }
 

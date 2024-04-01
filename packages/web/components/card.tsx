@@ -9,7 +9,7 @@ export const StatsCard = ({
 }) => {
   return (
     <div
-      className="col-span-full rounded-md border border-solid text-white p-4 shadow-sm md:col-span-6 lg:col-span-3"
+      className="col-span-full rounded-md border border-solid text-white p-4 shadow-sm md:col-span-6 lg:col-span-3 w-full"
       style={{
         background: "linear-gradient(90deg, #007324 0%, #00BA41 100%)",
         position: "relative",

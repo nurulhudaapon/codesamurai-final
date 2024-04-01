@@ -1,24 +1,50 @@
-import { cubeClient } from "@/client";
+import { cubeClient, dbClient } from "@/client";
 import { getServerAuthSession } from "@/utils/auth";
 import WaveSVG from "@/assets/wave.svg";
 import { LineChart01 } from "@/components/chart/line";
 
-const titles = ["Costing (TODO)", "Wastage", "Oil Used (TODO)", "Distance"];
-const Unit = ["", " Tons", " L", " Km"];
+const titles = [
+  "Total Cost Incurred",
+  "Total Wastege Dumping",
+  "Total Vehicles",
+  "Total Landfills",
+];
+const Unit = [" USD", " Tons", "", ""];
 
 const MonitorPage = async () => {
-  const session = await getServerAuthSession();
-  const response = await cubeClient.getTotalWaste();
-  console.log({ response });
-  console.log("session", session);
-  const wastage = (response?.transportation?.total_volume || 0);
-
-  const sum = {
+  // const session = await getServerAuthSession();
+  // const response = await cubeClient.getTotalWaste();
+  // const transportation = await cubeClient.getTransportationStats();
+  // const wastage = response?.transportation?.total_volume || 0;
+  const transportationData = await dbClient.transportation.getAll();
+  const vehicleData = await dbClient.vehicle.getAll();
+  const landfillData = await dbClient.landfill.getAll();
+  var sum = {
     costing: 0,
-    wastage,
-    oilUsed: 0,
-    distance: Math.round((((response?.transportation?.total_distance_meters || 0) /1000) || 0)),
+    wastage: 0,
+    totalVehicles: vehicleData.length,
+    tatalLandFill: landfillData.length,
   };
+  transportationData.forEach((item) => {
+    if (!item.padding) {
+      // Wastage calculation
+      sum.wastage += item.volume;
+      // Cost calucation
+      var capacity = 0;
+      if (item.vehicle.capacity == "fifteen_ton") capacity = 15;
+      else if (item.vehicle.capacity == "seven_ton") capacity = 7;
+      else if (item.vehicle.capacity == "five_ton") capacity = 5;
+      else if (item.vehicle.capacity == "three_ton") capacity = 3;
+      const unloadedCostRate = 0.5;
+      const loadedCostRate = 1.2;
+      var totalCost = unloadedCostRate * item.distance;
+      totalCost +=
+        (item.volume / capacity) *
+        (loadedCostRate - unloadedCostRate) *
+        item.distance;
+      sum.costing += totalCost;
+    }
+  });
 
   return (
     <main>
