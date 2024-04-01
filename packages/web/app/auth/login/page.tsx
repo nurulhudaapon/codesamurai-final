@@ -42,7 +42,7 @@ const Index = () => {
     <form onSubmit={handleSubmit} className="flex flex-col justify-center h-full gap-3">
       <p className="text-xl text-center mb-4">Login to EcoSync</p>
       <Input placeholder="Email" type="email" name="email" onChange={handleChange} required />
-      <Input placeholder="Password" name="password" onChange={handleChange} required />
+      <Input placeholder="Password" name="password" type="password" onChange={handleChange} required />
       <Link href={routes.auth.resetPassword.initiate()}>
         <p className="text-sm text-right">Forgot your password?</p>
       </Link>

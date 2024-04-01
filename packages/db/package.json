@@ -6,8 +6,8 @@
   "scripts": {
     "postinstall": "prisma generate",
     "reset": "prisma migrate reset --force",
-    "deploy": "prisma migrate deploy",
-    "seed": "prisma db seed",
+    "deploy": "prisma migrate deploy && prisma generate",
+    "seed": "prisma generate && prisma db seed",
     "generate": "prisma generate"
   },
   "prisma": {

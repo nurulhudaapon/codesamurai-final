@@ -141,10 +141,12 @@ erDiagram
   String sts_id FK "nullable"
   String landfill_id FK "nullable"
   String vehicle_id FK
-  transportation_location_type location_type
   Float volume
-  DateTime arrival_time
-  DateTime departure_time
+  DateTime arrival_time "nullable"
+  DateTime departure_time "nullable"
+  Boolean padding
+  Float distance
+  transportation_location_type location_type "nullable"
 }
 "vehicle" }o--|| "sts" : sts
 "transportation" }o--o| "sts" : sts
@@ -204,7 +206,9 @@ erDiagram
   - `sts_id`: STS ID associated with the STS entry.
   - `landfill_id`: Landfill ID where the wast is dumped
   - `vehicle_id`: Vehicle ID associated with the STS entry.
-  - `location_type`: Type of the location.
   - `volume`: Volume of waste.
   - `arrival_time`: Time of arrival.
   - `departure_time`: Time of departure.
+  - `padding`: 
+  - `distance`: Distance from the STS to the landfill.
+  - `location_type`: Type of the location.
