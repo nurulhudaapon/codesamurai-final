@@ -4,7 +4,6 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "postinstall": "prisma generate",
     "reset": "prisma migrate reset --force",
     "deploy": "prisma migrate deploy && prisma generate",
     "seed": "prisma db seed",

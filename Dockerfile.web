@@ -1,5 +1,6 @@
 FROM node:20.12.2-alpine3.19 AS base
 
+# Install all npm deps
 FROM base AS deps
 WORKDIR /app
 
@@ -8,10 +9,11 @@ COPY apps/web/package*.json ./apps/web/
 COPY packages/client/package*.json ./packages/client/
 COPY packages/core/package*.json ./packages/core/
 COPY packages/db/package*.json ./packages/db/
+COPY packages/cube/package*.json ./packages/cube/
 
 RUN npm ci
 
-
+# Install all internal deps
 FROM deps AS internal_deps
 WORKDIR /app
 
@@ -19,16 +21,15 @@ COPY packages ./packages
 COPY apps/web ./apps/web
 
 RUN npm ci
+RUN npm run generate -w @ecosync/db
 
-FROM deps AS builder
+# Build web app
+FROM internal_deps AS builder
 WORKDIR /app
-
-COPY  --from=deps /app/node_modules ./node_modules
-COPY  --from=deps /app/package.json .
-COPY apps/web ./apps/web
 
 RUN npm run build -w @ecosync/web
 
+# Copy necessary content and run app
 FROM base AS runner
 WORKDIR /app
 
