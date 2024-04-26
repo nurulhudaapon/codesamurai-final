@@ -2,16 +2,14 @@
   "name": "ecosync",
   "description": "A monorepo for the Ecosync - an app to to bridge the gaps, streamline processes, and enhance accountability through technological innovation.",
   "version": "0.0.0-alpha-0",
-  "module": "index.ts",
-  "main": "index.js",
-  "type": "module",
   "scripts": {
     "start:container": "docker compose up -d",
     "dev": "npm run start:container && npm run dev -w @ecosync/web",
     "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "devDependencies": {
     "@types/uuid": "^9.0.8",
