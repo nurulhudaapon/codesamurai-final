@@ -1,8 +1,7 @@
-import { EcosyncLogger } from "@ecosync/logger";
 import { Schema, type EcosyncDatabase } from "@ecosync/db";
 import type * as Entity from "@prisma/client";
 
-const console = new EcosyncLogger({ name: "Vehicle Service" }).init();
+
 
 /**
  * ## Vehicle entity related CRUD Operations

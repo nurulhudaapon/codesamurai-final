@@ -1,12 +1,8 @@
+import { ToastInitializer } from "@/components/toast";
+import { AuthProvider } from "@/context/AuthContext";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { EcosyncLogger } from "@ecosync/logger";
-import { Logger } from "@/components";
 import "../style/globals.css";
-import { AuthProvider } from "@/context/AuthContext";
-import { ToastInitializer } from "@/components/toast";
-
-globalThis.console = new EcosyncLogger({ name: "Web" }).init();
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,14 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <Logger>
         <html lang="en">
           <body className={inter.className}>
             <ToastInitializer />
             {children}
           </body>
         </html>
-      </Logger>
     </AuthProvider>
   );
 }

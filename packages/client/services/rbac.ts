@@ -1,7 +1,6 @@
-import { EcosyncLogger } from "@ecosync/logger";
 import type { EcosyncDatabase } from "@ecosync/db";
 
-const console = new EcosyncLogger({ name: "RBAC" }).init();
+
 
 /**
 * ## Role-Based Access Control (RBAC) Endpoints

@@ -1,8 +1,7 @@
-import { EcosyncLogger } from "@ecosync/logger";
 
 const gql = String.raw;
 
-const console = new EcosyncLogger({ name: "Cubejs Service" }).init();
+
 
 /**
  * ## Cubejs Related Service

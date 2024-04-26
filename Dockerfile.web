@@ -1,10 +1,44 @@
-FROM node:20
+FROM node:20.12.2-alpine3.19 AS base
+
+FROM base AS deps
 WORKDIR /app
-COPY . .
+
+COPY package*.json ./
+COPY apps/web/package*.json ./apps/web/
+COPY packages/client/package*.json ./packages/client/
+COPY packages/core/package*.json ./packages/core/
+COPY packages/db/package*.json ./packages/db/
+
 RUN npm ci
-RUN curl -fsSL https://bun.sh/install | bash
-RUN curl -fsSL https://bun.sh/install | bash -s "bun-v1.0.0"
-ENV DATABASE_URL postgresql://user:password@db/ecosync
+
+
+FROM deps AS internal_deps
+WORKDIR /app
+
+COPY packages ./packages
+COPY apps/web ./apps/web
+
+RUN npm ci
+
+FROM deps AS builder
+WORKDIR /app
+
+COPY  --from=deps /app/node_modules ./node_modules
+COPY  --from=deps /app/package.json .
+COPY apps/web ./apps/web
+
 RUN npm run build -w @ecosync/web
+
+FROM base AS runner
+WORKDIR /app
+
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder app/apps/web ./packages/web
+
+ENV NODE_ENV production
+ENV PORT 3000
+ENV DATABASE_URL postgresql://user:password@db/ecosync
+
 EXPOSE 3000
 CMD npm start -w @ecosync/web

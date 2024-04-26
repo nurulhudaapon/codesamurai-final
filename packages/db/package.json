@@ -12,7 +12,7 @@
   },
   "prisma": {
     "schema": "schema/schema.prisma",
-    "seed": "bun run seed/seed.ts"
+    "seed": "node --experimental-specifier-resolution=node --loader ts-node/esm seed/seed.ts"
   },
   "devDependencies": {
     "prisma": "^5.11.0",
