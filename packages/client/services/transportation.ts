@@ -1,8 +1,7 @@
-import { EcosyncLogger } from "@ecosync/logger";
 import { Schema, type EcosyncDatabase } from "@ecosync/db";
 import type * as Entity from "@prisma/client";
 
-const console = new EcosyncLogger({ name: "Landfill-Dumping Service" }).init();
+
 
 /**
  * ## Landfill Dumping entity related CRUD Operations

@@ -1,6 +1,5 @@
 import { EcosyncDatabase } from "@ecosync/db";
 import { EcosyncLandfillService } from "./services/landfill";
-import { EcosyncLogger } from "@ecosync/logger";
 import { EcosyncPermissionService } from "./services/permission";
 import { EcosyncRbacService } from "./services/rbac";
 import { EcosyncRoleService } from "./services/role";
@@ -9,7 +8,7 @@ import { EcosyncTransportationService } from "./services/transportation";
 import { EcosyncUserService } from "./services/user";
 import { EcosyncVehicleService } from "./services/vehicle";
 
-const console = new EcosyncLogger({ name: "DbClient" }).init();
+
 
 export class EcosyncDbClient {
 

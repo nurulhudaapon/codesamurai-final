@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { EcosyncLogger } from "@ecosync/logger";
 import { Logger } from "@/components";
 import "../style/globals.css";
 import { AuthProvider } from "@/context/AuthContext";

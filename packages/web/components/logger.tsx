@@ -1,6 +1,5 @@
 "use client";
 
-import { EcosyncLogger } from "@ecosync/logger";
 
 globalThis.console = new EcosyncLogger({ name: "Web" }).init();
 

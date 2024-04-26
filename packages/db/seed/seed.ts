@@ -1,9 +1,8 @@
-import { EcosyncLogger } from "@ecosync/logger";
 import { InitData } from "../data";
 import { getPrismaClient } from "../client";
 import { Prisma } from "@prisma/client";
 
-const console = new EcosyncLogger({ name: "Database" }).init();
+
 
 const main = async () => {
   console.log("🪫 Seeding database...");
