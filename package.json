@@ -5,7 +5,8 @@
   "scripts": {
     "start:container": "docker compose up -d",
     "dev": "npm run start:container && npm run dev -w @ecosync/web",
-    "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force"
+    "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force",
+    "app:web": "npm run web -w @ecosync/app"
   },
   "workspaces": [
     "packages/*",
@@ -21,6 +22,7 @@
     "clsx": "^2.1.0",
     "kleur": "^4.1.5",
     "lodash": "^4.17.21",
+    "lucide-react-native": "^0.378.0",
     "next-auth": "^4.24.7",
     "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^2.2.2",
