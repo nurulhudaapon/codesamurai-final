@@ -28,13 +28,27 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  const authenticated = false;
+
+  if (authenticated) {
+    return <RootLayoutNav />;
+  } else {
+    return <AuthLayoutNav />;
+  }
 }
 
 function RootLayoutNav() {
   return (
     <Stack>
-      <Stack.Screen name="(home)" options={{ headerShown: false }} />
+      <Stack.Screen name="(main)" options={{ headerShown: false }} />
+    </Stack>
+  );
+}
+
+function AuthLayoutNav() {
+  return (
+    <Stack>
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
     </Stack>
   );
 }
