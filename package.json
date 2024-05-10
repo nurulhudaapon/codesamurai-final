@@ -5,6 +5,7 @@
   "scripts": {
     "start:container": "docker compose up -d",
     "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force",
+    "app": "npm start -w @ecosync/app",
     "app:web": "npm run web -w @ecosync/app",
     "dev": "npm run dev -w @ecosync/web"
   },
@@ -20,8 +21,10 @@
     "supabase": "^1.142.2"
   },
   "dependencies": {
-    "clsx": "^2.1.0",
     "@supabase/postgrest-js": "^1.11.0",
+    "clsx": "^2.1.0",
+    "expo-image": "~1.10.6",
+    "expo-secure-store": "^13.0.1",
     "kleur": "^4.1.5",
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.378.0",

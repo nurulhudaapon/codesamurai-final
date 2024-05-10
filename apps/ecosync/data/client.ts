@@ -1,3 +1,3 @@
 import { createDbApiClient } from "@ecosync/db/api";
 
-export const dbClient = createDbApiClient(process.env.DATABASE_API_URL, process.env.AUTH_JWT_SECRET);
+export const dbClient = createDbApiClient("http://localhost:8080", "ecosync-jwt-secret");
