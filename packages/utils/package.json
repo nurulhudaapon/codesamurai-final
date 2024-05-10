@@ -1,0 +1,6 @@
+{
+  "name": "@ecosync/utils",
+  "description": "All the utilities used in the Ecosync project",
+  "module": "index.ts",
+  "type": "module"
+}

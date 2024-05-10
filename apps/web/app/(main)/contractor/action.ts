@@ -1,13 +1,16 @@
 "use server";
 import { dbApiClient } from "@/client";
 import { Schema } from "@ecosync/db";
+import { Objects } from "@ecosync/utils";
 
 export async function createContractorCompany(prev: any, form: FormData) {
   const formData = Object.fromEntries(form.entries());
-  const parsedData = Schema.contractor_companySchema.safeParse(formData);
+  const parsedData = Schema.contractor_companySchema.safeParse(
+    Objects.coerceNumbers(formData)
+  );
 
-  console.log({parsedData, formData});
-  
+  console.log({ parsedData, formData });
+
   if (!parsedData.success) {
     return {
       errors: parsedData.error.flatten().fieldErrors,
