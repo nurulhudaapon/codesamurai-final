@@ -104,8 +104,9 @@ export function ContractorForm() {
         />
       </div>
       <Suspense>
-
-      <StsSelector />
+        <div>
+        <StsSelector />
+        </div>
       </Suspense>
       <Button type="submit">Submit</Button>
     </form>

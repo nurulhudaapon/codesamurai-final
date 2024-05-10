@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 const now = new Date();
 
-const password = bcrypt.hashSync("password", 10);
+const password = "password"
 
 //======== Initial Data ========
 
