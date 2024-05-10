@@ -9,7 +9,7 @@ const titles = [
   "Total Vehicles",
   "Total Landfills",
 ];
-const Unit = [" USD", " Tons", "", ""];
+const Unit = [" ", " Tons", "", ""];
 
 const MonitorPage = async () => {
   // const session = await getServerAuthSession();

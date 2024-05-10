@@ -14,6 +14,13 @@ export class EcosyncUserService {
   }
 
   /**
+   * Get user count
+   */
+  getCount() {
+    return this.#client.user.count();
+  }
+
+  /**
    * Get All User
    * @returns {Promise<Array<Entity.user>>} A promise that resolves to an array of User objects
    */

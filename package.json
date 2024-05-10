@@ -4,9 +4,9 @@
   "version": "0.0.0-alpha-0",
   "scripts": {
     "start:container": "docker compose up -d",
-    "dev": "npm run start:container && npm run dev -w @ecosync/web",
     "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force",
-    "app:web": "npm run web -w @ecosync/app"
+    "app:web": "npm run web -w @ecosync/app",
+    "dev": "npm run dev -w @ecosync/web"
   },
   "workspaces": [
     "packages/*",

@@ -6,6 +6,7 @@
   "scripts": {
     "reset": "prisma migrate reset --force",
     "deploy": "prisma migrate deploy && prisma generate && npm run postdeploy",
+    "studio": "prisma studio",
     "seed": "prisma db seed",
     "generate": "prisma generate",
     "typegen": "bash ./tools/typegen.sh",
