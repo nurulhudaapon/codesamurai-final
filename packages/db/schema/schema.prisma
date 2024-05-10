@@ -81,10 +81,11 @@ model user {
   // manager_sts sts[] @relation(name: "manager_sts")
   creator_sts sts[] @relation(name: "creator_sts")
 
-  createor_landfill landfill[] @relation(name: "creator_landfill")
+  createor_landfill       landfill[]                @relation(name: "creator_landfill")
   // manager_landfill  landfill[] @relation(name: "manager_landfill")
-  issue             issue[]
-  post              post[]
+  issue                   issue[]
+  post                    post[]
+  user_contractor_company user_contractor_company[]
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
@@ -442,8 +443,25 @@ model contractor_company {
   sts_id String @db.Uuid
 
   /// Relation to the STS
-  sts       sts         @relation(fields: [sts_id], references: [id])
-  workforce workforce[]
+  sts                     sts                       @relation(fields: [sts_id], references: [id])
+  workforce               workforce[]
+  user_contractor_company user_contractor_company[]
+}
+
+/// @namespace Workforce
+/// Represents the relation between user and contractor company.
+model user_contractor_company {
+  /// User ID associated with the user contractor company.
+  user_id String @id @db.Uuid
+
+  /// Contractor company ID associated with the user contractor company.
+  contractor_company_id String @db.Uuid
+
+  /// Relation to the user
+  user user @relation(fields: [user_id], references: [id])
+
+  /// Relation to the contractor company
+  contractor_company contractor_company @relation(fields: [contractor_company_id], references: [id])
 }
 
 model workforce_log {
@@ -455,6 +473,10 @@ model workforce_log {
 
   /// Workforce ID
   workforce_id String @db.Uuid
+
+  /// GPS Coordinates of the current location
+  latitude  Float?
+  longitude Float?
 
   // relation to the workforce
   workforce workforce @relation(fields: [workforce_id], references: [id])
@@ -500,6 +522,7 @@ model workforce {
 enum workforce_log_type {
   start
   end
+  track
 }
 
 enum post_type {

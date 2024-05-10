@@ -497,6 +497,36 @@ export type Database = {
           },
         ]
       }
+      user_contractor_company: {
+        Row: {
+          contractor_company_id: string
+          user_id: string
+        }
+        Insert: {
+          contractor_company_id: string
+          user_id: string
+        }
+        Update: {
+          contractor_company_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_contractor_company_contractor_company_id_fkey"
+            columns: ["contractor_company_id"]
+            isOneToOne: false
+            referencedRelation: "contractor_company"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_contractor_company_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       vehicle: {
         Row: {
           capacity: Database["public"]["Enums"]["vehicle_capacity"]
@@ -551,11 +581,107 @@ export type Database = {
           },
         ]
       }
+      workforce: {
+        Row: {
+          assigned_collection_route: string
+          contact_information: string
+          contractor_id: string
+          dob: string
+          full_name: string
+          hired_at: string
+          id: string
+          job_title: string
+          payment_rate: number
+        }
+        Insert: {
+          assigned_collection_route: string
+          contact_information: string
+          contractor_id: string
+          dob: string
+          full_name: string
+          hired_at: string
+          id: string
+          job_title: string
+          payment_rate: number
+        }
+        Update: {
+          assigned_collection_route?: string
+          contact_information?: string
+          contractor_id?: string
+          dob?: string
+          full_name?: string
+          hired_at?: string
+          id?: string
+          job_title?: string
+          payment_rate?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workforce_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractor_company"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workforce_log: {
+        Row: {
+          created_at: string
+          id: string
+          type: Database["public"]["Enums"]["workforce_log_type"]
+          updated_at: string
+          workforce_id: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          type: Database["public"]["Enums"]["workforce_log_type"]
+          updated_at?: string
+          workforce_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          type?: Database["public"]["Enums"]["workforce_log_type"]
+          updated_at?: string
+          workforce_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workforce_log_workforce_id_fkey"
+            columns: ["workforce_id"]
+            isOneToOne: false
+            referencedRelation: "workforce"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      algorithm_sign: {
+        Args: {
+          signables: string
+          secret: string
+          algorithm: string
+        }
+        Returns: string
+      }
+      armor: {
+        Args: {
+          "": string
+        }
+        Returns: string
+      }
+      dearmor: {
+        Args: {
+          "": string
+        }
+        Returns: string
+      }
       distance: {
         Args: {
           lat1: number
@@ -564,6 +690,80 @@ export type Database = {
           lon2: number
         }
         Returns: number
+      }
+      gen_random_bytes: {
+        Args: {
+          "": number
+        }
+        Returns: string
+      }
+      gen_random_uuid: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      gen_salt: {
+        Args: {
+          "": string
+        }
+        Returns: string
+      }
+      login: {
+        Args: {
+          email: string
+          pass: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["jwt_token"]
+      }
+      pgp_armor_headers: {
+        Args: {
+          "": string
+        }
+        Returns: Record<string, unknown>[]
+      }
+      pgp_key_id: {
+        Args: {
+          "": string
+        }
+        Returns: string
+      }
+      sign: {
+        Args: {
+          payload: Json
+          secret: string
+          algorithm?: string
+        }
+        Returns: string
+      }
+      url_decode: {
+        Args: {
+          data: string
+        }
+        Returns: string
+      }
+      url_encode: {
+        Args: {
+          data: string
+        }
+        Returns: string
+      }
+      user_role: {
+        Args: {
+          email: string
+          pass: string
+        }
+        Returns: unknown
+      }
+      verify: {
+        Args: {
+          token: string
+          secret: string
+          algorithm?: string
+        }
+        Returns: {
+          header: Json
+          payload: Json
+          valid: boolean
+        }[]
       }
     }
     Enums: {
@@ -576,9 +776,12 @@ export type Database = {
         | "dump_truck"
         | "compactor"
         | "container_carrier"
+      workforce_log_type: "start" | "end"
     }
     CompositeTypes: {
-      [_ in never]: never
+      jwt_token: {
+        token: string | null
+      }
     }
   }
 }

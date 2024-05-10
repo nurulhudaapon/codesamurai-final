@@ -34,6 +34,8 @@ export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachme
 
 export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id']);
 
+export const User_contractor_companyScalarFieldEnumSchema = z.enum(['user_id','contractor_company_id']);
+
 export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','workforce_id','created_at','updated_at']);
 
 export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','contractor_id','assigned_collection_route']);
@@ -538,6 +540,27 @@ export const contractor_companySchema = z.object({
 })
 
 export type contractor_company = z.infer<typeof contractor_companySchema>
+
+/////////////////////////////////////////
+// USER CONTRACTOR COMPANY SCHEMA
+/////////////////////////////////////////
+
+/**
+ * @namespace Workforce
+ * Represents the relation between user and contractor company.
+ */
+export const user_contractor_companySchema = z.object({
+  /**
+   * User ID associated with the user contractor company.
+   */
+  user_id: z.string(),
+  /**
+   * Contractor company ID associated with the user contractor company.
+   */
+  contractor_company_id: z.string(),
+})
+
+export type user_contractor_company = z.infer<typeof user_contractor_companySchema>
 
 /////////////////////////////////////////
 // WORKFORCE LOG SCHEMA
