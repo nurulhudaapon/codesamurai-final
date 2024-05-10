@@ -1,6 +1,6 @@
 "use server";
 
-import { cubeClient, dbClient } from "@/client";
+import { cubeClient, dbApiClient, dbClient } from "@/client";
 import { Entity } from "@/types/prisma";
 
 
@@ -9,7 +9,7 @@ export const getAllTransportationStats = async () => {
 }
 
 export const getAllContractors = async () => {
-  // return await dbClient.contractor.getAll();
+  return await dbApiClient.from('contractor_company').select('*');
 }
 
 export const updateTransportation = async (id: string, transportationData: Entity.transportation) => {

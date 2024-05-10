@@ -19,6 +19,7 @@ export type CreationTransportatioProps = {
   onClose: () => void;
   triggerUpdate: () => void;
   modalType: string;
+  contractors_company: Entity.contractor_company[];
 };
 
 export const TransportationModal = ({
@@ -29,6 +30,7 @@ export const TransportationModal = ({
   stss,
   onClose,
   modalType,
+  contractors_company,
 }: CreationTransportatioProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -54,6 +56,7 @@ export const TransportationModal = ({
       departure_time: new Date(),
       arrival_time: new Date(),
       location_type: "landfill",
+      contractor_id: contractors_company[0].id,
     })
       .then(() => {
         triggerUpdate?.();
@@ -112,17 +115,17 @@ export const TransportationModal = ({
         ) : (
           <div className="mb-2">
             <label
-              htmlFor="landfill_id"
+              htmlFor="contractor_id"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Select Landfill
+              Select Contractor
             </label>
             <Select
-              name="landfill_id"
+              name="contractor_id"
               required
-              options={landfills.map((landfill) => ({
-                value: landfill.id,
-                label: landfill.name,
+              options={contractors_company.map((contractor) => ({
+                value: contractor.id,
+                label: contractor.name,
               }))}
             />
           </div>
@@ -146,40 +149,17 @@ export const TransportationModal = ({
             }))}
           />
         </div>
-
-        <div className="flex flex-row gap-4">
-          <Input
-            name="volume"
-            type="number"
-            required
-            placeholder="Volume"
-            // onChange={(e) => {
-            //   const value = +e.target.value;
-            // }}
-          />
-          <Input
-            name="distance"
-            type="number"
-            required
-            placeholder="Distance From STS to Landfill"
-            // onChange={(e) => {
-            //   const value = +e.target.value;
-            // }}
-          />
-        </div>
-
-        {/* <Input
-          name="arrival_time"
-          type="datetime-local"
-          required
-          placeholder="Arrival time"
-        />
-        <Input
-          name="departure_time"
-          type="datetime-local"
-          required
-          placeholder="Departure time"
-        /> */}
+        {modalType === "sts" && (
+          <div className="flex flex-row gap-4">
+            <Input name="volume" type="number" required placeholder="Volume" />
+            <Input
+              name="distance"
+              type="number"
+              required
+              placeholder="Distance From STS to Landfill"
+            />
+          </div>
+        )}
       </Modal>
     </form>
   );

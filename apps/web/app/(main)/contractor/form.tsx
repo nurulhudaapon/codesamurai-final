@@ -8,6 +8,8 @@ import { Suspense } from "react";
 import { Entity } from "@/types/prisma";
 import { Select } from "@/components/select";
 const now = new Date();
+import { v4 as uuid } from "uuid";
+import { notify } from "@/components/toast";
 
 type ContractorProps = {
   currentUserId: string;
@@ -16,16 +18,19 @@ type ContractorProps = {
 
 export function ContractorForm({ currentUserId, Sts }: ContractorProps) {
   // @ts-ignore
-  const [{ errors }, formAction] = useFormState(createContractorCompany, {
-    errors: null,
-  });
-
+  const [{ errors, message }, formAction] = useFormState(
+    createContractorCompany,
+    {
+      errors: null,
+    }
+  );
   return (
     <form action={formAction} className="max-w-lg mx-auto">
       <h1 className="text-xl text-center font-bold my-4">
         Add A New Contractor
       </h1>
       <div className="flex flex-row gap-4">
+        <input type="hidden" name="id" defaultValue={uuid()} />
         <Input
           label="Company name"
           placeholder="Name"
@@ -125,6 +130,7 @@ export function ContractorForm({ currentUserId, Sts }: ContractorProps) {
         />
       </div>
       <Button type="submit">Submit</Button>
+      {message && notify.success("Contractor added successfully!")}
     </form>
   );
 }

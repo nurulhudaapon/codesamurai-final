@@ -8,6 +8,7 @@ import {
   getUsers,
   getAllContractors,
 } from "../server";
+import { Entity } from "@/types/prisma";
 
 export default async function Index() {
   const session = await getServerAuthSession();
@@ -24,7 +25,9 @@ export default async function Index() {
       stss={stss}
       landfills={landfills}
       vehicles={vehicles}
-      contractors_company={contractors_company}
+      contractors_company={
+        contractors_company.data as unknown as Entity.contractor_company[]
+      }
     />
   );
 }

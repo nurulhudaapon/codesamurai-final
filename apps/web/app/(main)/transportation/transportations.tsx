@@ -25,7 +25,7 @@ export type TransportatioProps = {
   landfills: Entity.landfill[];
   vehicles: Entity.vehicle[];
   transportations: getAllTransportationStatsType;
-  // contractors_company: Entity.contractor[];
+  contractors_company: Entity.contractor_company[];
 };
 
 export default function Transportations({
@@ -34,6 +34,7 @@ export default function Transportations({
   vehicles,
   landfills,
   stss,
+  contractors_company,
 }: TransportatioProps) {
   const [transportations, setTransportations] = useState(trans);
   const [modalInfo, setModalInfo] = useState({
@@ -116,6 +117,7 @@ export default function Transportations({
           onClose={() => setModalInfo({ open: false, type: "" })}
           modalType={modalInfo.type}
           triggerUpdate={fetchTransportations}
+          contractors_company={contractors_company}
         />
       )}
     </>

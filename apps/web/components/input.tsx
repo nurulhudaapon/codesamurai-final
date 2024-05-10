@@ -11,10 +11,10 @@ const Input: React.FC<InputProps> = ({
   name,
   label,
   errors,
+  hidden,
   ...rest
 }) => {
   const errorMessage = name ? errors?.[name]?.[0] : null;
-  console.log(errors);
   return (
     <div className="w-full">
       {label && (
@@ -28,8 +28,8 @@ const Input: React.FC<InputProps> = ({
 
       <input
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        {...rest}
         name={name}
+        {...rest}
       />
 
       {errorMessage ? (
