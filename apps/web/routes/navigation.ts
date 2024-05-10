@@ -63,6 +63,13 @@ export const navigations = [
     require_permissions: [],
   },
   {
+    key: "contractor",
+    icon: BadgeHelp,
+    label: "Contractor",
+    path: routes.main.contractor(),
+    require_permissions: [],
+  },
+  {
     key: "users",
     icon: Users,
     label: "Users",
