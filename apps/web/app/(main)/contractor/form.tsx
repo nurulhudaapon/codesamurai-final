@@ -6,13 +6,15 @@ import { createContractorCompany } from "./action";
 import { StsSelector } from "./server";
 import { Suspense } from "react";
 import { Entity } from "@/types/prisma";
+import { Select } from "@/components/select";
 const now = new Date();
-type VehicleProps = {
+
+type ContractorProps = {
   currentUserId: string;
   Sts: Entity.sts[];
 };
 
-export function ContractorForm({ currentUserId, Sts }: VehicleProps) {
+export function ContractorForm({ currentUserId, Sts }: ContractorProps) {
   // @ts-ignore
   const [{ errors }, formAction] = useFormState(createContractorCompany, {
     errors: null,
@@ -112,11 +114,16 @@ export function ContractorForm({ currentUserId, Sts }: VehicleProps) {
           errors={errors}
         />
       </div>
-      {/* <Suspense>
-        <div>
-        <StsSelector />
-        </div>
-      </Suspense> */}
+      <div className="mb-4">
+        <Select
+          name="sts_id"
+          className="w-full"
+          options={Sts.map((sts) => ({
+            value: sts.id,
+            label: `STS Ward Number ${sts.ward_number} (${sts.capacity_tonnes} Ton)`,
+          }))}
+        />
+      </div>
       <Button type="submit">Submit</Button>
     </form>
   );

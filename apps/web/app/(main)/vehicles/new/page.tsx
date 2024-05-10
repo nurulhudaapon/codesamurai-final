@@ -1,6 +1,6 @@
 import React from "react";
 import { getServerAuthSession } from "@/utils/auth";
-import NewVehicleEntry from "./main-new";
+import NewVehicleEntry from "./form";
 import { getAllSts } from "../../sts/server";
 const now = new Date();
 

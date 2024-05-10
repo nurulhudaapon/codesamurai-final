@@ -18,7 +18,9 @@ type NewStsMainProps = {
 export const NewWork = ({ currentUserId, managers }: NewStsMainProps) => {
   return (
     <form className="max-w-lg mx-auto">
-      <h1 className="text-xl text-center font-bold my-4">Add work details</h1>
+      <h1 className="text-xl text-center font-bold my-4">
+        Add Employee work details
+      </h1>
       <div className="grid grid-cols-2 gap-x-4">
         <Input label="Daily Log-in/start time" type="time" name="opens_at" />
         <Input label="Daily Log-out/end time" type="time" name="closes_at" />
@@ -39,13 +41,12 @@ export const NewWork = ({ currentUserId, managers }: NewStsMainProps) => {
         />
       </div>
 
-      <InputRadio label="Default" name="Default" />
-      <InputRadio label="Absence" name="Absences" />
-      <InputRadio label="Leaves" name="Leaves" />
+      <InputRadio label="Absence" id="status-1" name="user_status" value={0} />
+      <InputRadio label="Leaves" id="status-2" name="user_status" value={1} />
       <div className="flex justify-center items-center mt-8">
         <Button
           type="submit"
-          className="w-[100%] text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="w-[100%] text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         >
           Add Work
         </Button>

@@ -1,3 +1,4 @@
+import { error } from "console";
 import React, { ChangeEvent, InputHTMLAttributes } from "react";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -13,7 +14,7 @@ const Input: React.FC<InputProps> = ({
   ...rest
 }) => {
   const errorMessage = name ? errors?.[name]?.[0] : null;
-
+  console.log(errors);
   return (
     <div className="w-full">
       {label && (

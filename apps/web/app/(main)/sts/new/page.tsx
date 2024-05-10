@@ -5,7 +5,7 @@ import { createSts } from "../server";
 import { notify } from "@/components/toast";
 import { getUsers } from "../../users/server";
 import { getServerAuthSession } from "@/utils/auth";
-import NewStsMain from "./main-new";
+import NewStsMain from "./form";
 const now = new Date();
 
 const Index = async () => {

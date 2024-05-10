@@ -1,6 +1,6 @@
 import { getServerAuthSession } from "@/utils/auth";
 import { getUsers } from "../../users/server";
-import NewStsMain from "./main-new";
+import NewStsMain from "./form";
 const now = new Date();
 
 const Index = async () => {

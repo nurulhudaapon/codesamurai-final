@@ -22,6 +22,8 @@ const coerceNumbers = <ObjT extends object>(
       }
     }
   }
+
+  return obj;
 };
 
 export const Objects = Object.assign({}, { coerceNumbers });

@@ -9,7 +9,7 @@ export async function createContractorCompany(prev: any, form: FormData) {
     Objects.coerceNumbers(formData)
   );
 
-  console.log({ parsedData, formData });
+  // console.log({ parsedData, formData, t: parsedData?.error?.errors });
 
   if (!parsedData.success) {
     return {

@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 import { notify } from "@/components/toast";
 import { getUsers } from "../../users/server";
 import { getServerAuthSession } from "@/utils/auth";
-import { NewWork } from "./main-new";
+import { NewWork } from "./form";
 const now = new Date();
 
 const Index = async () => {
