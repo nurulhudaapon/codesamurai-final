@@ -1,14 +1,15 @@
-// import { getAllSts } from "./server";
 import { StatsCard } from "@/components/card";
-import MainListing from "./listing";
 import { cubeClient, dbApiClient, dbClient } from "@/client";
 import { Helpers } from "@ecosync/utils";
+import { IssueCardList } from "./listing";
 
 export default async function IndexPage() {
-  const data = await dbApiClient.from('issue').select('*', {count: 'exact'}).order('created_at', { ascending: false }).limit(50);
+  const {data} = await dbApiClient.from('issue').select('*', {count: 'exact'}).order('created_at', { ascending: false }).limit(50);
   const stats = await cubeClient.getIssueStats();
 
   console.log(stats)
+
+
 
   return (
     <>
@@ -21,7 +22,7 @@ export default async function IndexPage() {
         <StatsCard title={"Reviewed"} value={stats.reviewed.count + Helpers.String.pluralize(" issue", stats.reviewed.count)} />
         <StatsCard title={"Flagged"} value={stats.flagged.count + Helpers.String.pluralize(" issue", stats.flagged.count)} />
       </div>
-      {/* <MainListing data={data} /> */}
+      <IssueCardList data={data || []} />
     </>
   );
 }

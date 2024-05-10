@@ -412,6 +412,9 @@ model post {
   /// Attachments of the post
   attachments String[]
 
+  /// Flag score to determine if the post is spam
+  flag_score Int
+
   /// Timestamp indicating when the post was made
   created_at DateTime @default(now()) @db.Timestamptz(6)
   updated_at DateTime @default(now()) @db.Timestamptz(6)
@@ -421,6 +424,20 @@ model post {
 
   /// Relation to the user who created
   user user? @relation(fields: [created_by_user_id], references: [id])
+}
+
+model blocked_words {
+  /// Unique identifier for the STS.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Word that is blocked
+  word String
+
+  /// Weight of the word
+  weight Int
+
+  /// Timestamp indicating when the post was made
+  created_at DateTime @default(now()) @db.Timestamptz(6)
 }
 
 model contractor_company {

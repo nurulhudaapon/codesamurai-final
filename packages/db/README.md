@@ -185,9 +185,16 @@ erDiagram
   String content
   post_type type
   String attachments
+  Int flag_score
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK "nullable"
+}
+"blocked_words" {
+  String id PK
+  String word
+  Int weight
+  DateTime created_at
 }
 "contractor_company" {
   String id PK
@@ -316,9 +323,18 @@ erDiagram
   - `content`: Content of the post
   - `type`: Type of the post: event, announcement, post
   - `attachments`: Attachments of the post
+  - `flag_score`: Flag score to determine if the post is spam
   - `created_at`: Timestamp indicating when the post was made
   - `updated_at`: 
   - `created_by_user_id`: 
+
+### `blocked_words`
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `word`: Word that is blocked
+  - `weight`: Weight of the word
+  - `created_at`: Timestamp indicating when the post was made
 
 ### `contractor_company`
 

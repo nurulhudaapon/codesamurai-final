@@ -30,7 +30,9 @@ export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','up
 
 export const IssueScalarFieldEnumSchema = z.enum(['id','title','description','type','attachments','status','created_at','updated_at','created_by_user_id','latitude','longitude']);
 
-export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachments','created_at','updated_at','created_by_user_id']);
+export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachments','flag_score','created_at','updated_at','created_by_user_id']);
+
+export const Blocked_wordsScalarFieldEnumSchema = z.enum(['id','word','weight','created_at']);
 
 export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id']);
 
@@ -483,6 +485,10 @@ export const postSchema = z.object({
    */
   attachments: z.string().array(),
   /**
+   * Flag score to determine if the post is spam
+   */
+  flag_score: z.number().int(),
+  /**
    * Timestamp indicating when the post was made
    */
   created_at: z.coerce.date(),
@@ -491,6 +497,31 @@ export const postSchema = z.object({
 })
 
 export type post = z.infer<typeof postSchema>
+
+/////////////////////////////////////////
+// BLOCKED WORDS SCHEMA
+/////////////////////////////////////////
+
+export const blocked_wordsSchema = z.object({
+  /**
+   * Unique identifier for the STS.
+   */
+  id: z.string().uuid(),
+  /**
+   * Word that is blocked
+   */
+  word: z.string(),
+  /**
+   * Weight of the word
+   */
+  weight: z.number().int(),
+  /**
+   * Timestamp indicating when the post was made
+   */
+  created_at: z.coerce.date(),
+})
+
+export type blocked_words = z.infer<typeof blocked_wordsSchema>
 
 /////////////////////////////////////////
 // CONTRACTOR COMPANY SCHEMA

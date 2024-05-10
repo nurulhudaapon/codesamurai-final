@@ -1,5 +1,5 @@
 export * from "./schema";
-
+export * from './types/table.entity';
 import { getPrismaClient } from "./client";
 
 
