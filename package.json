@@ -14,11 +14,12 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@types/leaflet": "^1.9.12",
     "@types/uuid": "^9.0.8",
     "bun-types": "latest",
     "prettier": "^3.2.5",
-    "typescript": "^5.0.0",
-    "supabase": "^1.142.2"
+    "supabase": "^1.142.2",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "@supabase/postgrest-js": "^1.11.0",
@@ -30,10 +31,12 @@
     "expo-location": "~16.5.5",
     "expo-secure-store": "^13.0.1",
     "kleur": "^4.1.5",
+    "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.378.0",
     "next-auth": "^4.24.7",
     "react-hot-toast": "^2.4.1",
+    "react-leaflet": "^4.2.1",
     "react-native-maps": "1.10.0",
     "react-native-modal": "^13.0.1",
     "react-native-reanimated": "~3.6.2",

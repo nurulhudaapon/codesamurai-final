@@ -1,67 +1,57 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import L, { LatLngTuple } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { Entity } from "@/types/prisma";
 
-type LandFill = {
-  _id: string;
-  name: string;
-  capacity_tonnes: number;
-  location: string;
-  Latitude?: any;
-  Longitude?: any;
+type Props = {
+  data?: Entity.issue[];
+  center?: LatLngTuple;
+  selectedIndex?: number;
 };
+
 const position = [51.505, -0.09];
 
-export const MyMap = ({
-  data,
-  center,
-  selectedIndex,
-}: {
-  data: LandFill[];
-  center: LatLngTuple;
-  selectedIndex: number | null;
-}) => {
-  const allLatLng: any = data.map((store) => [
-    store.Latitude.$numberDecimal,
-    store.Longitude.$numberDecimal,
+export const MyMap = ({ data, center, selectedIndex }: Props) => {
+  const [isClient, setIsClient] = useState(false);
+  const allLatLng: any = data?.map((store) => [
+    store.latitude,
+    store.longitude,
   ]);
-  // const map = useMap(); it can be used decendent of MapContainer
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
+  if (!isClient) {
+    return null;
+  }
   return (
     <MapContainer
-      zoom={5}
+      zoom={1}
       minZoom={3}
       maxZoom={16}
-      // bounds={allLatLng}
-      style={{ height: "60vh", width: "100vw" }}
+      bounds={allLatLng}
+      style={{ width: "100%", height: "300px" }}
       scrollWheelZoom={true}
       markerZoomAnimation={true}
-      center={[23.44, 90.2]}
       id="map"
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <MyMarkers
-        data={[
-          {
-            name: "Landfill 1",
-            location: "Location 1",
-            Latitude: { $numberDecimal: 23.44 },
-            Longitude: { $numberDecimal: 90.2 },
-          },
-          {
-            name: "Landfill 2",
-            location: "Location 2",
-            Latitude: { $numberDecimal: 23.44 },
-            Longitude: { $numberDecimal: 90.2 },
-          },
-        ]}
-        selectedIndex={selectedIndex}
-      />
+      {isClient && (
+        <MyMarkers
+          data={data?.map((item) => ({
+            // name: item.name,
+            // location: item.location,
+            title: item.title,
+            Latitude: item.latitude,
+            Longitude: item.longitude,
+          }))}
+        />
+      )}
     </MapContainer>
   );
 };
@@ -72,10 +62,9 @@ const MyMarkers = ({ data, selectedIndex }: any) => {
       key={index}
       content={item}
       center={{
-        lat: item.Latitude.$numberDecimal,
-        lng: item.Longitude.$numberDecimal,
+        lat: item.Latitude,
+        lng: item.Longitude,
       }}
-      openPopup={selectedIndex === index}
     />
   ));
 };
@@ -92,11 +81,11 @@ const PointMarker = ({ center, content, openPopup }: any) => {
   }, [map, center, openPopup]);
 
   return (
-    <Marker ref={markerRef} position={[23.44, 90.2]}>
+    <Marker ref={markerRef} position={[center.lat, center.lng]}>
       <Popup>
-        <b>{content.name}</b>
-        <br />
-        {content.location}
+        <b>{content.tile}</b>
+        {/* <br />
+        {content.location} */}
       </Popup>
     </Marker>
   );

@@ -1,7 +1,9 @@
-import { cubeClient, dbClient } from "@/client";
+import { cubeClient, dbApiClient, dbClient } from "@/client";
 import { getServerAuthSession } from "@/utils/auth";
 import WaveSVG from "@/assets/wave.svg";
 import { LineChart01 } from "@/components/chart/line";
+import { MyMap } from "@/components/map/Map";
+import { Entity } from "@/types/prisma";
 
 const titles = [
   "Total Cost Incurred",
@@ -19,6 +21,8 @@ const MonitorPage = async () => {
   const transportationData = await dbClient.transportation.getAll();
   const vehicleData = await dbClient.vehicle.getAll();
   const landfillData = await dbClient.landfill.getAll();
+  const { data: issuesData } = await dbApiClient.from("issue").select("*");
+
   var sum = {
     costing: 0,
     wastage: 0,
@@ -72,6 +76,17 @@ const MonitorPage = async () => {
             </div>
           </div>
         </div> */}
+        {/* ..Add Map Component.. */}
+
+        <div className="mt-8">
+          {/* <h1 className="font-semibold text-lg">Waste Dumping Locations</h1> */}
+          <h1 className="font-semibold text-lg">
+            Waste Dumping Issue Locations
+          </h1>
+          <div className="bg-white p-4 rounded-md shadow-sm my-4">
+            <MyMap data={issuesData as unknown as Entity.issue[]} />
+          </div>
+        </div>
       </div>
     </main>
   );

@@ -229,6 +229,7 @@ erDiagram
   String job_title
   Float payment_rate
   String contact_information
+  String collection_route "nullable"
   String contractor_id FK
   String assigned_collection_route
 }
@@ -376,5 +377,6 @@ erDiagram
   - `job_title`: Job Title
   - `payment_rate`: Payment rate per hour
   - `contact_information`: Contact Information
+  - `collection_route`: Assigned collection route
   - `contractor_id`: Contractor ID
   - `assigned_collection_route`: Assigned Collection Route

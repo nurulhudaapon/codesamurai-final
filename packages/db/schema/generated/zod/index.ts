@@ -40,7 +40,7 @@ export const User_contractor_companyScalarFieldEnumSchema = z.enum(['user_id','c
 
 export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','workforce_id','latitude','longitude','created_at','updated_at']);
 
-export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','contractor_id','assigned_collection_route']);
+export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','collection_route','contractor_id','assigned_collection_route']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -677,6 +677,10 @@ export const workforceSchema = z.object({
    * Contact Information
    */
   contact_information: z.string(),
+  /**
+   * Assigned collection route
+   */
+  collection_route: z.string().nullable(),
   /**
    * Contractor ID
    */
