@@ -2,7 +2,7 @@ import React, { ChangeEvent, InputHTMLAttributes } from "react";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
-  errors?: Record<string, string[]>;
+  errors?: Record<string, string[]> | null;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -12,7 +12,8 @@ const Input: React.FC<InputProps> = ({
   errors,
   ...rest
 }) => {
-  // const errorMessage = errors?[name]
+  const errorMessage = name ? errors?.[name]?.[0] : null;
+
   return (
     <div className="w-full mb-5">
       {label && (
@@ -28,6 +29,12 @@ const Input: React.FC<InputProps> = ({
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         {...rest}
       />
+
+      {errorMessage ? (
+        <span className="text-red-500 text-sm">{errorMessage}</span>
+      ) : (
+        <span className="text-red-500 text-sm"> {'‎'}</span>
+      )}
     </div>
   );
 };
