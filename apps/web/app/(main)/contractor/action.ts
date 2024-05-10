@@ -6,7 +6,7 @@ export async function createContractorCompany(prev: any, form: FormData) {
   const formData = Object.fromEntries(form.entries());
   const parsedData = Schema.contractor_companySchema.safeParse(formData);
 
-  console.log(parsedData);
+  console.log({parsedData, formData});
   
   if (!parsedData.success) {
     return {

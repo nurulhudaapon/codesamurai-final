@@ -8,20 +8,6 @@ import Button from "@/components/button";
 import Layout from "../layout";
 // import { useActionState } from "react";
 
-/*
-• Name of the company
-• Contract ID
-• Registration ID
-• Registration Date
-• TIN of the company
-• Contact number
-• Workforce size
-• Payment per tonnage of waste
-• The amount of waste per day
-• Contract duration 
-• Area of collection
-• Designated STS
-*/
 
 export function ContractorForm() {
   // @ts-ignore
