@@ -444,11 +444,11 @@ export const issueSchema = z.object({
   /**
    * GPS coordinates of the STS.
    */
-  latitude: z.number(),
+  latitude: z.number().nullable(),
   /**
    * GPS coordinates of the STS.
    */
-  longitude: z.number(),
+  longitude: z.number().nullable(),
 })
 
 export type issue = z.infer<typeof issueSchema>

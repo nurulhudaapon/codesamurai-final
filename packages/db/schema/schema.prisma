@@ -374,9 +374,9 @@ model issue {
   created_by_user_id String? @db.Uuid
 
   /// GPS coordinates of the STS.
-  latitude  Float
+  latitude  Float?
   /// GPS coordinates of the STS.
-  longitude Float
+  longitude Float?
 
   /// Relation to the user who created
   user user? @relation(fields: [created_by_user_id], references: [id])

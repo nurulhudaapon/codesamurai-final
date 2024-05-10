@@ -176,8 +176,8 @@ erDiagram
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK "nullable"
-  Float latitude
-  Float longitude
+  Float latitude "nullable"
+  Float longitude "nullable"
 }
 "post" {
   String id PK

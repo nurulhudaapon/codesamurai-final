@@ -13,6 +13,7 @@ export const routes = {
     monitor: () => `/monitor` as const,
     users: () => `/users` as const,
     vehicles: () => `/vehicles` as const,
+    issues: () => `/issues` as const,
     transportation: {
       root: () => `/transportation` as const,
       sts: () => `${routes.main.transportation.root()}/sts` as const,

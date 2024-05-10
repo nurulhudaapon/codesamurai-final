@@ -6,7 +6,8 @@ import {
   LandPlot,
   Caravan,
   Award,
-BaggageClaim,
+  BaggageClaim,
+  BadgeHelp,
   ListChecks,
 } from "lucide-react";
 import { routes } from ".";
@@ -24,14 +25,14 @@ export const navigations = [
     icon: BaggageClaim,
     label: "STS Transportation",
     path: routes.main.transportation.sts(),
-    require_permissions: ['sts_transportation'],
+    require_permissions: ["sts_transportation"],
   },
   {
     key: "landfill_transportation",
     icon: BaggageClaim,
     label: "Landfill and Billing",
     path: routes.main.transportation.landfill(),
-    require_permissions: ['landfill_transportation'],
+    require_permissions: ["landfill_transportation"],
   },
   {
     key: "vehicles",
@@ -53,6 +54,13 @@ export const navigations = [
     label: "Landfill",
     path: routes.main.landfill(),
     require_permissions: ["manage_landfill"],
+  },
+  {
+    key: "issue",
+    icon: BadgeHelp,
+    label: "Issues",
+    path: routes.main.issues(),
+    require_permissions: [],
   },
   {
     key: "users",
