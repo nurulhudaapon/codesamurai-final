@@ -7,15 +7,16 @@ import { Layout } from "@/components/layout";
 import Button from "@/components/Button";
 import Spacer from "@/components/Space";
 import logo from '../assets/logo/ecocync.png';
+import { dbClient } from "@/data/client";
 
 export default function Login() {
   const { signIn } = useSession();
 
   const handleLogin = () => {
     signIn();
-    // dbClient.from('role').select('*').then(r => {
-    //   console.log(r);
-    // })
+    dbClient.from('role').select('*').then(r => {
+      console.log(r);
+    })
     router.replace("/");
   };
 
