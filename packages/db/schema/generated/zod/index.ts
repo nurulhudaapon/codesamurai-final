@@ -26,7 +26,7 @@ export const StsScalarFieldEnumSchema = z.enum(['id','name','created_at','update
 
 export const LandfillScalarFieldEnumSchema = z.enum(['id','name','created_at','updated_at','created_by_user_id','capacity_tonnes','latitude','longitude','opens_at','closes_at']);
 
-export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','volume','arrival_time','departure_time','padding','distance','location_type']);
+export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','contractor_id','volume','arrival_time','departure_time','padding','distance','location_type']);
 
 export const IssueScalarFieldEnumSchema = z.enum(['id','title','description','type','attachments','created_at','updated_at','created_by_user_id','latitude','longitude']);
 
@@ -36,7 +36,7 @@ export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','cont
 
 export const User_contractor_companyScalarFieldEnumSchema = z.enum(['user_id','contractor_company_id']);
 
-export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','workforce_id','created_at','updated_at']);
+export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','workforce_id','latitude','longitude','created_at','updated_at']);
 
 export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','contractor_id','assigned_collection_route']);
 
@@ -50,7 +50,7 @@ export const user_stateSchema = z.enum(['active','inactive']);
 
 export type user_stateType = `${z.infer<typeof user_stateSchema>}`
 
-export const workforce_log_typeSchema = z.enum(['start','end']);
+export const workforce_log_typeSchema = z.enum(['start','end','track']);
 
 export type workforce_log_typeType = `${z.infer<typeof workforce_log_typeSchema>}`
 
@@ -389,6 +389,10 @@ export const transportationSchema = z.object({
    */
   vehicle_id: z.string(),
   /**
+   * Contractor ID associated with the STS entry.
+   */
+  contractor_id: z.string().nullable(),
+  /**
    * Volume of waste.
    */
   volume: z.number(),
@@ -579,6 +583,11 @@ export const workforce_logSchema = z.object({
    * Workforce ID
    */
   workforce_id: z.string(),
+  /**
+   * GPS Coordinates of the current location
+   */
+  latitude: z.number().nullable(),
+  longitude: z.number().nullable(),
   /**
    * Timestamp indicating when the post was made
    */

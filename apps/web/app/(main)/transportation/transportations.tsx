@@ -25,6 +25,7 @@ export type TransportatioProps = {
   landfills: Entity.landfill[];
   vehicles: Entity.vehicle[];
   transportations: getAllTransportationStatsType;
+  // contractors_company: Entity.contractor[];
 };
 
 export default function Transportations({
@@ -35,7 +36,10 @@ export default function Transportations({
   stss,
 }: TransportatioProps) {
   const [transportations, setTransportations] = useState(trans);
-  const [modal, setModal] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    open: false,
+    type: "",
+  });
 
   const fetchTransportations = async () => {
     const data = await getAllTransportationStats();
@@ -47,10 +51,22 @@ export default function Transportations({
       <div className="flex flex-col">
         <div className="flex justify-between items-center mb-5">
           <p className="text-lg font-bold">Transportation</p>
-          <Button onClick={() => setModal(true)} className="pl-3">
-            <Icon name="Plus" />
-            Add New Transportation
-          </Button>
+          <div className="flex flex-row gap-4">
+            <Button
+              onClick={() => setModalInfo({ open: true, type: "primary" })}
+              className="pl-3"
+            >
+              <Icon name="Plus" />
+              Primary Collector to STS
+            </Button>
+            <Button
+              onClick={() => setModalInfo({ open: true, type: "sts" })}
+              className="pl-3"
+            >
+              <Icon name="Plus" />
+              STS to Landfill
+            </Button>
+          </div>
         </div>
         <Table>
           <TableHead>
@@ -91,13 +107,14 @@ export default function Transportations({
           </TableBody>
         </Table>
       </div>
-      {modal && (
+      {modalInfo.open && (
         <TransportationModal
           currentUserId={currentUserId}
           stss={stss}
           landfills={landfills}
           vehicles={vehicles}
-          onClose={() => setModal(false)}
+          onClose={() => setModalInfo({ open: false, type: "" })}
+          modalType={modalInfo.type}
           triggerUpdate={fetchTransportations}
         />
       )}

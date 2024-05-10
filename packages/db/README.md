@@ -159,6 +159,7 @@ erDiagram
   String sts_id FK "nullable"
   String landfill_id FK "nullable"
   String vehicle_id FK
+  String contractor_id FK "nullable"
   Float volume
   DateTime arrival_time "nullable"
   DateTime departure_time "nullable"
@@ -206,6 +207,8 @@ erDiagram
   String id PK
   workforce_log_type type
   String workforce_id FK
+  Float latitude "nullable"
+  Float longitude "nullable"
   DateTime created_at
   DateTime updated_at
 }
@@ -224,6 +227,7 @@ erDiagram
 "transportation" }o--o| "sts" : sts
 "transportation" }o--o| "landfill" : landfill
 "transportation" }o--|| "vehicle" : vehicle
+"transportation" }o--o| "contractor_company" : contractor
 "contractor_company" }o--|| "sts" : sts
 "workforce_log" }o--|| "workforce" : workforce
 "workforce" }o--|| "contractor_company" : contractor_company
@@ -281,6 +285,7 @@ erDiagram
   - `sts_id`: STS ID associated with the STS entry.
   - `landfill_id`: Landfill ID where the wast is dumped
   - `vehicle_id`: Vehicle ID associated with the STS entry.
+  - `contractor_id`: Contractor ID associated with the STS entry.
   - `volume`: Volume of waste.
   - `arrival_time`: Time of arrival.
   - `departure_time`: Time of departure.
@@ -336,6 +341,8 @@ erDiagram
   - `id`: Unique identifier for the STS.
   - `type`: Type of log: start, end
   - `workforce_id`: Workforce ID
+  - `latitude`: GPS Coordinates of the current location
+  - `longitude`: 
   - `created_at`: Timestamp indicating when the post was made
   - `updated_at`: 
 

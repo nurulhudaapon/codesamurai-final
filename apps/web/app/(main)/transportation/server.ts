@@ -8,6 +8,10 @@ export const getAllTransportationStats = async () => {
   return await dbClient.transportation.getAll();
 }
 
+export const getAllContractors = async () => {
+  // return await dbClient.contractor.getAll();
+}
+
 export const updateTransportation = async (id: string, transportationData: Entity.transportation) => {
   return await dbClient.transportation.update(id, transportationData);
 }

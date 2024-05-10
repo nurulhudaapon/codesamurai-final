@@ -307,6 +307,9 @@ model transportation {
   /// Vehicle ID associated with the STS entry.
   vehicle_id String @db.Uuid
 
+  /// Contractor ID associated with the STS entry.
+  contractor_id String? @db.Uuid
+
   /// Volume of waste.
   volume Float
 
@@ -331,7 +334,8 @@ model transportation {
   landfill landfill? @relation(fields: [landfill_id], references: [id])
 
   /// Relation to the vehicle
-  vehicle vehicle @relation(fields: [vehicle_id], references: [id])
+  vehicle    vehicle             @relation(fields: [vehicle_id], references: [id])
+  contractor contractor_company? @relation(fields: [contractor_id], references: [id])
 
   /// Relation to the user who created
   creator user @relation(fields: [created_by_user_id], references: [id])
@@ -446,6 +450,7 @@ model contractor_company {
   sts                     sts                       @relation(fields: [sts_id], references: [id])
   workforce               workforce[]
   user_contractor_company user_contractor_company[]
+  transportation          transportation[]
 }
 
 /// @namespace Workforce

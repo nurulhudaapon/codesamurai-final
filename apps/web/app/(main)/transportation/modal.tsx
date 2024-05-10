@@ -18,6 +18,7 @@ export type CreationTransportatioProps = {
   vehicles: Entity.vehicle[];
   onClose: () => void;
   triggerUpdate: () => void;
+  modalType: string;
 };
 
 export const TransportationModal = ({
@@ -27,6 +28,7 @@ export const TransportationModal = ({
   vehicles,
   stss,
   onClose,
+  modalType,
 }: CreationTransportatioProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -89,22 +91,42 @@ export const TransportationModal = ({
             options={stss.map((sts) => ({ value: sts.id, label: sts.name }))}
           />
         </div>
-        <div className="mb-2">
-          <label
-            htmlFor="landfill_id"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Select Landfill
-          </label>
-          <Select
-            name="landfill_id"
-            required
-            options={landfills.map((landfill) => ({
-              value: landfill.id,
-              label: landfill.name,
-            }))}
-          />
-        </div>
+
+        {modalType === "sts" ? (
+          <div className="mb-2">
+            <label
+              htmlFor="landfill_id"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Select Landfill
+            </label>
+            <Select
+              name="landfill_id"
+              required
+              options={landfills.map((landfill) => ({
+                value: landfill.id,
+                label: landfill.name,
+              }))}
+            />
+          </div>
+        ) : (
+          <div className="mb-2">
+            <label
+              htmlFor="landfill_id"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Select Landfill
+            </label>
+            <Select
+              name="landfill_id"
+              required
+              options={landfills.map((landfill) => ({
+                value: landfill.id,
+                label: landfill.name,
+              }))}
+            />
+          </div>
+        )}
         <div className="mb-2">
           <label
             htmlFor="vehicle_id"

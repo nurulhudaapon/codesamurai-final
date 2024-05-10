@@ -6,6 +6,7 @@ import {
   getAllTransportationStats,
   getAllVehicles,
   getUsers,
+  getAllContractors,
 } from "../server";
 
 export default async function Index() {
@@ -14,6 +15,7 @@ export default async function Index() {
   const landfills = await getAllLandfills();
   const vehicles = await getAllVehicles();
   const transportations = await getAllTransportationStats();
+  const contractors_company = await getAllContractors();
 
   return (
     <Transportations
@@ -22,6 +24,7 @@ export default async function Index() {
       stss={stss}
       landfills={landfills}
       vehicles={vehicles}
+      contractors_company={contractors_company}
     />
   );
 }
