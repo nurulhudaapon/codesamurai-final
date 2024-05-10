@@ -1,4 +1,4 @@
-import { Constants } from '../constants';
+import { Constants } from "../../constants";
 
 /**
  * Returns a phone object from a phone number
