@@ -185,7 +185,8 @@ erDiagram
   String content
   post_type type
   String attachments
-  Int flag_score
+  Int flag_score "nullable"
+  post_status status "nullable"
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK "nullable"
@@ -324,6 +325,7 @@ erDiagram
   - `type`: Type of the post: event, announcement, post
   - `attachments`: Attachments of the post
   - `flag_score`: Flag score to determine if the post is spam
+  - `status`: Post status
   - `created_at`: Timestamp indicating when the post was made
   - `updated_at`: 
   - `created_by_user_id`: 

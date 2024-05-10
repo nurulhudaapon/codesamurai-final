@@ -2,13 +2,13 @@ CREATE OR REPLACE FUNCTION calculate_flag_score_and_update_status()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.flag_score := (
-        SELECT COUNT(*)
-        FROM unnest(string_to_array(NEW.content, ' ')) w
+        SELECT COALESCE(SUM(bw.weight))
+        FROM unnest(regexp_split_to_array(lower(NEW.content), '\W+')) w
         JOIN blocked_words bw ON w = bw.word
     );
 
     IF NEW.flag_score > 1 THEN
-        NEW.status := 'flagged';
+        NEW.status := 'inappropriate';
     END IF;
 
     RETURN NEW;

@@ -413,7 +413,10 @@ model post {
   attachments String[]
 
   /// Flag score to determine if the post is spam
-  flag_score Int
+  flag_score Int? @default(0)
+
+  /// Post status
+  status post_status? @default(published)
 
   /// Timestamp indicating when the post was made
   created_at DateTime @default(now()) @db.Timestamptz(6)
@@ -424,6 +427,20 @@ model post {
 
   /// Relation to the user who created
   user user? @relation(fields: [created_by_user_id], references: [id])
+}
+
+enum post_status {
+  /// Post is published
+  published
+
+  /// Post is draft
+  draft
+
+  /// Post is flagged as spam
+  spam
+
+  /// Flagged as inappropriate
+  inappropriate
 }
 
 model blocked_words {

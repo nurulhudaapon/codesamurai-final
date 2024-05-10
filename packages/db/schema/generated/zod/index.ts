@@ -30,7 +30,7 @@ export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','up
 
 export const IssueScalarFieldEnumSchema = z.enum(['id','title','description','type','attachments','status','created_at','updated_at','created_by_user_id','latitude','longitude']);
 
-export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachments','flag_score','created_at','updated_at','created_by_user_id']);
+export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachments','flag_score','status','created_at','updated_at','created_by_user_id']);
 
 export const Blocked_wordsScalarFieldEnumSchema = z.enum(['id','word','weight','created_at']);
 
@@ -55,6 +55,10 @@ export type user_stateType = `${z.infer<typeof user_stateSchema>}`
 export const issue_statusSchema = z.enum(['reported','reviewed','resolved','flagged']);
 
 export type issue_statusType = `${z.infer<typeof issue_statusSchema>}`
+
+export const post_statusSchema = z.enum(['published','draft','spam','inappropriate']);
+
+export type post_statusType = `${z.infer<typeof post_statusSchema>}`
 
 export const workforce_log_typeSchema = z.enum(['start','end','track']);
 
@@ -473,6 +477,10 @@ export const postSchema = z.object({
    */
   type: post_typeSchema,
   /**
+   * Post status
+   */
+  status: post_statusSchema.nullable(),
+  /**
    * Unique identifier for the STS.
    */
   id: z.string().uuid(),
@@ -487,7 +495,7 @@ export const postSchema = z.object({
   /**
    * Flag score to determine if the post is spam
    */
-  flag_score: z.number().int(),
+  flag_score: z.number().int().nullable(),
   /**
    * Timestamp indicating when the post was made
    */

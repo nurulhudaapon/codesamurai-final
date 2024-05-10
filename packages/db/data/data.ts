@@ -418,13 +418,13 @@ const blocked_words: Entity.blocked_words[] = [
   {
     id: uuid(),
     word: "bad",
-    weight: 0.5,
+    weight: 1,
     created_at: now,
   },
   {
     id: uuid(),
     word: "bitch",
-    weight: 2,
+    weight: 5,
     created_at: now,
   },
 ];
@@ -447,7 +447,7 @@ const issue: Entity.issue[] = [
   },
   {
     title: "Overflowing Trash Cans",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     created_at: new Date(),
@@ -463,7 +463,7 @@ const issue: Entity.issue[] = [
   },
   {
     title: "Littering on Streets",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     created_at: new Date(),
@@ -478,7 +478,7 @@ const issue: Entity.issue[] = [
   },
   {
     title: "Illegal Dumping in Park",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     created_at: new Date(),
@@ -493,7 +493,7 @@ const issue: Entity.issue[] = [
   },
   {
     title: "Damaged Streetlights",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     created_at: new Date(),
@@ -508,7 +508,7 @@ const issue: Entity.issue[] = [
   },
   {
     title: "Overflowing Dumpster",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     created_at: new Date(),
@@ -527,9 +527,10 @@ const issue: Entity.issue[] = [
 const post: Entity.post[] = [
   {
     id: uuid(),
+    status: "published",
     content: "Join us for the annual charity event next Saturday!",
     type: "event",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     flag_score: 0,
@@ -539,10 +540,11 @@ const post: Entity.post[] = [
   },
   {
     id: uuid(),
+    status: "published",
     content:
       "Important announcement: The office will be closed tomorrow due to maintenance.",
     type: "announcement",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     flag_score: 0,
@@ -553,8 +555,9 @@ const post: Entity.post[] = [
   {
     id: uuid(),
     content: "What a beautiful day! #sunny",
+    status: "published",
     type: "post",
-      attachments: [
+    attachments: [
       "https://res.cloudinary.com/ddqyh2o9o/image/upload/v1715372543/ut9bj6mrqnkgfkggr9id.jpg",
     ],
     flag_score: 0,
@@ -565,6 +568,7 @@ const post: Entity.post[] = [
   {
     id: uuid(),
     content: "This movie is so bad, don't waste your time watching it.",
+    status: "published",
     type: "post",
     attachments: ["https://example.com/movie_bad_review.jpg"],
     flag_score: 0,
@@ -575,6 +579,7 @@ const post: Entity.post[] = [
   {
     id: uuid(),
     content: "Looking for recommendations on a good book to read.",
+    status: "published",
     type: "post",
     attachments: [],
     flag_score: 0,
@@ -585,6 +590,7 @@ const post: Entity.post[] = [
   {
     id: uuid(),
     content: "New bitch in town, watch out!",
+    status: "published",
     type: "post",
     attachments: ["https://example.com/new_bitch.jpg"],
     flag_score: 0,
@@ -595,6 +601,7 @@ const post: Entity.post[] = [
   {
     id: uuid(),
     content: "Just finished a great workout session!",
+    status: "published",
     type: "post",
     attachments: ["https://example.com/great_workout.jpg"],
     flag_score: 0,
@@ -605,6 +612,7 @@ const post: Entity.post[] = [
   {
     id: uuid(),
     content: "Feeling lazy today, need some motivation.",
+    status: "published",
     type: "post",
     attachments: [],
     flag_score: 0,
@@ -614,7 +622,8 @@ const post: Entity.post[] = [
   },
   {
     id: uuid(),
-    content: "Bad weather today, stay indoors if you can.",
+    content: "Bad weather today for you bitch, stay indoors if you can. ",
+    status: "published",
     type: "post",
     attachments: [],
     flag_score: 0,
@@ -625,6 +634,7 @@ const post: Entity.post[] = [
   {
     id: uuid(),
     content: "Having a bad day, need some cheering up.",
+    status: "published",
     type: "post",
     attachments: [],
     flag_score: 0,
