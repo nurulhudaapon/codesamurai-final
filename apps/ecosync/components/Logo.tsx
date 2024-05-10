@@ -4,15 +4,17 @@ import { StyleProp, TextStyle, View } from "react-native"
 
 export const Logo = ({
     size,
-    center
+    center,
+    inverted
 }: {
-    size: number,
-    center: boolean
+    size?: number,
+    center?: boolean,
+    inverted?: boolean
 }) => {
 
     const styles: StyleProp<TextStyle> = {
         fontWeight: '900',
-        fontSize: size,
+        fontSize: size || 20,
         textAlign: center ? 'center' : 'left'
     }
 
@@ -20,7 +22,7 @@ export const Logo = ({
         <Text>
             <Text
                 style={[{
-                    color: theme.colors.primary,
+                    color: inverted ? theme.colors.white : theme.colors.primary,
                 }, styles]}
             >
                 Eco

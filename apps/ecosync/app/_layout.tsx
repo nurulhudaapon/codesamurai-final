@@ -2,6 +2,9 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Slot } from "expo-router";
+import { SessionProvider } from "@/contexts/auth";
+import { StatusBar } from "expo-status-bar";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -39,9 +42,6 @@ export default function RootLayout() {
 
   return <RootLayoutNav />;
 }
-import { Slot } from "expo-router";
-import { SessionProvider } from "@/contexts/auth";
-import { StatusBar } from "expo-status-bar";
 
 function RootLayoutNav() {
   return (
@@ -51,3 +51,6 @@ function RootLayoutNav() {
     </SessionProvider>
   );
 }
+
+
+

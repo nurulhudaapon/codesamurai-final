@@ -18,6 +18,7 @@ interface IProps extends React.ComponentProps<typeof RNInput> {
     fullWidth?: boolean;
     iconRight?: React.ReactElement;
     block?: boolean;
+    textArea?: boolean;
 }
 function Input({
     label,
@@ -28,6 +29,7 @@ function Input({
     iconRight,
     block,
     fullWidth,
+    textArea,
     ...rest
 }: IProps) {
     return (
@@ -40,7 +42,9 @@ function Input({
             <View style={[styles.container, block && { flex: 1 }, fullWidth && { width: '100%' }]}>
                 {icon && <View style={styles.icon}>{icon}</View>}
                 <RNInput
-                    placeholderTextColor="grey"
+                    multiline={textArea ? true : false}
+                    numberOfLines={textArea ? 10 : 1}
+                    placeholderTextColor={theme.colors.grey}
                     style={[
                         styles.input,
                         {
@@ -83,8 +87,8 @@ const styles = StyleSheet.create({
     },
     input: {
         borderColor: theme.colors.primary,
-        backgroundColor: theme.colors.white,
         borderWidth: 0.5,
+        backgroundColor: theme.colors.white,
         width: '100%',
         paddingVertical: 8,
         fontSize: 13,

@@ -1,28 +1,29 @@
-import { Button, StyleSheet } from "react-native";
-
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
-import { useSession } from "@/contexts/auth";
+import { FlatList, StyleSheet } from "react-native";
+import { View } from "@/components/Themed";
+import Text from "@/components/Text";
+import { theme } from "@/styles/theme";
+import { Layout } from "@/components/layout";
+import Spacer from "@/components/Space";
 
 export default function TabOneScreen() {
-  const { signOut, session } = useSession();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <Text>Welcome, {session}</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(auth)/(tabs)/index.tsx" />
-      <Button
-        title="Sign Out"
-        onPress={() => {
-          // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
-          signOut();
+    <Layout fullScreen withAppBar>
+      <FlatList
+        data={Array(5).fill(0)}
+        style={styles.feedContainer}
+        ItemSeparatorComponent={() => <Spacer height={10}/>}
+        renderItem={() => {
+          return <FeedCard />
         }}
       />
+    </Layout>
+  );
+}
+
+const FeedCard = () => {
+  return (
+    <View style={styles.feedCard}>
+      {/* <Text></Text> */}
     </View>
   );
 }
@@ -33,13 +34,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  feedContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 15
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
+  feedCard: {
+    width: '100%',
+    height: 200,
+    padding: 20,
+    backgroundColor: theme.colors.secondary,
+    borderRadius: 5,
+  }
 });

@@ -56,7 +56,7 @@ function Button({
         onPress={onPress}
         style={[
           {
-            // flex: 1,
+            gap: 10,
             borderRadius: rounded ? 30 : 5,
             width: block ? '100%' : 'auto',
             paddingVertical: lg ? 18 : sm ? 5 : 10,
@@ -68,7 +68,7 @@ function Button({
           style,
         ]}>
         <View style={styles.iconLeft}>{iconLeft}</View>
-        {loader && <Loader size={20} style={{marginRight: 10}} />}
+        {loader && <Loader size={20} />}
         <Text bold size={sm ? 10 : 14} style={[styles.text, textStyle]}>
           {children}
         </Text>

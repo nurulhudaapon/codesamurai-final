@@ -1,7 +1,5 @@
 import React from 'react';
-import { View, StyleProp, ViewStyle } from 'react-native';
-import { LoaderCircle } from 'lucide-react-native';
-
+import { StyleProp, ViewStyle, ActivityIndicator } from 'react-native';
 interface IProps {
   size?: number;
   color?: string;
@@ -9,13 +7,7 @@ interface IProps {
 }
 function Loader({ color, size, style }: IProps) {
   return (
-    <View>
-      <LoaderCircle
-        style={style}
-        size={size || 30}
-        color={color || 'white'}
-      />
-    </View>
+    <ActivityIndicator size={size || 30} color={color || 'white'} />
   );
 }
 

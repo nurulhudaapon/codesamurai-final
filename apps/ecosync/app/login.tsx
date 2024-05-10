@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import Input from "@/components/input";
 import Text from "@/components/Text";
@@ -19,7 +19,7 @@ export default function Login() {
     password: "",
   })
 
-  const handleInput = (key: string, value: string) => {
+  const handleInput = (value: string, key: string) => {
     setUser({
       ...user,
       [key]: value
@@ -28,13 +28,19 @@ export default function Login() {
 
   const handleLogin = async () => {
     setLoader(true)
-    try {
-      dbClient.from('user').select('*').then(console.log)
-      await login(user)
-      router.replace("/");
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
-    }
+    signIn("token")
+    router.replace("/");
+    // const res = await dbClient.rpc('login', {
+    //   email: user.email,
+    //   pass: user.password
+    // });
+    // const token = res.data?.token
+    // if (token) {
+    //   signIn(token)
+    //   router.replace("/");
+    // } else {
+    //   Alert.alert('Ops!', res.error?.message)
+    // }
     setLoader(false)
   };
 
