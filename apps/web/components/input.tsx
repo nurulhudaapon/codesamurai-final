@@ -1,13 +1,34 @@
 import React, { ChangeEvent, InputHTMLAttributes } from "react";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>;
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  label?: string;
+  errors?: Record<string, string[]>;
+};
 
-const Input: React.FC<InputProps> = ({ className, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  className,
+  name,
+  label,
+  errors,
+  ...rest
+}) => {
+  // const errorMessage = errors?[name]
   return (
-    <input
-      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      {...rest}
-    />
+    <div className="w-full mb-5">
+      {label && (
+        <label
+          htmlFor="latitude"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          {label}
+        </label>
+      )}
+
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        {...rest}
+      />
+    </div>
   );
 };
 
