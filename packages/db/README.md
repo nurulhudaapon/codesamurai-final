@@ -187,6 +187,7 @@ erDiagram
 "workforce_log" {
   String id PK
   workforce_log_type type
+  String workforce_id FK
   DateTime created_at
   DateTime updated_at
 }
@@ -198,6 +199,7 @@ erDiagram
   String job_title
   Float payment_rate
   String contact_information
+  String contractor_id FK
   String assigned_collection_route
 }
 "vehicle" }o--|| "sts" : sts
@@ -205,6 +207,8 @@ erDiagram
 "transportation" }o--o| "landfill" : landfill
 "transportation" }o--|| "vehicle" : vehicle
 "contractor_company" }o--|| "sts" : sts
+"workforce_log" }o--|| "workforce" : workforce
+"workforce" }o--|| "contractor_company" : contractor_company
 ```
 
 ### `vehicle`
@@ -313,6 +317,7 @@ erDiagram
 **Properties**
   - `id`: Unique identifier for the STS.
   - `type`: Type of log: start, end
+  - `workforce_id`: Workforce ID
   - `created_at`: Timestamp indicating when the post was made
   - `updated_at`: 
 
@@ -326,4 +331,5 @@ erDiagram
   - `job_title`: Job Title
   - `payment_rate`: Payment rate per hour
   - `contact_information`: Contact Information
+  - `contractor_id`: Contractor ID
   - `assigned_collection_route`: Assigned Collection Route

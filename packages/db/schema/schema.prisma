@@ -442,7 +442,8 @@ model contractor_company {
   sts_id String @db.Uuid
 
   /// Relation to the STS
-  sts sts @relation(fields: [sts_id], references: [id])
+  sts       sts         @relation(fields: [sts_id], references: [id])
+  workforce workforce[]
 }
 
 model workforce_log {
@@ -451,6 +452,12 @@ model workforce_log {
 
   /// Type of log: start, end
   type workforce_log_type
+
+  /// Workforce ID
+  workforce_id String @db.Uuid
+
+  // relation to the workforce
+  workforce workforce @relation(fields: [workforce_id], references: [id])
 
   /// Timestamp indicating when the post was made
   created_at DateTime @default(now()) @db.Timestamptz(6)
@@ -479,8 +486,15 @@ model workforce {
   /// Contact Information
   contact_information String
 
+  /// Contractor ID
+  contractor_id String @db.Uuid
+
+  // relations
+  contractor_company contractor_company @relation(fields: [contractor_id], references: [id])
+
   /// Assigned Collection Route
   assigned_collection_route String
+  workforce_log             workforce_log[]
 }
 
 enum workforce_log_type {

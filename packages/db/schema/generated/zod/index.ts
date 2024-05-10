@@ -34,9 +34,9 @@ export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachme
 
 export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id']);
 
-export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','created_at','updated_at']);
+export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','workforce_id','created_at','updated_at']);
 
-export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','assigned_collection_route']);
+export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','contractor_id','assigned_collection_route']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -553,6 +553,10 @@ export const workforce_logSchema = z.object({
    */
   id: z.string().uuid(),
   /**
+   * Workforce ID
+   */
+  workforce_id: z.string(),
+  /**
    * Timestamp indicating when the post was made
    */
   created_at: z.coerce.date(),
@@ -594,6 +598,10 @@ export const workforceSchema = z.object({
    * Contact Information
    */
   contact_information: z.string(),
+  /**
+   * Contractor ID
+   */
+  contractor_id: z.string(),
   /**
    * Assigned Collection Route
    */
