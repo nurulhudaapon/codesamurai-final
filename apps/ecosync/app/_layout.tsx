@@ -1,17 +1,12 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Slot } from "expo-router";
-import { SessionProvider } from "@/context/auth";
 
 export { ErrorBoundary } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
-
-export const unstable_settings = {
-  initialRouteName: "login",
-};
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -33,13 +28,27 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  const authenticated = false;
+
+  if (authenticated) {
+    return <RootLayoutNav />;
+  } else {
+    return <AuthLayoutNav />;
+  }
 }
 
 function RootLayoutNav() {
   return (
-    <SessionProvider>
-      <Slot />
-    </SessionProvider>
+    <Stack>
+      <Stack.Screen name="(main)" options={{ headerShown: false }} />
+    </Stack>
+  );
+}
+
+function AuthLayoutNav() {
+  return (
+    <Stack>
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+    </Stack>
   );
 }

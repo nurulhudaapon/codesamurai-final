@@ -5,10 +5,8 @@
   "scripts": {
     "start:container": "docker compose up -d",
     "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force",
-    "dev": "npm run dev -w @ecosync/web",
-    "app": "npm start -w @ecosync/app",
     "app:web": "npm run web -w @ecosync/app",
-    "app:android": "npm run android -w @ecosync/app"
+    "dev": "npm run dev -w @ecosync/web"
   },
   "workspaces": [
     "packages/*",
@@ -18,14 +16,12 @@
     "@types/uuid": "^9.0.8",
     "bun-types": "latest",
     "prettier": "^3.2.5",
-    "supabase": "^1.142.2",
-    "typescript": "~5.3.3"
+    "typescript": "^5.0.0",
+    "supabase": "^1.142.2"
   },
   "dependencies": {
-    "@supabase/postgrest-js": "^1.11.0",
     "clsx": "^2.1.0",
-    "expo": "~51.0.2",
-    "expo-secure-store": "^13.0.1",
+    "@supabase/postgrest-js": "^1.11.0",
     "kleur": "^4.1.5",
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.378.0",
