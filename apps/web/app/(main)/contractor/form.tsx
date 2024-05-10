@@ -5,8 +5,14 @@ import { useFormState } from "react-dom";
 import { createContractorCompany } from "./action";
 import { StsSelector } from "./server";
 import { Suspense } from "react";
+import { Entity } from "@/types/prisma";
+const now = new Date();
+type VehicleProps = {
+  currentUserId: string;
+  Sts: Entity.sts[];
+};
 
-export function ContractorForm() {
+export function ContractorForm({ currentUserId, Sts }: VehicleProps) {
   // @ts-ignore
   const [{ errors }, formAction] = useFormState(createContractorCompany, {
     errors: null,
@@ -14,6 +20,9 @@ export function ContractorForm() {
 
   return (
     <form action={formAction} className="max-w-lg mx-auto">
+      <h1 className="text-xl text-center font-bold my-4">
+        Add A New Contractor
+      </h1>
       <div className="flex flex-row gap-4">
         <Input
           label="Company name"
@@ -103,11 +112,11 @@ export function ContractorForm() {
           errors={errors}
         />
       </div>
-      <Suspense>
+      {/* <Suspense>
         <div>
         <StsSelector />
         </div>
-      </Suspense>
+      </Suspense> */}
       <Button type="submit">Submit</Button>
     </form>
   );
