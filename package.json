@@ -16,10 +16,12 @@
     "@types/uuid": "^9.0.8",
     "bun-types": "latest",
     "prettier": "^3.2.5",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "supabase": "^1.142.2"
   },
   "dependencies": {
     "clsx": "^2.1.0",
+    "@supabase/postgrest-js": "^1.11.0",
     "kleur": "^4.1.5",
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.378.0",

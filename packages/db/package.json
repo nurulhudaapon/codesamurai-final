@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "reset": "prisma migrate reset --force",
-    "deploy": "prisma migrate deploy && prisma generate",
+    "deploy": "prisma migrate deploy && prisma generate && npm run postdeploy",
     "seed": "prisma db seed",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "typegen": "bash ./tools/typegen.sh",
+    "postdeploy": "node --experimental-specifier-resolution=node --loader ts-node/esm tools/post-deploy.ts"
   },
   "prisma": {
     "schema": "schema/schema.prisma",

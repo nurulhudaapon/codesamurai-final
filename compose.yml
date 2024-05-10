@@ -31,12 +31,12 @@ services:
       - "5432:5432"
 
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: user
-      POSTGRES_DB: ecosync
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
 
     volumes:
-      - ./packages/db/tmp/pg/data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
     networks:
       - backend
@@ -50,5 +50,28 @@ services:
     networks:
       - backend
 
+  db-api:
+    image: postgrest/postgrest:v11.1.0
+    container_name: db-api
+    ports:
+      - '127.0.0.1:8080:8080'
+      - '127.0.0.1:8081:8081'
+    environment:
+      PGRST_SERVER_PORT: 8080
+      PGRST_ADMIN_SERVER_PORT: 8081
+      PGRST_DB_URI: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@db/${DATABASE_NAME}
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: postgres
+      PGRST_JWT_SECRET: ${AUTH_JWT_SECRET}
+      PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:8080
+    depends_on:
+      - db
+    networks:
+      - backend
+
 networks:
   backend:
+
+
+volumes:
+  postgres-data:
