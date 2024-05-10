@@ -34,6 +34,10 @@ export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachme
 
 export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id']);
 
+export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','created_at','updated_at']);
+
+export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','assigned_collection_route']);
+
 export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const QueryModeSchema = z.enum(['default','insensitive']);
@@ -43,6 +47,10 @@ export const NullsOrderSchema = z.enum(['first','last']);
 export const user_stateSchema = z.enum(['active','inactive']);
 
 export type user_stateType = `${z.infer<typeof user_stateSchema>}`
+
+export const workforce_log_typeSchema = z.enum(['start','end']);
+
+export type workforce_log_typeType = `${z.infer<typeof workforce_log_typeSchema>}`
 
 export const post_typeSchema = z.enum(['event','announcement','post']);
 
@@ -530,3 +538,66 @@ export const contractor_companySchema = z.object({
 })
 
 export type contractor_company = z.infer<typeof contractor_companySchema>
+
+/////////////////////////////////////////
+// WORKFORCE LOG SCHEMA
+/////////////////////////////////////////
+
+export const workforce_logSchema = z.object({
+  /**
+   * Type of log: start, end
+   */
+  type: workforce_log_typeSchema,
+  /**
+   * Unique identifier for the STS.
+   */
+  id: z.string().uuid(),
+  /**
+   * Timestamp indicating when the post was made
+   */
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
+})
+
+export type workforce_log = z.infer<typeof workforce_logSchema>
+
+/////////////////////////////////////////
+// WORKFORCE SCHEMA
+/////////////////////////////////////////
+
+export const workforceSchema = z.object({
+  /**
+   * Unique identifier for the STS.
+   */
+  id: z.string().uuid(),
+  /**
+   * Full name of the workforce
+   */
+  full_name: z.string(),
+  /**
+   * Date of Birth
+   */
+  dob: z.coerce.date(),
+  /**
+   * Date of Hire
+   */
+  hired_at: z.coerce.date(),
+  /**
+   * Job Title
+   */
+  job_title: z.string(),
+  /**
+   * Payment rate per hour
+   */
+  payment_rate: z.number(),
+  /**
+   * Contact Information
+   */
+  contact_information: z.string(),
+  /**
+   * Assigned Collection Route
+   */
+  assigned_collection_route: z.string(),
+})
+
+export type workforce = z.infer<typeof workforceSchema>

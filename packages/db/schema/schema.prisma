@@ -445,6 +445,49 @@ model contractor_company {
   sts sts @relation(fields: [sts_id], references: [id])
 }
 
+model workforce_log {
+  /// Unique identifier for the STS.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Type of log: start, end
+  type workforce_log_type
+
+  /// Timestamp indicating when the post was made
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model workforce {
+  /// Unique identifier for the STS.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Full name of the workforce
+  full_name String
+
+  /// Date of Birth
+  dob DateTime
+
+  /// Date of Hire
+  hired_at DateTime
+
+  /// Job Title
+  job_title String
+
+  /// Payment rate per hour
+  payment_rate Float
+
+  /// Contact Information
+  contact_information String
+
+  /// Assigned Collection Route
+  assigned_collection_route String
+}
+
+enum workforce_log_type {
+  start
+  end
+}
+
 enum post_type {
   /// Event
   event

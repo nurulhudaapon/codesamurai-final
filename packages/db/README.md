@@ -184,6 +184,22 @@ erDiagram
   String area_of_collection
   String sts_id FK
 }
+"workforce_log" {
+  String id PK
+  workforce_log_type type
+  DateTime created_at
+  DateTime updated_at
+}
+"workforce" {
+  String id PK
+  String full_name
+  DateTime dob
+  DateTime hired_at
+  String job_title
+  Float payment_rate
+  String contact_information
+  String assigned_collection_route
+}
 "vehicle" }o--|| "sts" : sts
 "transportation" }o--o| "sts" : sts
 "transportation" }o--o| "landfill" : landfill
@@ -291,3 +307,23 @@ erDiagram
   - `contract_duration`: Contract duration
   - `area_of_collection`: Area of collection
   - `sts_id`: Designated STS
+
+### `workforce_log`
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `type`: Type of log: start, end
+  - `created_at`: Timestamp indicating when the post was made
+  - `updated_at`: 
+
+### `workforce`
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `full_name`: Full name of the workforce
+  - `dob`: Date of Birth
+  - `hired_at`: Date of Hire
+  - `job_title`: Job Title
+  - `payment_rate`: Payment rate per hour
+  - `contact_information`: Contact Information
+  - `assigned_collection_route`: Assigned Collection Route
