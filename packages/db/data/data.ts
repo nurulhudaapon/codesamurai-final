@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 const now = new Date();
 
-const password = "password"
+const password = "password";
 
 //======== Initial Data ========
 
@@ -155,7 +155,7 @@ const user: Entity.user[] = [
 const sts: Entity.sts[] = [
   {
     id: uuid(),
-    name: 'Gausia',
+    name: "Gausia",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -167,7 +167,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
-    name: 'Kuril',
+    name: "Kuril",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -179,7 +179,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
-    name: 'Kanchan',
+    name: "Kanchan",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -191,7 +191,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
-    name: 'Kamalapur',
+    name: "Kamalapur",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -203,7 +203,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
-    name: 'Mohakhali',
+    name: "Mohakhali",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -215,7 +215,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
-    name: 'Mirpur',
+    name: "Mirpur",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -227,7 +227,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
-    name: 'Badda',
+    name: "Badda",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -239,7 +239,7 @@ const sts: Entity.sts[] = [
   },
   {
     id: uuid(),
-    name: 'Banani',
+    name: "Banani",
     manager_id: user[1].id,
     capacity_tonnes: 3000,
     created_by_user_id: user[0].id,
@@ -248,13 +248,13 @@ const sts: Entity.sts[] = [
     ward_number: "17",
     created_at: now,
     updated_at: now,
-  }
+  },
 ];
 
 const landfill: Entity.landfill[] = [
   {
     id: uuid(),
-    name: 'DNCC',
+    name: "DNCC",
     closes_at: "8:00",
     opens_at: "18:00",
     capacity_tonnes: 3000,
@@ -266,7 +266,7 @@ const landfill: Entity.landfill[] = [
   },
   {
     id: uuid(),
-    name: 'DNSS',
+    name: "DNSS",
     closes_at: "8:00",
     opens_at: "18:00",
     capacity_tonnes: 3000,
@@ -333,6 +333,7 @@ const transportation: Entity.transportation[] = [
   {
     id: uuid(),
     created_at: now,
+    contractor_id: null,
     updated_at: now,
     created_by_user_id: user[0].id,
     sts_id: sts[0].id,
@@ -343,10 +344,11 @@ const transportation: Entity.transportation[] = [
     departure_time: new Date(),
     padding: true,
     distance: 10.5,
-    location_type: Entity.transportation_location_type.sts
+    location_type: Entity.transportation_location_type.sts,
   },
   {
     id: uuid(),
+    contractor_id: null,
     created_at: now,
     updated_at: now,
     created_by_user_id: user[0].id,
@@ -357,7 +359,7 @@ const transportation: Entity.transportation[] = [
     arrival_time: new Date(),
     departure_time: new Date(),
     padding: false,
-    distance: 26.00,
+    distance: 26.0,
     location_type: Entity.transportation_location_type.sts,
   },
   {
@@ -366,6 +368,8 @@ const transportation: Entity.transportation[] = [
     updated_at: now,
     created_by_user_id: user[0].id,
     sts_id: sts[2].id,
+    contractor_id: null,
+
     landfill_id: landfill[0].id,
     vehicle_id: vehicle[2].id,
     volume: 3,
@@ -379,6 +383,8 @@ const transportation: Entity.transportation[] = [
     id: uuid(),
     created_at: now,
     updated_at: now,
+    contractor_id: null,
+
     created_by_user_id: user[0].id,
     sts_id: sts[3].id,
     landfill_id: landfill[1].id,
@@ -387,7 +393,7 @@ const transportation: Entity.transportation[] = [
     arrival_time: new Date(),
     departure_time: new Date(),
     padding: true,
-    distance: 16.00,
+    distance: 16.0,
     location_type: Entity.transportation_location_type.landfill,
   },
   {
@@ -396,13 +402,14 @@ const transportation: Entity.transportation[] = [
     updated_at: now,
     created_by_user_id: user[0].id,
     sts_id: sts[1].id,
+    contractor_id: null,
     landfill_id: landfill[1].id,
     vehicle_id: vehicle[3].id,
     volume: 7,
     arrival_time: new Date(),
     departure_time: new Date(),
     padding: false,
-    distance: 45.00,
+    distance: 45.0,
     location_type: Entity.transportation_location_type.sts,
   },
 ];

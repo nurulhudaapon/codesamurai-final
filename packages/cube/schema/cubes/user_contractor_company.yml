@@ -1,0 +1,32 @@
+cubes:
+  - name: user_contractor_company
+    sql_table: public.user_contractor_company
+    data_source: default
+
+    joins:
+      - name: user
+        sql: "{CUBE}.user_id = {user}.id"
+        relationship: many_to_one
+
+      - name: contractor_company
+        sql: "{CUBE}.contractor_company_id = {contractor_company}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: user_id
+        sql: user_id
+        type: string
+        primary_key: true
+
+      - name: contractor_company_id
+        sql: contractor_company_id
+        type: string
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

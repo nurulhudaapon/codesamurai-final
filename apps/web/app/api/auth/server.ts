@@ -1,8 +1,17 @@
-import { dbClient } from "@/client";
+import { dbApiClient, dbClient } from "@/client";
 import type { SessionData } from "@/types/auth";
 import * as bcrypt from "bcryptjs";
 
 export const login = async (user: { email: string; password: string }) => {
+  const isAuthed = await dbApiClient.rpc('login', {
+    email: user.email,
+    pass: user.password
+  });
+
+  if (!isAuthed.data?.token) {
+    throw new Error("Invalid credentials!");
+  }
+
   const existingUser = await dbClient.user.getUserByEmailWithPermissions(
     user.email
   );
@@ -15,12 +24,6 @@ export const login = async (user: { email: string; password: string }) => {
 
   if (!password) {
     throw new Error("Invalid user!");
-  }
-
-  const isPasswordValid = await bcrypt.compare(user.password, password);
-
-  if (!isPasswordValid) {
-    throw new Error("Invalid password!");
   }
 
   const userData: SessionData = {

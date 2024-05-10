@@ -28,7 +28,7 @@ export const LandfillScalarFieldEnumSchema = z.enum(['id','name','created_at','u
 
 export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','contractor_id','volume','arrival_time','departure_time','padding','distance','location_type']);
 
-export const IssueScalarFieldEnumSchema = z.enum(['id','title','description','type','attachments','created_at','updated_at','created_by_user_id','latitude','longitude']);
+export const IssueScalarFieldEnumSchema = z.enum(['id','title','description','type','attachments','status','created_at','updated_at','created_by_user_id','latitude','longitude']);
 
 export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachments','created_at','updated_at','created_by_user_id']);
 
@@ -49,6 +49,10 @@ export const NullsOrderSchema = z.enum(['first','last']);
 export const user_stateSchema = z.enum(['active','inactive']);
 
 export type user_stateType = `${z.infer<typeof user_stateSchema>}`
+
+export const issue_statusSchema = z.enum(['reported','reviewed','resolved','flagged']);
+
+export type issue_statusType = `${z.infer<typeof issue_statusSchema>}`
 
 export const workforce_log_typeSchema = z.enum(['start','end','track']);
 
@@ -418,6 +422,10 @@ export type transportation = z.infer<typeof transportationSchema>
 /////////////////////////////////////////
 
 export const issueSchema = z.object({
+  /**
+   * Status of the issue
+   */
+  status: issue_statusSchema.nullable(),
   /**
    * Unique identifier for the STS.
    */

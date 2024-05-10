@@ -105,8 +105,9 @@ export type Database = {
           created_by_user_id: string | null
           description: string
           id: string
-          latitude: number
-          longitude: number
+          latitude: number | null
+          longitude: number | null
+          status: Database["public"]["Enums"]["issue_status"] | null
           title: string
           type: string
           updated_at: string
@@ -117,8 +118,9 @@ export type Database = {
           created_by_user_id?: string | null
           description: string
           id: string
-          latitude: number
-          longitude: number
+          latitude?: number | null
+          longitude?: number | null
+          status?: Database["public"]["Enums"]["issue_status"] | null
           title: string
           type: string
           updated_at?: string
@@ -129,8 +131,9 @@ export type Database = {
           created_by_user_id?: string | null
           description?: string
           id?: string
-          latitude?: number
-          longitude?: number
+          latitude?: number | null
+          longitude?: number | null
+          status?: Database["public"]["Enums"]["issue_status"] | null
           title?: string
           type?: string
           updated_at?: string
@@ -367,6 +370,7 @@ export type Database = {
       transportation: {
         Row: {
           arrival_time: string | null
+          contractor_id: string | null
           created_at: string
           created_by_user_id: string
           departure_time: string | null
@@ -384,6 +388,7 @@ export type Database = {
         }
         Insert: {
           arrival_time?: string | null
+          contractor_id?: string | null
           created_at?: string
           created_by_user_id: string
           departure_time?: string | null
@@ -401,6 +406,7 @@ export type Database = {
         }
         Update: {
           arrival_time?: string | null
+          contractor_id?: string | null
           created_at?: string
           created_by_user_id?: string
           departure_time?: string | null
@@ -417,6 +423,13 @@ export type Database = {
           volume?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "transportation_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractor_company"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "transportation_created_by_user_id_fkey"
             columns: ["created_by_user_id"]
@@ -629,6 +642,8 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          latitude: number | null
+          longitude: number | null
           type: Database["public"]["Enums"]["workforce_log_type"]
           updated_at: string
           workforce_id: string
@@ -636,6 +651,8 @@ export type Database = {
         Insert: {
           created_at?: string
           id: string
+          latitude?: number | null
+          longitude?: number | null
           type: Database["public"]["Enums"]["workforce_log_type"]
           updated_at?: string
           workforce_id: string
@@ -643,6 +660,8 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          latitude?: number | null
+          longitude?: number | null
           type?: Database["public"]["Enums"]["workforce_log_type"]
           updated_at?: string
           workforce_id?: string
@@ -767,6 +786,7 @@ export type Database = {
       }
     }
     Enums: {
+      issue_status: "reported" | "in_progress" | "resolved"
       post_type: "event" | "announcement" | "post"
       transportation_location_type: "sts" | "landfill"
       user_state: "active" | "inactive"
@@ -776,7 +796,7 @@ export type Database = {
         | "dump_truck"
         | "compactor"
         | "container_carrier"
-      workforce_log_type: "start" | "end"
+      workforce_log_type: "start" | "end" | "track"
     }
     CompositeTypes: {
       jwt_token: {

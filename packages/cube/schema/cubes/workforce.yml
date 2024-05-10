@@ -1,0 +1,49 @@
+cubes:
+  - name: workforce
+    sql_table: public.workforce
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: id
+        sql: id
+        type: string
+        primary_key: true
+
+      - name: contractor_id
+        sql: contractor_id
+        type: string
+
+      - name: full_name
+        sql: full_name
+        type: string
+
+      - name: job_title
+        sql: job_title
+        type: string
+
+      - name: contact_information
+        sql: contact_information
+        type: string
+
+      - name: assigned_collection_route
+        sql: assigned_collection_route
+        type: string
+
+      - name: dob
+        sql: dob
+        type: time
+
+      - name: hired_at
+        sql: hired_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

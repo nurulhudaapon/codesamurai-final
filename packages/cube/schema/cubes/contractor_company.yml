@@ -1,0 +1,60 @@
+cubes:
+  - name: contractor_company
+    sql_table: public.contractor_company
+    data_source: default
+
+    joins:
+      - name: sts
+        sql: "{CUBE}.sts_id = {sts}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: string
+        primary_key: true
+
+      - name: sts_id
+        sql: sts_id
+        type: string
+
+      - name: tin
+        sql: tin
+        type: string
+
+      - name: contact_number
+        sql: contact_number
+        type: string
+
+      - name: contract_duration
+        sql: contract_duration
+        type: string
+
+      - name: area_of_collection
+        sql: area_of_collection
+        type: string
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: contract_id
+        sql: contract_id
+        type: string
+
+      - name: registration_id
+        sql: registration_id
+        type: string
+
+      - name: registration_date
+        sql: registration_date
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

@@ -319,8 +319,8 @@ model transportation {
   /// Time of departure.
   departure_time DateTime?
 
-  // padding for the vehicle to reach the location - true if the vehicle is already at the location
   // false if the vehicle is on the way to the location
+  // padding for the vehicle to reach the location - true if the vehicle is already at the location
   padding Boolean
 
   /// Distance from the STS to the landfill.
@@ -366,6 +366,9 @@ model issue {
   /// Attachments of the issue
   attachments String[]
 
+  /// Status of the issue 
+  status issue_status? @default(reported)
+
   /// Timestamp indicating when the report was issued
   created_at DateTime @default(now()) @db.Timestamptz(6)
   updated_at DateTime @default(now()) @db.Timestamptz(6)
@@ -380,6 +383,20 @@ model issue {
 
   /// Relation to the user who created
   user user? @relation(fields: [created_by_user_id], references: [id])
+}
+
+enum issue_status {
+  /// Issue is reported
+  reported
+
+  /// Issue has been reviewed
+  reviewed
+
+  /// Issue is resolved
+  resolved
+
+  /// Issue has been flagged as spam
+  flagged
 }
 
 model post {

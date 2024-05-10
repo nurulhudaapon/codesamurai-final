@@ -1,7 +1,4 @@
-
 const gql = String.raw;
-
-
 
 /**
  * ## Cubejs Related Service
@@ -114,7 +111,10 @@ export class EcosyncCubeClient {
     `;
 
     const result = (await this.#query(query, variables)) as {
-      transportation: { total_volume: number | null, total_distance_meters: number | null };
+      transportation: {
+        total_volume: number | null;
+        total_distance_meters: number | null;
+      };
     };
 
     return result;
@@ -185,6 +185,52 @@ export class EcosyncCubeClient {
     };
 
     return result;
+  }
+
+  async getIssueStats() {
+    const query = gql`
+      query GetIssueStats {
+        today: cube(
+          where: { issue: { created_at: { inDateRange: "today" } } }
+        ) {
+          today: issue {
+            count
+          }
+        }
+        total: cube {
+          total: issue {
+            count
+          }
+        }
+        reviewed: cube(where: { issue: { status: { equals: "reviewed" } } }) {
+          reviewed: issue {
+            count
+          }
+        }
+
+        flagged: cube(where: { issue: { status: { equals: "flagged" } } }) {
+          flagged: issue {
+            count
+          }
+        }
+
+        resolved: cube(where: { issue: { status: { equals: "resolved" } } }) {
+          resolved: issue {
+            count
+          }
+        }
+      }
+    `;
+
+    const result = await this.#query(query);
+
+    return result as {
+      today: { count: number };
+      total: { count: number };
+      reviewed: { count: number };
+      flagged: { count: number };
+      resolved: { count: number };
+    };
   }
 
   async getTransportationTableStats(variables?: {

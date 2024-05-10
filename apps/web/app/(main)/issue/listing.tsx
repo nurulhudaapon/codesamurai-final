@@ -17,7 +17,7 @@ import * as Entity from "@prisma/client";
 import { v4 as uuid } from "uuid";
 import Link from "next/link";
 
-const MainListing = ({ data }: { data: Entity.landfill[] }) => {
+const MainListing = ({ data }: { data: Entity.issue[] }) => {
   const [search, setSearch] = useState<string>("");
 
   const filteredData = data.filter((data) =>
@@ -44,6 +44,8 @@ const MainListing = ({ data }: { data: Entity.landfill[] }) => {
       </div>
 
       <div>
+
+        
         
       </div>
     </div>

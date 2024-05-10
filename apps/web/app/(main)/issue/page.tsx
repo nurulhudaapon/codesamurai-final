@@ -1,11 +1,14 @@
 // import { getAllSts } from "./server";
 import { StatsCard } from "@/components/card";
 import MainListing from "./listing";
-import { cubeClient, dbClient } from "@/client";
+import { cubeClient, dbApiClient, dbClient } from "@/client";
 import { Helpers } from "@ecosync/utils";
 
 export default async function IndexPage() {
-  // const data = await dbClient
+  const data = await dbApiClient.from('issue').select('*', {count: 'exact'}).order('created_at', { ascending: false }).limit(50);
+  const stats = await cubeClient.getIssueStats();
+
+  console.log(stats)
 
   return (
     <>
@@ -13,10 +16,10 @@ export default async function IndexPage() {
         <h1 className="font-semibold text-lg">Issue Overview</h1>
       </div>
       <div className="grid grid-cols-6 gap-4 xl:gap-6">
-        {/* <StatsCard title={"Today"} value={totalCapacity + Helpers.String.pluralize(" issue", totalCapacity)} />
-        <StatsCard title={"Total"} value={totalVolume + Helpers.String.pluralize(" issue", totalVolume)} />
-        <StatsCard title={"Reviewed"} value={totalDumped + Helpers.String.pluralize(" issue", totalDumped)} />
-        <StatsCard title={"Flagged"} value={totalDumped + Helpers.String.pluralize(" issue", totalDumped)} /> */}
+        <StatsCard title={"Today"} value={stats.today.count + Helpers.String.pluralize(" issue", stats.today.count)} />
+        <StatsCard title={"Total"} value={stats.total.count + Helpers.String.pluralize(" issue", stats.total.count)} />
+        <StatsCard title={"Reviewed"} value={stats.reviewed.count + Helpers.String.pluralize(" issue", stats.reviewed.count)} />
+        <StatsCard title={"Flagged"} value={stats.flagged.count + Helpers.String.pluralize(" issue", stats.flagged.count)} />
       </div>
       {/* <MainListing data={data} /> */}
     </>

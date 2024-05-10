@@ -173,6 +173,7 @@ erDiagram
   String description
   String type
   String attachments
+  issue_status status "nullable"
   DateTime created_at
   DateTime updated_at
   String created_by_user_id FK "nullable"
@@ -301,6 +302,7 @@ erDiagram
   - `description`: 
   - `type`: Type of the issue - overflowing bins, littering, illegal dumping, or damaged infrastructure.
   - `attachments`: Attachments of the issue
+  - `status`: Status of the issue 
   - `created_at`: Timestamp indicating when the report was issued
   - `updated_at`: 
   - `created_by_user_id`: 
