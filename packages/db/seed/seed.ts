@@ -2,8 +2,6 @@ import { InitData } from "../data";
 import { getPrismaClient } from "../client";
 import { Prisma } from "@prisma/client";
 
-
-
 const main = async () => {
   console.log("🪫 Seeding database...");
   const prismaClient = getPrismaClient();

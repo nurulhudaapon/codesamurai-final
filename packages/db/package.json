@@ -4,7 +4,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "reset": "prisma migrate reset --force",
+    "reset": "prisma migrate reset --force && npm run postdeploy",
     "deploy": "prisma migrate deploy && prisma generate && npm run postdeploy",
     "migration": "prisma migrate dev",
     "studio": "prisma studio",

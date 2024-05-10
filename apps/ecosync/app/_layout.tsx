@@ -41,10 +41,12 @@ export default function RootLayout() {
 }
 import { Slot } from "expo-router";
 import { SessionProvider } from "@/contexts/auth";
+import { StatusBar } from "expo-status-bar";
 
 function RootLayoutNav() {
   return (
     <SessionProvider>
+      <StatusBar style="light" />
       <Slot />
     </SessionProvider>
   );

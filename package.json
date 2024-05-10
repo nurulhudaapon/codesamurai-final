@@ -4,7 +4,7 @@
   "version": "0.0.0-alpha-0",
   "scripts": {
     "start:container": "docker compose up -d",
-    "reset": "docker compose up -d && cd packages/db && prisma migrate reset --force",
+    "reset": "npm run reset -w @ecosync/db",
     "app": "npm start -w @ecosync/app",
     "app:web": "npm run web -w @ecosync/app",
     "dev": "npm run dev -w @ecosync/web"
@@ -23,6 +23,7 @@
   "dependencies": {
     "@supabase/postgrest-js": "^1.11.0",
     "ajv": "^8.13.0",
+    "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "expo-image": "~1.10.6",
     "expo-secure-store": "^13.0.1",

@@ -23,7 +23,7 @@ function Input({
     label,
     error,
     style,
-    rounded = true,
+    rounded,
     icon,
     iconRight,
     block,

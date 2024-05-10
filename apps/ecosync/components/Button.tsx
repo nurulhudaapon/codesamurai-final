@@ -37,7 +37,7 @@ function Button({
   lg,
   style,
   onPress,
-  rounded = true,
+  rounded,
   disabled,
   sm,
 }: IProps) {

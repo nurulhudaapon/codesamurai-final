@@ -15,7 +15,7 @@ export const Layout = ({
     return (
         <View style={[
             styles.layout,
-            withPadding && { padding: 20 },
+            withPadding && { paddingHorizontal: 20, paddingVertical: 40 },
             fullScreen && { flex: 1 },
             style
         ]}>
