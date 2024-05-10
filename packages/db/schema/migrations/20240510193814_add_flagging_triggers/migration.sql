@@ -2,9 +2,9 @@ CREATE OR REPLACE FUNCTION calculate_flag_score_and_update_status()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.flag_score := (
-        SELECT SUM(bw.weight)
-        FROM unnest(string_to_array(NEW.content, ' ')) word
-        JOIN blocked_words bw ON word = bw.word
+        SELECT COUNT(*)
+        FROM unnest(string_to_array(NEW.content, ' ')) w
+        JOIN blocked_words bw ON w = bw.word
     );
 
     IF NEW.flag_score > 1 THEN

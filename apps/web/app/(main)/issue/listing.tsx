@@ -31,7 +31,7 @@ export const IssueCardList = ({
         </div>
       </div>
 
-      <div>
+      <div className="grid grid-cols-12 gap-4 xl:gap-6">
         {
           filteredData.map((issue) => (
             <IssueCard issue={issue} />
@@ -46,7 +46,7 @@ export const IssueCardList = ({
 
 const IssueCard = ({ issue }: { issue: DatabaseEntity['issue']}) => {
   return (
-    <div className="max-w-md bg-white shadow-lg rounded-lg overflow-hidden mx-auto mb-4">
+    <div className="col-span-full rounded-md border border-solid text-white p-4 shadow-sm md:col-span-6 lg:col-span-3 w-full max-w-md bg-white shadow-lg rounded-lg overflow-hidden mx-auto mb-4">
       {issue.attachments?.[0] && <img className="w-full h-56 object-cover object-center" src={issue.attachments?.[0]} alt="Issue" />}
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{issue.title}</div>
