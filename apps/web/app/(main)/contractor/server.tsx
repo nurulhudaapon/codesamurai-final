@@ -1,17 +1,15 @@
 "use server";
-import { dbClient } from "@/client";
-import { Entity } from "@/types/prisma";
 
-export const getAllSts = async () => {
-  return dbClient.sts.getAll();
-};
-
-export type VehiclesType = Awaited<ReturnType<typeof getAllSts>>;
+import { dbApiClient } from "@/client";
 
 export async function StsSelector() {
+  const {data: stss} = await dbApiClient.from('sts').select('*');
+
+  if (!stss) return null;
+
   return (
     <select name="sts_id">
-      {(await dbClient.sts.getAll()).map((sts, idx) => (
+      {(stss).map((sts, idx) => (
         <option key={idx} value={sts.id}>
           {sts.ward_number} ({sts.capacity_tonnes} Ton)
         </option>

@@ -1,12 +1,10 @@
 "use client";
-import { dbApiClient, dbClient } from "@/client";
-import Input from "@/components/input";
-import { Schema } from "@ecosync/db";
-import { createContractorCompany } from "./action";
-import { useFormState } from "react-dom";
 import Button from "@/components/button";
-import Layout from "../layout";
+import Input from "@/components/input";
+import { useFormState } from "react-dom";
+import { createContractorCompany } from "./action";
 import { StsSelector } from "./server";
+import { Suspense } from "react";
 
 export function ContractorForm() {
   // @ts-ignore
@@ -105,7 +103,10 @@ export function ContractorForm() {
           errors={errors}
         />
       </div>
+      <Suspense>
+
       <StsSelector />
+      </Suspense>
       <Button type="submit">Submit</Button>
     </form>
   );
