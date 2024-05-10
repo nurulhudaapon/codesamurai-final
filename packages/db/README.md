@@ -148,10 +148,47 @@ erDiagram
   Float distance
   transportation_location_type location_type "nullable"
 }
+"issue" {
+  String id PK
+  String title
+  String description
+  String type
+  String attachments
+  DateTime created_at
+  DateTime updated_at
+  String created_by_user_id FK "nullable"
+  Float latitude
+  Float longitude
+}
+"post" {
+  String id PK
+  String content
+  post_type type
+  String attachments
+  DateTime created_at
+  DateTime updated_at
+  String created_by_user_id FK "nullable"
+}
+"contractor_company" {
+  String id PK
+  String name
+  String contract_id
+  String registration_id
+  DateTime registration_date
+  String tin
+  String contact_number
+  Int workforce_size
+  Float payment_per_tonnage
+  Float required_amount_per_day
+  String contract_duration
+  String area_of_collection
+  String sts_id FK
+}
 "vehicle" }o--|| "sts" : sts
 "transportation" }o--o| "sts" : sts
 "transportation" }o--o| "landfill" : landfill
 "transportation" }o--|| "vehicle" : vehicle
+"contractor_company" }o--|| "sts" : sts
 ```
 
 ### `vehicle`
@@ -212,3 +249,45 @@ erDiagram
   - `padding`: 
   - `distance`: Distance from the STS to the landfill.
   - `location_type`: Type of the location.
+
+### `issue`
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `title`: Title of the issue
+  - `description`: 
+  - `type`: Type of the issue - overflowing bins, littering, illegal dumping, or damaged infrastructure.
+  - `attachments`: Attachments of the issue
+  - `created_at`: Timestamp indicating when the report was issued
+  - `updated_at`: 
+  - `created_by_user_id`: 
+  - `latitude`: GPS coordinates of the STS.
+  - `longitude`: GPS coordinates of the STS.
+
+### `post`
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `content`: Content of the post
+  - `type`: Type of the post: event, announcement, post
+  - `attachments`: Attachments of the post
+  - `created_at`: Timestamp indicating when the post was made
+  - `updated_at`: 
+  - `created_by_user_id`: 
+
+### `contractor_company`
+
+**Properties**
+  - `id`: Unique identifier for the contractor company.
+  - `name`: Name of the company
+  - `contract_id`: Contract ID
+  - `registration_id`: Registration ID
+  - `registration_date`: Registration Date
+  - `tin`: TIN of the company
+  - `contact_number`: Contact number
+  - `workforce_size`: Workforce size
+  - `payment_per_tonnage`: Payment per tonnage of waste
+  - `required_amount_per_day`: The required amount of waste per day
+  - `contract_duration`: Contract duration
+  - `area_of_collection`: Area of collection
+  - `sts_id`: Designated STS

@@ -28,6 +28,12 @@ export const LandfillScalarFieldEnumSchema = z.enum(['id','name','created_at','u
 
 export const TransportationScalarFieldEnumSchema = z.enum(['id','created_at','updated_at','created_by_user_id','sts_id','landfill_id','vehicle_id','volume','arrival_time','departure_time','padding','distance','location_type']);
 
+export const IssueScalarFieldEnumSchema = z.enum(['id','title','description','type','attachments','created_at','updated_at','created_by_user_id','latitude','longitude']);
+
+export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachments','created_at','updated_at','created_by_user_id']);
+
+export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id']);
+
 export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const QueryModeSchema = z.enum(['default','insensitive']);
@@ -37,6 +43,10 @@ export const NullsOrderSchema = z.enum(['first','last']);
 export const user_stateSchema = z.enum(['active','inactive']);
 
 export type user_stateType = `${z.infer<typeof user_stateSchema>}`
+
+export const post_typeSchema = z.enum(['event','announcement','post']);
+
+export type post_typeType = `${z.infer<typeof post_typeSchema>}`
 
 export const transportation_location_typeSchema = z.enum(['sts','landfill']);
 
@@ -388,3 +398,135 @@ export const transportationSchema = z.object({
 })
 
 export type transportation = z.infer<typeof transportationSchema>
+
+/////////////////////////////////////////
+// ISSUE SCHEMA
+/////////////////////////////////////////
+
+export const issueSchema = z.object({
+  /**
+   * Unique identifier for the STS.
+   */
+  id: z.string().uuid(),
+  /**
+   * Title of the issue
+   */
+  title: z.string(),
+  description: z.string(),
+  /**
+   * Type of the issue - overflowing bins, littering, illegal dumping, or damaged infrastructure.
+   */
+  type: z.string(),
+  /**
+   * Attachments of the issue
+   */
+  attachments: z.string().array(),
+  /**
+   * Timestamp indicating when the report was issued
+   */
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
+  created_by_user_id: z.string().nullable(),
+  /**
+   * GPS coordinates of the STS.
+   */
+  latitude: z.number(),
+  /**
+   * GPS coordinates of the STS.
+   */
+  longitude: z.number(),
+})
+
+export type issue = z.infer<typeof issueSchema>
+
+/////////////////////////////////////////
+// POST SCHEMA
+/////////////////////////////////////////
+
+export const postSchema = z.object({
+  /**
+   * Type of the post: event, announcement, post
+   */
+  type: post_typeSchema,
+  /**
+   * Unique identifier for the STS.
+   */
+  id: z.string().uuid(),
+  /**
+   * Content of the post
+   */
+  content: z.string(),
+  /**
+   * Attachments of the post
+   */
+  attachments: z.string().array(),
+  /**
+   * Timestamp indicating when the post was made
+   */
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
+  created_by_user_id: z.string().nullable(),
+})
+
+export type post = z.infer<typeof postSchema>
+
+/////////////////////////////////////////
+// CONTRACTOR COMPANY SCHEMA
+/////////////////////////////////////////
+
+export const contractor_companySchema = z.object({
+  /**
+   * Unique identifier for the contractor company.
+   */
+  id: z.string().uuid(),
+  /**
+   * Name of the company
+   */
+  name: z.string(),
+  /**
+   * Contract ID
+   */
+  contract_id: z.string(),
+  /**
+   * Registration ID
+   */
+  registration_id: z.string(),
+  /**
+   * Registration Date
+   */
+  registration_date: z.coerce.date(),
+  /**
+   * TIN of the company
+   */
+  tin: z.string(),
+  /**
+   * Contact number
+   */
+  contact_number: z.string(),
+  /**
+   * Workforce size
+   */
+  workforce_size: z.number().int(),
+  /**
+   * Payment per tonnage of waste
+   */
+  payment_per_tonnage: z.number(),
+  /**
+   * The required amount of waste per day
+   */
+  required_amount_per_day: z.number(),
+  /**
+   * Contract duration
+   */
+  contract_duration: z.string(),
+  /**
+   * Area of collection
+   */
+  area_of_collection: z.string(),
+  /**
+   * Designated STS
+   */
+  sts_id: z.string(),
+})
+
+export type contractor_company = z.infer<typeof contractor_companySchema>

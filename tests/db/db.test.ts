@@ -1,6 +1,6 @@
-import { createDbClient } from "@ecosync/db/api";
+import { createDbApiClient } from "@ecosync/db/api";
 
-const dbClient = createDbClient(process.env.DATABASE_API_URL, process.env.AUTH_JWT_SECRET);
+const dbClient = createDbApiClient(process.env.DATABASE_API_URL, process.env.AUTH_JWT_SECRET);
 
 // Test connection
 test("dbClient;", async () => {

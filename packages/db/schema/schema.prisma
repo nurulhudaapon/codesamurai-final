@@ -84,6 +84,7 @@ model user {
   createor_landfill landfill[] @relation(name: "creator_landfill")
   // manager_landfill  landfill[] @relation(name: "manager_landfill")
   issue             issue[]
+  post              post[]
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
@@ -241,8 +242,9 @@ model sts {
   transportations transportation[]
 
   /// Relation to the user who created
-  creator  user      @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
-  vehicles vehicle[]
+  creator            user                 @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
+  vehicles           vehicle[]
+  contractor_company contractor_company[]
 
   /// Index for searching by ward number
   @@index([ward_number])
@@ -375,7 +377,6 @@ model issue {
   user user? @relation(fields: [created_by_user_id], references: [id])
 }
 
-
 model post {
   /// Unique identifier for the STS.
   id String @id @default(uuid()) @db.Uuid
@@ -400,6 +401,50 @@ model post {
   user user? @relation(fields: [created_by_user_id], references: [id])
 }
 
+model contractor_company {
+  /// Unique identifier for the contractor company.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Name of the company
+  name String
+
+  /// Contract ID
+  contract_id String
+
+  /// Registration ID
+  registration_id String
+
+  /// Registration Date
+  registration_date DateTime
+
+  /// TIN of the company
+  tin String
+
+  /// Contact number
+  contact_number String
+
+  /// Workforce size
+  workforce_size Int
+
+  /// Payment per tonnage of waste
+  payment_per_tonnage Float
+
+  /// The required amount of waste per day
+  required_amount_per_day Float
+
+  /// Contract duration
+  contract_duration String
+
+  /// Area of collection
+  area_of_collection String
+
+  /// Designated STS
+  sts_id String @db.Uuid
+
+  /// Relation to the STS
+  sts sts @relation(fields: [sts_id], references: [id])
+}
+
 enum post_type {
   /// Event
   event
@@ -410,7 +455,6 @@ enum post_type {
   /// Post
   post
 }
-
 
 enum transportation_location_type {
   /// STS location type.

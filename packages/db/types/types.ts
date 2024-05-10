@@ -42,6 +42,109 @@ export type Database = {
         }
         Relationships: []
       }
+      contractor_company: {
+        Row: {
+          area_of_collection: string
+          contact_number: string
+          contract_duration: string
+          contract_id: string
+          id: string
+          name: string
+          payment_per_tonnage: number
+          registration_date: string
+          registration_id: string
+          required_amount_per_day: number
+          sts_id: string
+          tin: string
+          workforce_size: number
+        }
+        Insert: {
+          area_of_collection: string
+          contact_number: string
+          contract_duration: string
+          contract_id: string
+          id: string
+          name: string
+          payment_per_tonnage: number
+          registration_date: string
+          registration_id: string
+          required_amount_per_day: number
+          sts_id: string
+          tin: string
+          workforce_size: number
+        }
+        Update: {
+          area_of_collection?: string
+          contact_number?: string
+          contract_duration?: string
+          contract_id?: string
+          id?: string
+          name?: string
+          payment_per_tonnage?: number
+          registration_date?: string
+          registration_id?: string
+          required_amount_per_day?: number
+          sts_id?: string
+          tin?: string
+          workforce_size?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contractor_company_sts_id_fkey"
+            columns: ["sts_id"]
+            isOneToOne: false
+            referencedRelation: "sts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      issue: {
+        Row: {
+          attachments: string[] | null
+          created_at: string
+          created_by_user_id: string | null
+          description: string
+          id: string
+          latitude: number
+          longitude: number
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          attachments?: string[] | null
+          created_at?: string
+          created_by_user_id?: string | null
+          description: string
+          id: string
+          latitude: number
+          longitude: number
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          attachments?: string[] | null
+          created_at?: string
+          created_by_user_id?: string | null
+          description?: string
+          id?: string
+          latitude?: number
+          longitude?: number
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issue_created_by_user_id_fkey"
+            columns: ["created_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       landfill: {
         Row: {
           capacity_tonnes: number
@@ -112,6 +215,44 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      post: {
+        Row: {
+          attachments: string[] | null
+          content: string
+          created_at: string
+          created_by_user_id: string | null
+          id: string
+          type: Database["public"]["Enums"]["post_type"]
+          updated_at: string
+        }
+        Insert: {
+          attachments?: string[] | null
+          content: string
+          created_at?: string
+          created_by_user_id?: string | null
+          id: string
+          type: Database["public"]["Enums"]["post_type"]
+          updated_at?: string
+        }
+        Update: {
+          attachments?: string[] | null
+          content?: string
+          created_at?: string
+          created_by_user_id?: string | null
+          id?: string
+          type?: Database["public"]["Enums"]["post_type"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_created_by_user_id_fkey"
+            columns: ["created_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       role: {
         Row: {
@@ -426,6 +567,7 @@ export type Database = {
       }
     }
     Enums: {
+      post_type: "event" | "announcement" | "post"
       transportation_location_type: "sts" | "landfill"
       user_state: "active" | "inactive"
       vehicle_capacity: "three_ton" | "five_ton" | "seven_ton" | "fifteen_ton"

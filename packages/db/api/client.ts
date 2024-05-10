@@ -10,7 +10,7 @@ export type PostgrestFilterType = ReturnType<ReturnType<PostgrestClientType['fro
 
 
 /** Postgrest client */
-export const createDbClient = (apiUrl: string, jwtSecret: string, useCrossFetch = true): PostgrestClientType => {
+export const createDbApiClient = (apiUrl: string, jwtSecret: string, useCrossFetch = true): PostgrestClientType => {
 	const jwtToken = jwt.sign({ iss: 'lr', role: 'postgres' }, jwtSecret);
 	return new PostgrestClient(apiUrl, {
 		headers: jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {},
