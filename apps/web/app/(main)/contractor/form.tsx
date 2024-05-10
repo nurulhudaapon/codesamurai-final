@@ -6,8 +6,7 @@ import { createContractorCompany } from "./action";
 import { useFormState } from "react-dom";
 import Button from "@/components/button";
 import Layout from "../layout";
-// import { useActionState } from "react";
-
+import { StsSelector } from "./server";
 
 export function ContractorForm() {
   // @ts-ignore
@@ -106,13 +105,7 @@ export function ContractorForm() {
           errors={errors}
         />
       </div>
-      <Input
-        label="Designated STS"
-        placeholder="Designated STS"
-        type="text"
-        name="designated_sts"
-        errors={errors}
-      />
+      <StsSelector />
       <Button type="submit">Submit</Button>
     </form>
   );

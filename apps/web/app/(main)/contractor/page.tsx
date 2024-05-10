@@ -1,8 +1,10 @@
 import { ContractorForm } from "./form";
 
-export default function() {
-
-    return <>
-    <ContractorForm/>
+const Page = () => {
+  return (
+    <>
+      <ContractorForm />
     </>
-}
+  );
+};
+export default Page;
