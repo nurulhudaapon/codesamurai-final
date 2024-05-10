@@ -76,7 +76,6 @@ export default function Report() {
         } else {
             Alert.alert('Ops!', 'Please fill all the required fields')
         }
-
     };
 
     return (

@@ -3,8 +3,9 @@ import { Redirect, Stack, router } from 'expo-router';
 import { Text } from '@/components/Themed';
 import { useSession } from '@/contexts/auth';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Plus } from 'lucide-react-native';
+import { ChevronsDown, ChevronsUp, ClipboardPlus, FilePen, Plus } from 'lucide-react-native';
 import { theme } from '@/styles/theme';
+import { useState } from 'react';
 
 
 export default function AppLayout() {
@@ -26,32 +27,62 @@ export default function AppLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
-      <ReprotBubble />
+      <Bubble />
     </>
   )
 }
 
-const ReprotBubble = () => {
-  const goToReport = () => {
-    router.push('/report')
-  }
+const Bubble = () => {
+  const [open, setOpen] = useState(false);
+
+  const Icon = open ? ChevronsDown : ChevronsUp;
 
   return (
-    <TouchableOpacity onPress={goToReport}>
-      <View style={styles.bubble}>
-        <Plus size={30} color={theme.colors.white} />
-      </View>
-    </TouchableOpacity>
+    <View style={styles.actions}>
+      {open && <BubbleActions />}
+      <TouchableOpacity onPress={() => setOpen(!open)} style={styles.bubble}>
+        <Icon size={30} color={theme.colors.white} />
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+const BubbleActions = () => {
+  const goToReport = () => {
+    router.push('/create-report')
+  }
+  const goToPost = () => {
+    router.push('/create-post')
+  }
+  return (
+    <>
+      <TouchableOpacity onPress={goToPost} style={styles.bubble}>
+        <FilePen size={20} color={theme.colors.white} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={goToReport} style={styles.bubble}>
+        <ClipboardPlus size={20} color={theme.colors.white} />
+      </TouchableOpacity>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
+  button: {
+    bottom: 70,
+    right: 20,
+  },
   bubble: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: 50,
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  actions: {
     position: "absolute",
     bottom: 70,
     right: 20,
-    backgroundColor: theme.colors.primary,
-    padding: 10,
-    borderRadius: 50,
-  },
+    gap: 10
+  }
 })

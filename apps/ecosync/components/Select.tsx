@@ -53,7 +53,7 @@ export const Select = ({
         </View>
       </ActionModal>
       <TouchableOpacity onPress={() => setOpen(true)}>
-        <Input editable={false} placeholder={placeholder} icon={icon} value={labelFromValue?.label || defaultValue} />
+        <Input editable={false} placeholder={placeholder} icon={icon} defaultValue={labelFromValue?.label || defaultValue} />
       </TouchableOpacity>
     </>
   );
