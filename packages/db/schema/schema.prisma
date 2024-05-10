@@ -83,6 +83,7 @@ model user {
 
   createor_landfill landfill[] @relation(name: "creator_landfill")
   // manager_landfill  landfill[] @relation(name: "manager_landfill")
+  issue             issue[]
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
@@ -335,6 +336,81 @@ model transportation {
   /// Index for searching by STS ID
   @@index([sts_id])
 }
+
+// • Users should be able to report issues related to waste management, such as overflowing
+// bins, littering, illegal dumping, or damaged infrastructure.
+// • Reporting functionalities should include options to provide details such as location, type
+// of issue, description, and photo attachments.
+// • Anonymous reporting options should be available for users who prefer not to disclose their
+// identity.
+// */
+
+model issue {
+  /// Unique identifier for the STS.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Title of the issue
+  title       String
+  description String
+
+  /// Type of the issue - overflowing bins, littering, illegal dumping, or damaged infrastructure.
+  type String
+
+  /// Attachments of the issue
+  attachments String[]
+
+  /// Timestamp indicating when the report was issued
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  // User who reported the issue
+  created_by_user_id String? @db.Uuid
+
+  /// GPS coordinates of the STS.
+  latitude  Float
+  /// GPS coordinates of the STS.
+  longitude Float
+
+  /// Relation to the user who created
+  user user? @relation(fields: [created_by_user_id], references: [id])
+}
+
+
+model post {
+  /// Unique identifier for the STS.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Content of the post
+  content String
+
+  /// Type of the post: event, announcement, post
+  type post_type
+
+  /// Attachments of the post
+  attachments String[]
+
+  /// Timestamp indicating when the post was made
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  // User who created the post
+  created_by_user_id String? @db.Uuid
+
+  /// Relation to the user who created
+  user user? @relation(fields: [created_by_user_id], references: [id])
+}
+
+enum post_type {
+  /// Event
+  event
+
+  /// Announcement
+  announcement
+
+  /// Post
+  post
+}
+
 
 enum transportation_location_type {
   /// STS location type.

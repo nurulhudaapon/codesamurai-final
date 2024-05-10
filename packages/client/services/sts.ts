@@ -1,8 +1,6 @@
 import { Schema, type EcosyncDatabase } from "@ecosync/db";
 import type * as Entity from "@prisma/client";
 
-
-
 /**
  * ## Sts entity related CRUD Operations
  */
@@ -17,13 +15,14 @@ export class EcosyncStsService {
    * Get All Stss
    * @returns {Promise<Array<Entity.sts>>} A promise that resolves to an array of Sts objects
    */
-  getAll(): Promise<Array<Entity.sts>> {
+  getAll() {
     //return manager info as well
-    return this.#client.sts.findMany(
-      { 
-        orderBy: { created_at: "desc" },
-      }
-    );
+    return this.#client.sts.findMany({
+      include: {
+        creator: true,
+      },
+      orderBy: { created_at: "desc" },
+    });
   }
 
   /**
@@ -45,7 +44,7 @@ export class EcosyncStsService {
     const validStsData = Schema.stsSchema.parse(stsData);
 
     // Commit
-    return this.#client.sts.create({ data: validStsData});
+    return this.#client.sts.create({ data: validStsData });
   }
 
   /**
