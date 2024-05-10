@@ -564,6 +564,9 @@ model workforce {
   /// Contact Information
   contact_information String
 
+  /// Assigned collection route
+  collection_route String?
+
   /// Contractor ID
   contractor_id String @db.Uuid
 
