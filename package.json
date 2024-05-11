@@ -38,6 +38,7 @@
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.378.0",
     "next-auth": "^4.24.7",
+    "react-google-maps": "^9.4.5",
     "react-hot-toast": "^2.4.1",
     "react-leaflet": "^4.2.1",
     "react-native-get-random-values": "^1.11.0",

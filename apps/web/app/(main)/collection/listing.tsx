@@ -1,11 +1,12 @@
 "use client";
+
 import { DatabaseEntity } from "@ecosync/db";
-import { Helpers } from "@ecosync/utils";
-import { CheckCheckIcon, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { updateIssue } from "./server";
 import Button from "@/components/button";
 import { Icon } from "@/components/icon";
+import { RoutePlanner } from "@/components/routePlanner";
 
 export const CollectionPlanCardList = ({
   data,
@@ -41,7 +42,7 @@ export const CollectionPlanCardList = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-4 xl:gap-6">
+      <div className="grid grid-cols-10 gap-4 xl:gap-6">
         {filteredData.map((data) => (
           <CollectionPlanCard data={data} />
         ))}
@@ -64,6 +65,8 @@ const CollectionPlanCard = ({
     window.location.reload();
   };
 
+  const locations = JSON.parse(data.area_of_collection);
+
   return (
     <div className="col-span-full rounded-md border border-solid text-white p-4 shadow-sm md:col-span-6 lg:col-span-3 w-full max-w-md bg-white shadow-lg rounded-lg overflow-hidden mx-auto mb-4">
       <p className="text-black">
@@ -79,7 +82,8 @@ const CollectionPlanCard = ({
         tonnes
         <br />
       </p>
-      <Button>Generate</Button>
+      <RoutePlanner location={locations} />
+      {/* <Button>Generate</Button> */}
     </div>
   );
 };
