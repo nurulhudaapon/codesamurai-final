@@ -20,7 +20,7 @@ export function AppNoti() {
   return (
     <div>
       <h1 className="font-semibold text-lg mb-4">Notifications</h1>
-      <div className="rounded-md overflow-y-scroll h-[350px]">
+      <div className="rounded-md h-[350px]">
         <div className="space-y-4">
           {noti.map((n) => (
             <Notification key={n.id} title={n.title} content={n.content} />
@@ -33,14 +33,14 @@ export function AppNoti() {
 
 function Notification({ title, content }: { title: string; content: string }) {
   return (
-    <div className="bg-green-500 shadow-md rounded-md p-4 mb-4">
+    <div className="bg-green400 shadow-md rounded-md p-4 mb-4">
       <div className="flex items-center">
         <div className="bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center mr-2">
           🔔
         </div>
         <div>
           <p className="font-semibold">{title}</p>
-          <p className="text-sm text-gray-600">{content}</p>
+          <p className="text-sm text-white">{content}</p>
         </div>
       </div>
     </div>

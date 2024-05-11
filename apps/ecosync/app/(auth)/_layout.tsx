@@ -68,7 +68,7 @@ const BubbleActions = () => {
 
 const styles = StyleSheet.create({
   button: {
-    bottom: Platform.OS === 'ios' ? 200 : 70,
+    bottom: Platform.OS === 'ios' ? 130 : 70,
     right: 20,
   },
   bubble: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   actions: {
     position: "absolute",
-    bottom: 70,
+    bottom: Platform.OS === 'ios' ? 130 : 70,
     right: 20,
     gap: 10
   }
