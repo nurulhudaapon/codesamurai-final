@@ -87,7 +87,8 @@ model user {
   post                    post[]
   user_contractor_company user_contractor_company[]
   notification_read       notification_read[]
-  activity_log            activity_log[]
+  // activity_log            activity_log[]
+  notification            notification[]
 
   /// Index for searching by HubSpot ID
   @@index([email, password])
@@ -456,9 +457,15 @@ model notification {
   /// Content of the notification
   content String
 
+  /// User ID
+  user_id String? @db.Uuid
+
   /// Timestamp indicating when the notification was made
   created_at        DateTime            @default(now()) @db.Timestamptz(6)
   notification_read notification_read[]
+
+  /// Relation to the user
+  user user? @relation(fields: [user_id], references: [id])
 }
 
 model notification_read {
@@ -543,25 +550,25 @@ model contractor_company {
 }
 
 /// Activity Log Table
-model activity_log {
-  /// Unique identifier for the STS.
-  id String @id @default(uuid()) @db.Uuid
+// model activity_log {
+//   /// Unique identifier for the STS.
+//   id String @id @default(uuid()) @db.Uuid
 
-  /// Table name
-  table_name String
+//   /// Table name
+//   table_name String
 
-  /// Action
-  action String
+//   /// Action
+//   action String
 
-  /// User ID
-  user_id String @db.Uuid
+//   /// User ID
+//   user_id String @db.Uuid
 
-  /// Timestamp indicating when the post was made
-  created_at DateTime? @default(now())
+//   /// Timestamp indicating when the post was made
+//   created_at DateTime? @default(now())
 
-  /// Relation to the user
-  user user @relation(fields: [user_id], references: [id])
-}
+//   /// Relation to the user
+//   user user @relation(fields: [user_id], references: [id])
+// }
 
 /// @namespace Workforce
 /// Represents the relation between user and contractor company.

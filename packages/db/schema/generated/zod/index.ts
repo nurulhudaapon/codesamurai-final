@@ -32,15 +32,13 @@ export const IssueScalarFieldEnumSchema = z.enum(['id','title','description','ty
 
 export const PostScalarFieldEnumSchema = z.enum(['id','content','type','attachments','flag_score','status','created_at','updated_at','created_by_user_id']);
 
-export const NotificationScalarFieldEnumSchema = z.enum(['id','title','content','created_at']);
+export const NotificationScalarFieldEnumSchema = z.enum(['id','title','content','user_id','created_at']);
 
 export const Notification_readScalarFieldEnumSchema = z.enum(['id','notification_id','user_id','read_at']);
 
 export const Blocked_wordsScalarFieldEnumSchema = z.enum(['id','word','weight','created_at']);
 
 export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id']);
-
-export const Activity_logScalarFieldEnumSchema = z.enum(['id','table_name','action','user_id','created_at']);
 
 export const User_contractor_companyScalarFieldEnumSchema = z.enum(['user_id','contractor_company_id']);
 
@@ -533,6 +531,10 @@ export const notificationSchema = z.object({
    */
   content: z.string(),
   /**
+   * User ID
+   */
+  user_id: z.string().nullable(),
+  /**
    * Timestamp indicating when the notification was made
    */
   created_at: z.coerce.date(),
@@ -650,38 +652,6 @@ export const contractor_companySchema = z.object({
 })
 
 export type contractor_company = z.infer<typeof contractor_companySchema>
-
-/////////////////////////////////////////
-// ACTIVITY LOG SCHEMA
-/////////////////////////////////////////
-
-/**
- * Activity Log Table
- */
-export const activity_logSchema = z.object({
-  /**
-   * Unique identifier for the STS.
-   */
-  id: z.string().uuid(),
-  /**
-   * Table name
-   */
-  table_name: z.string(),
-  /**
-   * Action
-   */
-  action: z.string(),
-  /**
-   * User ID
-   */
-  user_id: z.string(),
-  /**
-   * Timestamp indicating when the post was made
-   */
-  created_at: z.coerce.date().nullable(),
-})
-
-export type activity_log = z.infer<typeof activity_logSchema>
 
 /////////////////////////////////////////
 // USER CONTRACTOR COMPANY SCHEMA

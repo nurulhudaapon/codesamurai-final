@@ -195,6 +195,7 @@ erDiagram
   String id PK
   String title
   String content
+  String user_id FK "nullable"
   DateTime created_at
 }
 "notification_read" {
@@ -223,13 +224,6 @@ erDiagram
   String contract_duration
   String area_of_collection
   String sts_id FK
-}
-"activity_log" {
-  String id PK
-  String table_name
-  String action
-  String user_id FK
-  DateTime created_at "nullable"
 }
 "workforce_log" {
   String id PK
@@ -358,6 +352,7 @@ Notificatons
   - `id`: Unique identifier for the STS.
   - `title`: Title of the notification
   - `content`: Content of the notification
+  - `user_id`: User ID
   - `created_at`: Timestamp indicating when the notification was made
 
 ### `notification_read`
@@ -392,16 +387,6 @@ Notificatons
   - `contract_duration`: Contract duration
   - `area_of_collection`: Area of collection
   - `sts_id`: Designated STS
-
-### `activity_log`
-Activity Log Table
-
-**Properties**
-  - `id`: Unique identifier for the STS.
-  - `table_name`: Table name
-  - `action`: Action
-  - `user_id`: User ID
-  - `created_at`: Timestamp indicating when the post was made
 
 ### `workforce_log`
 
