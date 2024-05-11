@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { Slot } from "expo-router";
 import { SessionProvider } from "@/contexts/auth";
 import { StatusBar } from "expo-status-bar";
+import { Notification } from '@/components/notification';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -47,6 +48,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <SessionProvider>
+      {/* <Notification/> */}
       <StatusBar style="light" />
       <Slot />
     </SessionProvider>
