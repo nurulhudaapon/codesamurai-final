@@ -1,6 +1,7 @@
 "use server";
-import { dbClient } from "@/client";
+import { dbApiClient, dbClient } from "@/client";
 import { Entity } from "@/types/prisma";
+import { DatabaseEntity } from "@ecosync/db";
 
 export const getAll = async () => {
   return dbClient.landfill.getAll();
@@ -13,6 +14,11 @@ export const getById = async (id: string) => {
 export const create = async (data: Entity.landfill) => {
   return dbClient.landfill.create(data);
 };
+
+export const updateIssue = async (id: string, issue: Partial<DatabaseEntity['issue']>) => {
+  return dbApiClient.from('issue').update(issue).eq('id', id).single();
+};
+
 
 export type VehiclesType = Awaited<ReturnType<typeof getAll>>;
 

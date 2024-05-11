@@ -6,7 +6,9 @@ import "leaflet/dist/leaflet.css";
 import { Entity } from "@/types/prisma";
 
 type Props = {
-  data?: Entity.issue[];
+  data?: Array<(Entity.issue & Entity.landfill & Entity.sts) & ({
+    subtitle: string
+  })>;
   center?: LatLngTuple;
   selectedIndex?: number;
 };
@@ -26,6 +28,7 @@ export const MyMap = ({ data, center, selectedIndex }: Props) => {
   if (!isClient) {
     return null;
   }
+  console.log(data);
   return (
     <MapContainer
       zoom={1}
@@ -44,9 +47,9 @@ export const MyMap = ({ data, center, selectedIndex }: Props) => {
       {isClient && (
         <MyMarkers
           data={data?.map((item) => ({
-            // name: item.name,
-            // location: item.location,
-            title: item.title,
+            name: item.type,
+            type: item.subtitle,
+            title: item.title || item.name,
             Latitude: item.latitude,
             Longitude: item.longitude,
           }))}
@@ -61,6 +64,7 @@ const MyMarkers = ({ data, selectedIndex }: any) => {
     <PointMarker
       key={index}
       content={item}
+      type={item.type}
       center={{
         lat: item.Latitude,
         lng: item.Longitude,
@@ -69,7 +73,7 @@ const MyMarkers = ({ data, selectedIndex }: any) => {
   ));
 };
 
-const PointMarker = ({ center, content, openPopup }: any) => {
+const PointMarker = ({ center, content, openPopup, type }: any) => {
   const map = useMap();
   const markerRef = useRef<any>(null);
 
@@ -81,9 +85,18 @@ const PointMarker = ({ center, content, openPopup }: any) => {
   }, [map, center, openPopup]);
 
   return (
-    <Marker ref={markerRef} position={[center.lat, center.lng]}>
+    <Marker ref={markerRef} 
+    
+    // icon={new L.Icon({
+    //   className: 'bg-red-500',
+
+    // })} 
+    
+    position={[center.lat, center.lng]}>
       <Popup>
-        <b>{content.tile}</b>
+        <>{type} </>
+        <br />
+        <b>{content.title}</b>
         {/* <br />
         {content.location} */}
       </Popup>

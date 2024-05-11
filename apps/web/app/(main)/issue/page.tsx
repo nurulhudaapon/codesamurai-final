@@ -16,7 +16,7 @@ export default async function IndexPage() {
       <div className="mb-6">
         <h1 className="font-semibold text-lg">Issue Overview</h1>
       </div>
-      <div className="grid grid-cols-6 gap-4 xl:gap-6">
+      <div className="grid grid-cols-12 gap-4 xl:gap-6">
         <StatsCard title={"Today"} value={stats.today.count + Helpers.String.pluralize(" issue", stats.today.count)} />
         <StatsCard title={"Total"} value={stats.total.count + Helpers.String.pluralize(" issue", stats.total.count)} />
         <StatsCard title={"Reviewed"} value={stats.reviewed.count + Helpers.String.pluralize(" issue", stats.reviewed.count)} />

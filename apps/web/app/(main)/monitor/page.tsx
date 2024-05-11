@@ -22,7 +22,16 @@ const MonitorPage = async () => {
   const vehicleData = await dbClient.vehicle.getAll();
   const landfillData = await dbClient.landfill.getAll();
   const { data: issuesData } = await dbApiClient.from("issue").select("*");
+  const { data: sts } = await dbApiClient.from("sts").select("*");
 
+  const mergedData = [
+    ...(sts?.map((t) => ({ ...t, subtitle: "STS" })) || []),
+    ...(issuesData?.map((t) => ({ ...t, subtitle: "Issue" })) || []),
+    ...(landfillData?.map((t) => ({ ...t, subtitle: "Landfill" })) || []),
+  ].filter((t) => t.latitude && t.longitude) || [];
+
+  console.log(mergedData);
+  
   var sum = {
     costing: 0,
     wastage: 0,
@@ -80,11 +89,9 @@ const MonitorPage = async () => {
 
         <div className="mt-8">
           {/* <h1 className="font-semibold text-lg">Waste Dumping Locations</h1> */}
-          <h1 className="font-semibold text-lg">
-            Waste Dumping Issue Locations
-          </h1>
+          <h1 className="font-semibold text-lg">Map View</h1>
           <div className="bg-white p-4 rounded-md shadow-sm my-4">
-            <MyMap data={issuesData as unknown as Entity.issue[]} />
+            <MyMap data={ mergedData as any} />
           </div>
         </div>
       </div>

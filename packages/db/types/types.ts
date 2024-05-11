@@ -42,6 +42,27 @@ export type Database = {
         }
         Relationships: []
       }
+      blocked_words: {
+        Row: {
+          created_at: string
+          id: string
+          weight: number
+          word: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          weight: number
+          word: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          weight?: number
+          word?: string
+        }
+        Relationships: []
+      }
       contractor_company: {
         Row: {
           area_of_collection: string
@@ -225,7 +246,9 @@ export type Database = {
           content: string
           created_at: string
           created_by_user_id: string | null
+          flag_score: number | null
           id: string
+          status: Database["public"]["Enums"]["post_status"] | null
           type: Database["public"]["Enums"]["post_type"]
           updated_at: string
         }
@@ -234,7 +257,9 @@ export type Database = {
           content: string
           created_at?: string
           created_by_user_id?: string | null
+          flag_score?: number | null
           id: string
+          status?: Database["public"]["Enums"]["post_status"] | null
           type: Database["public"]["Enums"]["post_type"]
           updated_at?: string
         }
@@ -243,7 +268,9 @@ export type Database = {
           content?: string
           created_at?: string
           created_by_user_id?: string | null
+          flag_score?: number | null
           id?: string
+          status?: Database["public"]["Enums"]["post_status"] | null
           type?: Database["public"]["Enums"]["post_type"]
           updated_at?: string
         }
@@ -786,7 +813,8 @@ export type Database = {
       }
     }
     Enums: {
-      issue_status: "reported" | "in_progress" | "resolved"
+      issue_status: "reported" | "reviewed" | "resolved" | "flagged"
+      post_status: "published" | "draft" | "spam" | "inappropriate"
       post_type: "event" | "announcement" | "post"
       transportation_location_type: "sts" | "landfill"
       user_state: "active" | "inactive"
