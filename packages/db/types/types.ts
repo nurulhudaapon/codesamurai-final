@@ -216,6 +216,63 @@ export type Database = {
           },
         ]
       }
+      notification: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          title: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id: string
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      notification_read: {
+        Row: {
+          id: string
+          notification_id: string
+          read_at: string
+          user_id: string
+        }
+        Insert: {
+          id: string
+          notification_id: string
+          read_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          notification_id?: string
+          read_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_read_notification_id_fkey"
+            columns: ["notification_id"]
+            isOneToOne: false
+            referencedRelation: "notification"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notification_read_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       permission: {
         Row: {
           created_at: string
@@ -624,6 +681,7 @@ export type Database = {
       workforce: {
         Row: {
           assigned_collection_route: string
+          collection_route: string | null
           contact_information: string
           contractor_id: string
           dob: string
@@ -635,6 +693,7 @@ export type Database = {
         }
         Insert: {
           assigned_collection_route: string
+          collection_route?: string | null
           contact_information: string
           contractor_id: string
           dob: string
@@ -646,6 +705,7 @@ export type Database = {
         }
         Update: {
           assigned_collection_route?: string
+          collection_route?: string | null
           contact_information?: string
           contractor_id?: string
           dob?: string

@@ -191,6 +191,18 @@ erDiagram
   DateTime updated_at
   String created_by_user_id FK "nullable"
 }
+"notification" {
+  String id PK
+  String title
+  String content
+  DateTime created_at
+}
+"notification_read" {
+  String id PK
+  String notification_id FK
+  String user_id FK
+  DateTime read_at
+}
 "blocked_words" {
   String id PK
   String word
@@ -211,6 +223,13 @@ erDiagram
   String contract_duration
   String area_of_collection
   String sts_id FK
+}
+"activity_log" {
+  String id PK
+  String table_name
+  String action
+  String user_id FK
+  DateTime created_at "nullable"
 }
 "workforce_log" {
   String id PK
@@ -238,6 +257,7 @@ erDiagram
 "transportation" }o--o| "landfill" : landfill
 "transportation" }o--|| "vehicle" : vehicle
 "transportation" }o--o| "contractor_company" : contractor
+"notification_read" }o--|| "notification" : notification
 "contractor_company" }o--|| "sts" : sts
 "workforce_log" }o--|| "workforce" : workforce
 "workforce" }o--|| "contractor_company" : contractor_company
@@ -331,6 +351,23 @@ erDiagram
   - `updated_at`: 
   - `created_by_user_id`: 
 
+### `notification`
+Notificatons
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `title`: Title of the notification
+  - `content`: Content of the notification
+  - `created_at`: Timestamp indicating when the notification was made
+
+### `notification_read`
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `notification_id`: Notification ID
+  - `user_id`: User ID
+  - `read_at`: Timestamp indicating when the notification was read
+
 ### `blocked_words`
 
 **Properties**
@@ -355,6 +392,16 @@ erDiagram
   - `contract_duration`: Contract duration
   - `area_of_collection`: Area of collection
   - `sts_id`: Designated STS
+
+### `activity_log`
+Activity Log Table
+
+**Properties**
+  - `id`: Unique identifier for the STS.
+  - `table_name`: Table name
+  - `action`: Action
+  - `user_id`: User ID
+  - `created_at`: Timestamp indicating when the post was made
 
 ### `workforce_log`
 
