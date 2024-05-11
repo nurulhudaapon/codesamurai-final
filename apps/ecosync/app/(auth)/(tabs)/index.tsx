@@ -28,7 +28,7 @@ export default function TabOneScreen() {
   }, [])
 
   return (
-    <Layout fullScreen withAppBar>
+    <Layout fullScreen withAppBar withNotification>
       <FlatList
         data={feeds}
         style={styles.feedContainer}

@@ -71,7 +71,7 @@ export default function Report() {
     };
 
     return (
-        <Layout withBackButton withAppBar withPadding fullScreen style={styles.container}>
+        <Layout withBackButton withNotification withAppBar withPadding fullScreen style={styles.container}>
             <Text size={12} subtitle>
                 Report your issue
             </Text>

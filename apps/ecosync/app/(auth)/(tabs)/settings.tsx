@@ -7,14 +7,10 @@ import Button from "@/components/Button";
 import { LogOut } from "lucide-react-native";
 import { theme } from "@/styles/theme";
 
-const settings = [
-
-]
-
 export default function TabTwoScreen() {
   const { signOut, session } = useSession();
   return (
-    <Layout withAppBar style={styles.container}>
+    <Layout withBackButton withNotification withAppBar style={styles.container}>
       <SwitchCard
         title="Allow Location Access"
         description="Allow the app to access your current location for better services."

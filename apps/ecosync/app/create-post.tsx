@@ -76,7 +76,7 @@ export default function Report() {
     };
 
     return (
-        <Layout withBackButton withAppBar fullScreen style={styles.container}>
+        <Layout withBackButton withNotification withAppBar fullScreen style={styles.container}>
             <ScrollView style={{ padding: 20 }}>
                 <Text size={12} subtitle>
                     Create a new post
