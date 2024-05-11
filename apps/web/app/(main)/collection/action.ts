@@ -7,7 +7,13 @@ export async function createCollectionDetails(prev: any, form: FormData) {
   const formData = Object.fromEntries(form.entries());
 
   const parsedData = Schema.collection_planSchema.safeParse(
-    Objects.coerceNumbers(formData, ['expected_weight_per_day', 'num_laborers', 'num_vans', 'collection_duration'] satisfies Array<keyof Entity.collection_plan>)
+    Objects.coerceNumbers(formData, [
+      "expected_weight_per_day",
+      "num_laborers",
+      "num_vans",
+      'collection_duration',
+      
+    ] satisfies Array<keyof Entity.collection_plan>)
   );
 
   if (!parsedData.success) {

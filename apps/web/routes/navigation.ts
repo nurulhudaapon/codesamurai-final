@@ -67,7 +67,7 @@ export const navigations = [
     icon: CalendarClock,
     label: "Collection Plan",
     path: routes.main.collection(),
-    require_permissions: ['manage_collection_plan'],
+    require_permissions: [],
   },
   {
     key: "users",

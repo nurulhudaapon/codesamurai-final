@@ -26,7 +26,6 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <Wrapper>
       <button
-        type="button"
         className={cn(
           `
             flex

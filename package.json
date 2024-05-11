@@ -14,6 +14,7 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@types/google-map-react": "^2.1.10",
     "@types/leaflet": "^1.9.12",
     "@types/uuid": "^9.0.8",
     "bun-types": "latest",
@@ -22,6 +23,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.3",
     "@supabase/postgrest-js": "^1.11.0",
     "ajv": "^8.13.0",
     "axios": "^1.6.8",
@@ -30,6 +32,7 @@
     "expo-image-picker": "~14.7.1",
     "expo-location": "~16.5.5",
     "expo-secure-store": "^13.0.1",
+    "google-map-react": "^2.2.1",
     "kleur": "^4.1.5",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
