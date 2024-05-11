@@ -10,15 +10,37 @@ const fetchStss = async () => {
   return stsQuery.data
 }
 
-type StsType = Awaited<ReturnType<typeof fetchStss>>
+const fetchIssue = async () => {
+  const stsQuery = await dbClient.from('issue').select('*').limit(1000);
+  return stsQuery.data
+}
+
+const landfilll = async () => {
+  const stsQuery = await dbClient.from('landfill').select('*').limit(1000);
+  return stsQuery.data
+}
 
 export default function App() {
-  const [stss, setStss] = useState<StsType>([])
+  const [data, setData] = useState<any>([])
   const location = useLocation()
 
   const getPosts = async () => {
-    const stss = await fetchStss()
-    setStss(stss)
+    const stss = await fetchStss();
+    const issues = await fetchIssue();
+    const landfill = await landfilll();
+    const margedData = [
+      ...(stss || []).map((item) => ({ ...item, type: 'STS' })),
+      ...(issues || []).map((item) => ({ ...item, type: 'Issue' })),
+      ...(landfill || []).map((item) => ({ ...item, type: 'Landfill' }))
+    ].map((item: any) => {
+      return {
+        name: item.name || item.title,
+        type: item.type,
+        latitude: item.latitude,
+        longitude: item.longitude
+      }
+    })
+    setData(margedData)
   }
 
   useEffect(() => {
@@ -27,7 +49,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {!!(location && stss?.length) && <MapView
+      {!!(location && data?.length) && <MapView
         style={styles.map}
         initialRegion={{
           // latitude: location.coords.latitude,
@@ -38,8 +60,9 @@ export default function App() {
           longitudeDelta: 0.0421,
         }}
       >
-        {stss?.map((marker, index) => (
+        {data?.map((marker: any, index: number) => (
           <Marker
+            pinColor={ marker.type === 'STS' ? 'yellow' : "red"}
             key={index}
             coordinate={{
               latitude: marker.latitude,
@@ -48,8 +71,8 @@ export default function App() {
           >
             <Callout>
               <View>
-                <Text size={12}>Location: {marker.name}</Text>
-                <Text size={12}>Word Number: {marker.ward_number}</Text>
+                <Text bold size={12}>{marker.type}</Text>
+                <Text size={12}>{marker.name}</Text>
               </View>
             </Callout>
           </Marker>
