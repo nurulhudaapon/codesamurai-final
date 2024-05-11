@@ -42,30 +42,6 @@ export type Database = {
         }
         Relationships: []
       }
-      activity_log: {
-        Row: {
-          action: string
-          id: number
-          table_name: string
-          timestamp: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          id?: number
-          table_name: string
-          timestamp?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          id?: number
-          table_name?: string
-          timestamp?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       blocked_words: {
         Row: {
           created_at: string
@@ -87,9 +63,54 @@ export type Database = {
         }
         Relationships: []
       }
+      collection_plan: {
+        Row: {
+          area_of_collection: string
+          collection_duration: number
+          collection_start_time: string
+          contractor_company_id: string | null
+          expected_weight_per_day: number
+          id: string
+          num_laborers: number
+          num_vans: number
+          sts_id: string
+        }
+        Insert: {
+          area_of_collection: string
+          collection_duration: number
+          collection_start_time: string
+          contractor_company_id?: string | null
+          expected_weight_per_day: number
+          id: string
+          num_laborers: number
+          num_vans: number
+          sts_id: string
+        }
+        Update: {
+          area_of_collection?: string
+          collection_duration?: number
+          collection_start_time?: string
+          contractor_company_id?: string | null
+          expected_weight_per_day?: number
+          id?: string
+          num_laborers?: number
+          num_vans?: number
+          sts_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_plan_sts_id_fkey"
+            columns: ["sts_id"]
+            isOneToOne: false
+            referencedRelation: "sts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contractor_company: {
         Row: {
           area_of_collection: string
+          collection_id: string | null
           contact_number: string
           contract_duration: string
           contract_id: string
@@ -105,6 +126,7 @@ export type Database = {
         }
         Insert: {
           area_of_collection: string
+          collection_id?: string | null
           contact_number: string
           contract_duration: string
           contract_id: string
@@ -120,6 +142,7 @@ export type Database = {
         }
         Update: {
           area_of_collection?: string
+          collection_id?: string | null
           contact_number?: string
           contract_duration?: string
           contract_id?: string
@@ -134,6 +157,13 @@ export type Database = {
           workforce_size?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "contractor_company_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collection_plan"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "contractor_company_sts_id_fkey"
             columns: ["sts_id"]

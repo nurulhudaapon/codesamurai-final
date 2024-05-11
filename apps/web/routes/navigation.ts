@@ -10,6 +10,7 @@ import {
   BadgeHelp,
   ListChecks,
   TruckIcon,
+  CalendarClock,
 } from "lucide-react";
 import { routes } from ".";
 
@@ -62,6 +63,13 @@ export const navigations = [
     label: "Issues",
     path: routes.main.issues(),
     require_permissions: [],
+  },
+  {
+    key: "collection",
+    icon: CalendarClock,
+    label: "Collection Plan",
+    path: routes.main.collection(),
+    require_permissions: ['manage_collection_plan'],
   },
   {
     key: "users",

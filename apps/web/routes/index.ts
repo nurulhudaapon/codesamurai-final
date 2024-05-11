@@ -15,6 +15,7 @@ export const routes = {
     vehicles: () => `/vehicles` as const,
     issues: () => `/issue` as const,
     contractor: () => `/contractor` as const,
+    collection: () => `/collection` as const,
     transportation: {
       root: () => `/transportation` as const,
       sts: () => `${routes.main.transportation.root()}/sts` as const,

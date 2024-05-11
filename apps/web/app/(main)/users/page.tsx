@@ -20,6 +20,7 @@ import {
 } from "@/components/table";
 import { Select } from "@/components/select";
 import { notify } from "@/components/toast";
+import { Helpers } from "@ecosync/utils";
 
 const Index = () => {
   const [userModal, setUserModal] = useState<boolean>(false);
@@ -78,7 +79,7 @@ const Index = () => {
                   {user.first_name} {user.last_name}
                 </TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{user.phone}</TableCell>
+                <TableCell>{Helpers.Phone.prettyFormat(user.phone)}</TableCell>
                 <TableCell>
                   <Select
                     onChange={(e) => onRoleChange(user.id, e.target.value)}
