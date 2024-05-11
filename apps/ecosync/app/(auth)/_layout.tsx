@@ -2,7 +2,7 @@ import { Redirect, Stack, router } from 'expo-router';
 
 import { Text } from '@/components/Themed';
 import { useSession } from '@/contexts/auth';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ChevronsDown, ChevronsUp, ClipboardPlus, FilePen, Plus } from 'lucide-react-native';
 import { theme } from '@/styles/theme';
 import { useState } from 'react';
@@ -68,7 +68,7 @@ const BubbleActions = () => {
 
 const styles = StyleSheet.create({
   button: {
-    bottom: 70,
+    bottom: Platform.OS === 'ios' ? 130 : 70,
     right: 20,
   },
   bubble: {

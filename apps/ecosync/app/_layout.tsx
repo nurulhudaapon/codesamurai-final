@@ -33,7 +33,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const insets = useSafeAreaInsets();
-console.log(insets.top == 59 ? true : false ) 
+  console.log(insets.top == 59 ? true : false)
 
   const [loaded, error] = useFonts({
     Inter: require("../assets/fonts/Inter-VariableFont_slnt,wght.ttf"),
@@ -61,16 +61,16 @@ console.log(insets.top == 59 ? true : false )
 function RootLayoutNav() {
   return (
     <SafeAreaView style={{ flex: 1 }} >
-    <SessionProvider>
-      {/* <Notification/> */}
-      <StatusBar style="light" 
-      // move the status bar down to the top of the screen if the iPhone is 14 Pro or 14 Pro Max
-      translucent={true}
-      backgroundColor="transparent"
-      />
+      <SessionProvider>
+        {/* <Notification/> */}
+        <StatusBar style="light"
+          // move the status bar down to the top of the screen if the iPhone is 14 Pro or 14 Pro Max
+          translucent={true}
+          backgroundColor="transparent"
+        />
 
-      <Slot />
-    </SessionProvider>
+        <Slot />
+      </SessionProvider>
     </SafeAreaView>
   );
 }

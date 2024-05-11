@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet } from "react-native";
+import { FlatList, Image, RefreshControl, StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
 import { theme } from "@/styles/theme";
 import { Layout } from "@/components/layout";
@@ -30,6 +30,7 @@ export default function TabOneScreen() {
   return (
     <Layout fullScreen withAppBar withNotification>
       <FlatList
+        refreshControl={<RefreshControl refreshing={false} onRefresh={getPosts} />}
         data={feeds}
         style={styles.feedContainer}
         ItemSeparatorComponent={() => <Spacer height={10} />}

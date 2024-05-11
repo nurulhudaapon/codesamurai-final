@@ -1,5 +1,5 @@
 import { theme } from "@/styles/theme"
-import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Platform, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Logo } from "./Logo";
 import { StatusBar } from 'react-native';
 import { ArrowLeft, BellDotIcon, BellIcon, ChevronLeftIcon } from "lucide-react-native";
@@ -44,7 +44,7 @@ const AppBar = ({
     withBackButton?: boolean,
     withNotification?: boolean
 }) => {
-    const statusBar = StatusBar.currentHeight || 0;
+    const statusBar = Platform.OS === 'ios' ? StatusBar.currentHeight || 0 : 0;
     return (
         <View style={{
             flexDirection: 'row',
