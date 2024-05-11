@@ -28,19 +28,19 @@ export default function Login() {
 
   const handleLogin = async () => {
     setLoader(true)
-    signIn("token")
-    router.replace("/");
-    // const res = await dbClient.rpc('login', {
-    //   email: user.email,
-    //   pass: user.password
-    // });
-    // const token = res.data?.token
-    // if (token) {
-    //   signIn(token)
-    //   router.replace("/");
-    // } else {
-    //   Alert.alert('Ops!', res.error?.message)
-    // }
+    // signIn("token")
+    // router.replace("/");
+    const res = await dbClient.rpc('login', {
+      email: user.email,
+      pass: user.password
+    });
+    const token = res.data?.token
+    if (token) {
+      signIn(token)
+      router.replace("/");
+    } else {
+      Alert.alert('Ops!', res.error?.message)
+    }
     setLoader(false)
   };
 

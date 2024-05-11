@@ -15,7 +15,7 @@ export const createDbApiClient = (
 };
 
 const baseUrl = Platform.select({
-  android: "http://192.168.240.131",
+  android: "http://10.0.2.2:8080",
   web: "http://localhost:8080",
 });
 

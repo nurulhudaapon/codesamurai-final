@@ -5,17 +5,17 @@ import Text from "@/components/Text";
 import { Layout } from "@/components/layout";
 import Button from "@/components/Button";
 import Spacer from "@/components/Space";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FileInput from "@/components/fileInput";
 import { ListIcon, User } from "lucide-react-native";
 import { Select } from "@/components/Select";
 import { dbClient } from "@/data/client";
 import { CheckBox } from "@/components/checkBox";
 import { uid } from "@/utils/uid";
-import * as Location from 'expo-location';
 import { validate } from "@/utils/validation";
 import { theme } from "@/styles/theme";
 import { upload } from "@/utils/cloudinary";
+import useLocation from "@/hooks/location";
 
 const options = [
     { label: "Waste Management", value: "waste_management" },
@@ -33,19 +33,8 @@ export default function Report() {
         issueType: "",
         message: ""
     })
-    const [location, setLocation] = useState<Location.LocationObject>();
 
-    useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                Alert.alert('Permission to access location was denied');
-                return;
-            }
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-        })();
-    }, []);
+    const location = useLocation();
 
     const handleInput = (key: string, value: any) => {
         setIssue({

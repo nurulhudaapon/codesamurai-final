@@ -37,6 +37,7 @@
     "next-auth": "^4.24.7",
     "react-hot-toast": "^2.4.1",
     "react-leaflet": "^4.2.1",
+    "react-native-get-random-values": "^1.11.0",
     "react-native-maps": "1.10.0",
     "react-native-modal": "^13.0.1",
     "react-native-reanimated": "~3.6.2",
