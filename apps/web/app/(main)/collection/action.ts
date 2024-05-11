@@ -18,13 +18,12 @@ export async function createCollectionDetails(prev: any, form: FormData) {
 
   try {
     const res = await dbApiClient
-    
-      // .from("")
-      // .insert({
-      //   ...parsedData.data,
-      // })
-      // .select("*")
-      // .maybeSingle();
+      .from("coll")
+      .insert({
+        ...parsedData.data,
+      })
+      .select("*")
+      .maybeSingle();
 
     return {
       message: "Workforce created successfully",

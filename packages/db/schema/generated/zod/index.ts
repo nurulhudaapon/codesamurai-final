@@ -38,13 +38,15 @@ export const Notification_readScalarFieldEnumSchema = z.enum(['id','notification
 
 export const Blocked_wordsScalarFieldEnumSchema = z.enum(['id','word','weight','created_at']);
 
-export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id']);
+export const Contractor_companyScalarFieldEnumSchema = z.enum(['id','name','contract_id','registration_id','registration_date','tin','contact_number','workforce_size','payment_per_tonnage','required_amount_per_day','contract_duration','area_of_collection','sts_id','collection_id']);
 
 export const User_contractor_companyScalarFieldEnumSchema = z.enum(['user_id','contractor_company_id']);
 
 export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','workforce_id','latitude','longitude','created_at','updated_at']);
 
 export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','collection_route','contractor_id','assigned_collection_route']);
+
+export const Collection_planScalarFieldEnumSchema = z.enum(['id','area_of_collection','collection_start_time','collection_duration','num_laborers','num_vans','expected_weight_per_day','sts_id','contractor_company_id']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -649,6 +651,7 @@ export const contractor_companySchema = z.object({
    * Designated STS
    */
   sts_id: z.string(),
+  collection_id: z.string().nullable(),
 })
 
 export type contractor_company = z.infer<typeof contractor_companySchema>
@@ -753,3 +756,21 @@ export const workforceSchema = z.object({
 })
 
 export type workforce = z.infer<typeof workforceSchema>
+
+/////////////////////////////////////////
+// COLLECTION PLAN SCHEMA
+/////////////////////////////////////////
+
+export const collection_planSchema = z.object({
+  id: z.string().uuid(),
+  area_of_collection: z.string(),
+  collection_start_time: z.string(),
+  collection_duration: z.number(),
+  num_laborers: z.number().int(),
+  num_vans: z.number().int(),
+  expected_weight_per_day: z.number(),
+  sts_id: z.string(),
+  contractor_company_id: z.string().nullable(),
+})
+
+export type collection_plan = z.infer<typeof collection_planSchema>

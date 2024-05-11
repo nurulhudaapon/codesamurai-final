@@ -224,6 +224,7 @@ erDiagram
   String contract_duration
   String area_of_collection
   String sts_id FK
+  String collection_id FK "nullable"
 }
 "workforce_log" {
   String id PK
@@ -246,6 +247,17 @@ erDiagram
   String contractor_id FK
   String assigned_collection_route
 }
+"collection_plan" {
+  String id PK
+  String area_of_collection
+  String collection_start_time
+  Float collection_duration
+  Int num_laborers
+  Int num_vans
+  Float expected_weight_per_day
+  String sts_id FK
+  String contractor_company_id "nullable"
+}
 "vehicle" }o--|| "sts" : sts
 "transportation" }o--o| "sts" : sts
 "transportation" }o--o| "landfill" : landfill
@@ -253,8 +265,10 @@ erDiagram
 "transportation" }o--o| "contractor_company" : contractor
 "notification_read" }o--|| "notification" : notification
 "contractor_company" }o--|| "sts" : sts
+"contractor_company" }o--o| "collection_plan" : collection_plan
 "workforce_log" }o--|| "workforce" : workforce
 "workforce" }o--|| "contractor_company" : contractor_company
+"collection_plan" }o--|| "sts" : sts
 ```
 
 ### `vehicle`
@@ -387,6 +401,7 @@ Notificatons
   - `contract_duration`: Contract duration
   - `area_of_collection`: Area of collection
   - `sts_id`: Designated STS
+  - `collection_id`: 
 
 ### `workforce_log`
 
@@ -412,3 +427,16 @@ Notificatons
   - `collection_route`: Assigned collection route
   - `contractor_id`: Contractor ID
   - `assigned_collection_route`: Assigned Collection Route
+
+### `collection_plan`
+
+**Properties**
+  - `id`: 
+  - `area_of_collection`: 
+  - `collection_start_time`: 
+  - `collection_duration`: 
+  - `num_laborers`: 
+  - `num_vans`: 
+  - `expected_weight_per_day`: 
+  - `sts_id`: 
+  - `contractor_company_id`: 

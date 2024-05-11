@@ -249,6 +249,7 @@ model sts {
   creator            user                 @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
   vehicles           vehicle[]
   contractor_company contractor_company[]
+  collection_plan    collection_plan[]
 
   /// Index for searching by ward number
   @@index([ward_number])
@@ -547,6 +548,8 @@ model contractor_company {
   workforce               workforce[]
   user_contractor_company user_contractor_company[]
   transportation          transportation[]
+  collection_plan         collection_plan?          @relation(fields: [collection_id], references: [id])
+  collection_id           String?                   @map("collection_id") @db.Uuid
 }
 
 /// Activity Log Table
@@ -695,4 +698,20 @@ enum vehicle_capacity {
 
   /// 15 ton capacity.
   fifteen_ton
+}
+
+model collection_plan {
+  id                      String @id @default(uuid()) @db.Uuid
+  area_of_collection      String
+  collection_start_time   String
+  collection_duration     Float
+  num_laborers            Int
+  num_vans                Int
+  expected_weight_per_day Float
+  sts_id                  String @db.Uuid
+  sts                     sts    @relation(fields: [sts_id], references: [id])
+
+  contractor_company_id String?              @db.Uuid
+  // Foreign key relations
+  contractor_company    contractor_company[]
 }

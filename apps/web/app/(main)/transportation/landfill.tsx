@@ -164,7 +164,7 @@ export default function LandFill({
                       </TableCell>
                       <TableCell>{item.vehicle.capacity}</TableCell>
                       <TableCell>{item.volume} tons</TableCell>
-                      <TableCell>{totalCost.toFixed(2)}</TableCell>
+                      <TableCell>{totalCost.toFixed(2)} $</TableCell>
                       <TableCell>{item.distance} km</TableCell>
                       <TableCell>
                         {item.arrival_time &&

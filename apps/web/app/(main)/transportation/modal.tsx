@@ -56,7 +56,7 @@ export const TransportationModal = ({
       departure_time: new Date(),
       arrival_time: new Date(),
       location_type: "landfill",
-      contractor_id: contractors_company[0].id,
+      contractor_id: null,
     })
       .then(() => {
         triggerUpdate?.();
