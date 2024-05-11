@@ -62,7 +62,7 @@ export default function App() {
       >
         {data?.map((marker: any, index: number) => (
           <Marker
-            pinColor={ marker.type === 'STS' ? 'yellow' : "red"}
+            pinColor={ marker.type === 'STS' ? 'blue' : "red"}
             key={index}
             coordinate={{
               latitude: marker.latitude,

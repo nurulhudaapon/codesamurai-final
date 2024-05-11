@@ -2,24 +2,37 @@ import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
 import { useSession } from "@/contexts/auth";
 import { Layout } from "@/components/layout";
-import { SwitchCard } from "@/components/switchCard";
-import Button from "@/components/Button";
-import { BellIcon, LogOut } from "lucide-react-native";
+import { BellIcon } from "lucide-react-native";
 import { theme } from "@/styles/theme";
 import Text from "@/components/Text";
+import { useEffect, useState } from "react";
+import { dbClient } from "@/data/client";
 
 export default function TabTwoScreen() {
     const { signOut, session } = useSession();
+    const [noti, setNoti] = useState<any[]>([]);
+
+    useEffect(() => {
+        dbClient
+            .from("notification")
+            .select("*,notification_read(*)")
+            .is("notification_read.id", null)
+            .then((data) => {
+                setNoti(data?.data || []);
+            });
+    }, []);
     return (
-        <Layout withNotification withAppBar withBackButton>
-            <NotificationCard
-                title="New event has been announced"
-                description="A new event has been announced in your area. Check it out now."
-            />
-            <NotificationCard
-                title="Your submitted issue has been resolved"
-                description="Your submitted issue has been resolved. Thank you for your contribution."
-            />
+        <Layout fullScreen withNotification withAppBar withBackButton>
+            <View>
+                {
+                    noti.map((n) => (
+                        <NotificationCard
+                            title={n.title}
+                            description={n.content}
+                        />
+                    ))
+                }
+            </View>
         </Layout>
     );
 }
