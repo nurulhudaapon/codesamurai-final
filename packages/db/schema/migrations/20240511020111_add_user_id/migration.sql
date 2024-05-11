@@ -7,8 +7,5 @@
 -- AlterTable
 ALTER TABLE "notification" ADD COLUMN     "user_id" UUID;
 
--- DropTable
-DROP TABLE "activity_log";
-
 -- AddForeignKey
 ALTER TABLE "notification" ADD CONSTRAINT "notification_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
