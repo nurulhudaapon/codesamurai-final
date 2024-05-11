@@ -14,6 +14,7 @@ import { uid } from "@/utils/uid";
 import { theme } from "@/styles/theme";
 import { upload } from "@/utils/cloudinary";
 import { Schema } from '@ecosync/db'
+import { useSession } from "@/contexts/auth";
 
 
 const options = [
@@ -24,13 +25,14 @@ const options = [
 
 export default function Report() {
     const [loader, setLoader] = useState(false);
+    const { userId } = useSession();
     const [post, setPost] = useState({
         content: '',
         attachments: [],
         type: '',
     })
 
-    const handleInput = (key: string, value: any) => {
+    const handle = (key: string, value: any) => {
         setPost({
             ...post,
             [key]: value
@@ -60,6 +62,7 @@ export default function Report() {
             })
             const res = await dbClient.from('post').insert({
                 id: uid(),
+                created_by_user_id: userId,
                 ...validatedData.data,
             }).select('*');
             if (res.data) {
@@ -68,7 +71,6 @@ export default function Report() {
             }
             setLoader(false)
         } else {
-            console.log({d: post});
             Alert.alert('Ops!', 'Please fill all the required fields')
         }
     };
@@ -83,7 +85,7 @@ export default function Report() {
                 <Layout style={{ gap: 10 }}>
                     <FileInput
                         onChange={(f) => {
-                            handleInput('attachments', [...post.attachments, f])
+                            handle('attachments', [...post.attachments, f])
                         }}
                     />
                     {
@@ -96,7 +98,7 @@ export default function Report() {
                     <Select
                         placeholder="Select Post Type"
                         options={options}
-                        onSelect={s => handleInput('type', s)}
+                        onSelect={s => handle('type', s)}
                         value={post.type}
                         icon={<ListIcon color={theme.colors.black} size={15} />}
                     />
@@ -104,7 +106,7 @@ export default function Report() {
                         textArea
                         fullWidth
                         placeholder="Content"
-                        onChangeText={v => handleInput('content', v)}
+                        onChangeText={v => handle('content', v)}
                     />
                     <Button loader={loader} onPress={handleLogin}>
                         Submit

@@ -1,4 +1,4 @@
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import Input from "@/components/input";
 import Text from "@/components/Text";
@@ -34,9 +34,10 @@ export default function Login() {
       email: user.email,
       pass: user.password
     });
+    const loggedInUser = await dbClient.from('user').select('id').eq('email', user.email).single()
     const token = res.data?.token
-    if (token) {
-      signIn(token)
+    if (token && loggedInUser.data?.id) {
+      signIn({ token, userId: loggedInUser.data?.id })
       router.replace("/");
     } else {
       Alert.alert('Ops!', res.error?.message)
@@ -63,6 +64,9 @@ export default function Login() {
         <Button loader={loader} onPress={handleLogin}>
           Login
         </Button>
+        <TouchableOpacity onPress={() => router.push('/registration')}>
+          <Text size={12} primary center>Create a new account</Text>
+        </TouchableOpacity>
       </Layout>
     </Layout>
   );

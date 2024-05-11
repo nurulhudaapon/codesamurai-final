@@ -16,6 +16,7 @@ import { validate } from "@/utils/validation";
 import { theme } from "@/styles/theme";
 import { upload } from "@/utils/cloudinary";
 import useLocation from "@/hooks/location";
+import { useSession } from "@/contexts/auth";
 
 const options = [
     { label: "Waste Management", value: "waste_management" },
@@ -27,6 +28,7 @@ const options = [
 
 export default function Report() {
     const [loader, setLoader] = useState(false);
+    const { userId } = useSession();
     const [issue, setIssue] = useState({
         isAnonymous: false,
         attachment: "",
@@ -43,7 +45,7 @@ export default function Report() {
         })
     }
 
-    const handleLogin = async () => {
+    const handle = async () => {
         const error = validate(issue, ['message', 'issueType', 'attachment'])
         if (!error) {
             setLoader(true)
@@ -51,6 +53,7 @@ export default function Report() {
             const res = await dbClient.from('issue').insert({
                 id: uid(),
                 title: '',
+                created_by_user_id: userId,
                 description: issue.message,
                 latitude: location?.coords.latitude || 0,
                 longitude: location?.coords.longitude || 0,
@@ -110,7 +113,7 @@ export default function Report() {
                         handleInput('isAnonymous', !issue.isAnonymous)
                     }}
                 />
-                <Button loader={loader} onPress={handleLogin}>
+                <Button loader={loader} onPress={handle}>
                     Submit
                 </Button>
             </Layout>
