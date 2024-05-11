@@ -9,6 +9,7 @@ import {
   BaggageClaim,
   BadgeHelp,
   ListChecks,
+  TruckIcon,
 } from "lucide-react";
 import { routes } from ".";
 
@@ -22,15 +23,15 @@ export const navigations = [
   },
   {
     key: "sts_transportation",
-    icon: BaggageClaim,
-    label: "STS Transportation",
+    icon: TruckIcon,
+    label: "Transportation",
     path: routes.main.transportation.sts(),
     require_permissions: ["sts_transportation"],
   },
   {
     key: "landfill_transportation",
     icon: BaggageClaim,
-    label: "Landfill and Billing",
+    label: "Billing",
     path: routes.main.transportation.landfill(),
     require_permissions: ["landfill_transportation"],
   },
@@ -60,13 +61,6 @@ export const navigations = [
     icon: BadgeHelp,
     label: "Issues",
     path: routes.main.issues(),
-    require_permissions: [],
-  },
-  {
-    key: "contractor",
-    icon: BadgeHelp,
-    label: "Contractor",
-    path: routes.main.contractor(),
     require_permissions: [],
   },
   {

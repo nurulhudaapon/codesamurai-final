@@ -72,6 +72,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
             )}
           </div>
         </div>
+        <Notification title={"New Notification"} content={"You have a new notification"} />
         <div
           onClick={logout}
           className="px-10 pb-10 text-white flex items-center gap-2 cursor-pointer"
@@ -86,3 +87,19 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
     </div>
   );
 };
+
+function Notification({ title, content }) {
+  return (
+    <div className="bg-green-500 shadow-md rounded-md p-4 mb-4">
+      <div className="flex items-center">
+        <div className="bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center mr-2">
+          🔔
+        </div>
+        <div>
+          <p className="font-semibold">{title}</p>
+          <p className="text-sm text-gray-600">{content}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
