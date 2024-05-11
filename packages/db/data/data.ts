@@ -667,6 +667,57 @@ const notification: Entity.notification[] = [
   },
 ];
 
+const contractor: Entity.contractor_company[] = [
+  {
+    id: uuid(),
+    name: 'Suaeb Ahmed',
+    area_of_collection: "Kuril",
+    collection_id: uuid(),
+    contact_number: "+8801000000000",
+    contract_duration: "1 year",
+    contract_id: uuid(),
+    payment_per_tonnage: 10,  
+    registration_date: now,
+    registration_id: uuid(),
+    required_amount_per_day: 10,
+    sts_id: sts[1].id,
+    tin: "123456789",
+    workforce_size: 10,
+  },
+  {
+    id: uuid(),
+    name: 'Mujib Ahmed',
+    area_of_collection: "Kuril",
+    collection_id: uuid(),
+    contact_number: "+8801000000000",
+    contract_duration: "1 year",
+    contract_id: uuid(),
+    payment_per_tonnage: 10,  
+    registration_date: now,
+    registration_id: uuid(),
+    required_amount_per_day: 10,
+    sts_id: sts[1].id,
+    tin: "123456789",
+    workforce_size: 10,
+  },
+  {
+    id: uuid(),
+    name: 'Rahim Ahmed',
+    area_of_collection: "Kuril",
+    collection_id: uuid(),
+    contact_number: "+8801000000000",
+    contract_duration: "1 year",
+    contract_id: uuid(),
+    payment_per_tonnage: 10,  
+    registration_date: now,
+    registration_id: uuid(),
+    required_amount_per_day: 10,
+    sts_id: sts[1].id,
+    tin: "123456789",
+    workforce_size: 10,
+  },
+];
+
 export const InitData = {
   permission,
   role,
@@ -680,4 +731,5 @@ export const InitData = {
   issue,
   post,
   notification,
+  contractor,
 };

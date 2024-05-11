@@ -6,6 +6,7 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import { Select } from "@/components/select";
 import { createWorkforceRegistration } from "./action";
+import { useEffect } from "react";
 
 export const WorkforceRegistrationForm = () => {
   // @ts-ignore
@@ -15,7 +16,11 @@ export const WorkforceRegistrationForm = () => {
       errors: null,
     }
   );
-
+  useEffect(() => {
+    if (message) {
+      notify.success("Workforce registration completed successfully!");
+    }
+  }, [message]);
   return (
     <div className="max-w-lg mx-auto">
       <div className="bg-white shadow-lg rounded-lg p-6">
@@ -101,9 +106,6 @@ export const WorkforceRegistrationForm = () => {
           />
 
           <Button type="submit">Submit</Button>
-
-          {message &&
-            notify.success("Workforce registration completed successfully!")}
         </form>
       </div>
     </div>

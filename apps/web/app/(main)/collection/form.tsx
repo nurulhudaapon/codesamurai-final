@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "@/components/input";
 import { Select } from "@/components/select";
 import Button from "@/components/button";
@@ -11,9 +11,13 @@ import { Entity } from "@/types/prisma";
 
 type CollectionDetailsProps = {
   Sts: Entity.sts[];
+  contractor_cp: Entity.contractor_company;
 };
 
-export function CollectionDetailsForm({ Sts }: CollectionDetailsProps) {
+export function CollectionDetailsForm({
+  Sts,
+  contractor_cp,
+}: CollectionDetailsProps) {
   // @ts-ignore
   const [{ errors, message }, formAction] = useFormState(
     createCollectionDetails,
@@ -21,6 +25,11 @@ export function CollectionDetailsForm({ Sts }: CollectionDetailsProps) {
       errors: null,
     }
   );
+  useEffect(() => {
+    if (message) {
+      notify.success(message);
+    }
+  }, [message]);
 
   return (
     <div className="max-w-xl mx-auto">
@@ -29,8 +38,14 @@ export function CollectionDetailsForm({ Sts }: CollectionDetailsProps) {
           Add Collection Details
         </h1>
 
-        <form onSubmit={formAction} className="space-y-4">
+        <form action={formAction} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
+            <input
+              type="hidden"
+              name="contractor_company_id"
+              value={contractor_cp?.id || uuid()}
+            />
+            <input type="hidden" name="id" value={uuid()} />
             <Input
               label="Area of Collection"
               placeholder="Area of Collection"
@@ -77,7 +92,6 @@ export function CollectionDetailsForm({ Sts }: CollectionDetailsProps) {
               placeholder="Weight (in tonnes)"
               type="number"
               name="expected_weight_per_day"
-              // errors={errors}
             />
           </div>
 
@@ -92,7 +106,6 @@ export function CollectionDetailsForm({ Sts }: CollectionDetailsProps) {
             />
           </div>
           <Button type="submit">Submit</Button>
-          {message && notify.success("Collection details added successfully!")}
         </form>
       </div>
     </div>

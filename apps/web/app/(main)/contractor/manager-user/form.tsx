@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { v4 as uuid } from "uuid";
 import { notify } from "@/components/toast";
@@ -16,7 +16,11 @@ export const ContractorManagerForm = () => {
       errors: null,
     }
   );
-
+  useEffect(() => {
+    if (message) {
+      notify.success(message);
+    }
+  }, [message]);
   return (
     <form action={formAction} className="max-w-lg mx-auto">
       <h1 className="text-xl text-center font-bold my-4">
@@ -88,9 +92,6 @@ export const ContractorManagerForm = () => {
       /> */}
 
       <Button type="submit">Submit</Button>
-
-      {message &&
-        notify.success("Contractor manager account created successfully!")}
     </form>
   );
 };
