@@ -6,8 +6,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@/components/icon";
 import { signOut, useSession } from "next-auth/react";
+import { dbApiClient } from "@/client";
+import { AppNoti } from "./app-noti";
 
-export const AppLayout = ({ children }: { children: React.ReactNode }) => {
+export  const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
 
   const permission = session.data?.permission as string[];
@@ -28,7 +30,9 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
     signOut();
   };
 
-  return (
+
+
+return (
     <div className="flex flex-row overflow-hidden">
       <div className="bg-green300 w-[400px] h-screen flex flex-col justify-between">
         <div>
@@ -72,7 +76,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
             )}
           </div>
         </div>
-        <Notification title={"New Notification"} content={"You have a new notification"} />
+        <AppNoti/>
         <div
           onClick={logout}
           className="px-10 pb-10 text-white flex items-center gap-2 cursor-pointer"
@@ -83,23 +87,9 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <div className="h-screen w-full overflow-y-auto overflow-x-hidden py-10 px-5">
         {children}
+
       </div>
     </div>
   );
 };
 
-function Notification({ title, content }) {
-  return (
-    <div className="bg-green-500 shadow-md rounded-md p-4 mb-4">
-      <div className="flex items-center">
-        <div className="bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center mr-2">
-          🔔
-        </div>
-        <div>
-          <p className="font-semibold">{title}</p>
-          <p className="text-sm text-gray-600">{content}</p>
-        </div>
-      </div>
-    </div>
-  );
-}

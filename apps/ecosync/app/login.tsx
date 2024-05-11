@@ -22,7 +22,7 @@ export default function Login() {
   const handleInput = (value: string, key: string) => {
     setUser({
       ...user,
-      [key]: value
+      [key]: key === 'email' ? value.toLowerCase() : value,
     })
   }
 
@@ -31,7 +31,7 @@ export default function Login() {
     // signIn("token")
     // router.replace("/");
     const res = await dbClient.rpc('login', {
-      email: user.email,
+      email: user.email?.toLowerCase(),
       pass: user.password
     });
     const loggedInUser = await dbClient.from('user').select('id').eq('email', user.email).single()

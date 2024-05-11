@@ -18,4 +18,4 @@ export const cubeClient = new EcosyncCubeClient({
   graphQlUrl: process.env.NEXT_PUBLIC_CUBEJS_GRAPHQL_API || "",
 });
 
-export const dbApiClient = createDbApiClient(process.env.DATABASE_API_URL, process.env.AUTH_JWT_SECRET | 'dfd');
+export const dbApiClient = createDbApiClient(process.env.DATABASE_API_URL || process.env.NEXT_PUBLIC_DATABASE_API_URL, process.env.AUTH_JWT_SECRET | 'dfd');

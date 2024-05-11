@@ -38,14 +38,16 @@ export default function Registration() {
             password: true,
             phone: true
         }).safeParse(user)
+        const email = validatedData.data?.email?.toLowerCase()
 
-        if (validatedData.success) {
+        if (validatedData.success && email) {
             setLoader(true)
             const res = await dbClient
                 .from("user")
                 .insert({
                     id: uid(),
                     ...validatedData.data,
+                    email,
                 })
                 .select("*")
                 .maybeSingle();
@@ -58,6 +60,7 @@ export default function Registration() {
             setLoader(false)
         } else {
             console.log(validatedData.error);
+            setLoader(true)
 
             Alert.alert('Ops!', 'Please fill all the required fields')
         }

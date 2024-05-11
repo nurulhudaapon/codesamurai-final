@@ -644,6 +644,29 @@ const post: Entity.post[] = [
   },
 ];
 
+// id: string;
+// title: string;
+// content: string;
+// user_id: string | null;
+// created_at: Date;
+
+const notification: Entity.notification[] = [
+  {
+    content: "Vehicle Reached STS 2",
+    created_at: now,
+    id: uuid(),
+    title: "Vehicle Arrived",
+    user_id: null,
+  },
+  {
+    content: "STS reached limit",
+    created_at: now,
+    id: uuid(),
+    title: "STS Limit",
+    user_id: null,
+  },
+];
+
 export const InitData = {
   permission,
   role,
@@ -656,4 +679,5 @@ export const InitData = {
   blocked_words,
   issue,
   post,
+  notification,
 };
