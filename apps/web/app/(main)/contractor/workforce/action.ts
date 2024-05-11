@@ -26,7 +26,6 @@ export async function createWorkforceRegistration(prev: any, form: FormData) {
     .select("*")
     .maybeSingle();
 
-    console.log({ parsedData, res });
 
   return {
     message: "Workforce created successfully",
