@@ -35,7 +35,7 @@ export const MyMap = ({ data, center, selectedIndex }: Props) => {
       minZoom={3}
       maxZoom={16}
       bounds={allLatLng}
-      style={{ width: "100%", height: "300px" }}
+      style={{ width: "100%", height: "650px" }}
       scrollWheelZoom={true}
       markerZoomAnimation={true}
       id="map"
