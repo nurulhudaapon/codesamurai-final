@@ -5,7 +5,7 @@ export default async function IndexPage() {
   const data = await dbClient.transportation.getAll();
   const stats = await cubeClient.getTransportationStats();
 
-  const way = stats?.data.way?.[0]?.transportation
+  const way = stats?.data.way?.[0]?.transportation;
   const transported = stats?.data.dumped?.[0].transportation;
 
   return (
@@ -22,7 +22,6 @@ export default async function IndexPage() {
           title={"Transported"}
           value={`${transported.total_volume || 0} Tons | ${transported.count || 0} Vehicles`}
         />
-
       </div>
     </>
   );

@@ -4,6 +4,8 @@ import WaveSVG from "@/assets/wave.svg";
 import { LineChart01 } from "@/components/chart/line";
 import { MyMap } from "@/components/map/Map";
 import { Entity } from "@/types/prisma";
+import Button from "@/components/button";
+import { Icon } from "@/components/icon";
 
 const titles = [
   "Total Cost Incurred",
@@ -24,14 +26,15 @@ const MonitorPage = async () => {
   const { data: issuesData } = await dbApiClient.from("issue").select("*");
   const { data: sts } = await dbApiClient.from("sts").select("*");
 
-  const mergedData = [
-    ...(sts?.map((t) => ({ ...t, subtitle: "STS" })) || []),
-    ...(issuesData?.map((t) => ({ ...t, subtitle: "Issue" })) || []),
-    ...(landfillData?.map((t) => ({ ...t, subtitle: "Landfill" })) || []),
-  ].filter((t) => t.latitude && t.longitude) || [];
+  const mergedData =
+    [
+      ...(sts?.map((t) => ({ ...t, subtitle: "STS" })) || []),
+      ...(issuesData?.map((t) => ({ ...t, subtitle: "Issue" })) || []),
+      ...(landfillData?.map((t) => ({ ...t, subtitle: "Landfill" })) || []),
+    ].filter((t) => t.latitude && t.longitude) || [];
 
   console.log(mergedData);
-  
+
   var sum = {
     costing: 0,
     wastage: 0,
@@ -62,8 +65,25 @@ const MonitorPage = async () => {
   return (
     <main>
       <div className={`max-w-9xl mx-auto w-full`}>
-        <div className="mb-6">
+        <div className="mb-6 flex flex-row justify-between">
           <h1 className="font-semibold text-lg">Monitor</h1>
+          <div className="flex gap-4">
+            <div className="flex flex-row gap-4">
+              <a href="/contractor">
+                <Button className="pl-3">
+                  <Icon name="Plus" />
+                  Add Contractor
+                </Button>
+              </a>
+
+              <a href="/contractor/workforce">
+                <Button className="pl-3">
+                  <Icon name="Plus" />
+                  Add Workforce
+                </Button>
+              </a>
+            </div>
+          </div>
         </div>
         <div className="grid grid-cols-6 gap-2 xl:gap-6">
           {Object.keys(sum).map((key, idx) => (
@@ -91,7 +111,7 @@ const MonitorPage = async () => {
           {/* <h1 className="font-semibold text-lg">Waste Dumping Locations</h1> */}
           <h1 className="font-semibold text-lg">Map View</h1>
           <div className="bg-white p-4 rounded-md shadow-sm my-4">
-            <MyMap data={ mergedData as any} />
+            <MyMap data={mergedData as any} />
           </div>
         </div>
       </div>

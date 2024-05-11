@@ -16,14 +16,20 @@ type ContractorProps = {
 };
 
 export function ContractorForm({ currentUserId, Sts }: ContractorProps) {
-  const [{ errors, message }, formAction] = useFormState(createContractorCompany, {
-    errors: null,
-  });
+  // @ts-ignore
+  const [{ errors, message }, formAction] = useFormState(
+    createContractorCompany,
+    {
+      errors: null,
+    }
+  );
 
   return (
     <div className="max-w-lg mx-auto">
       <div className="bg-white shadow-lg rounded-lg p-6">
-        <h1 className="text-xl font-bold text-center mb-4">Add A New Contractor</h1>
+        <h1 className="text-xl font-bold text-center mb-4">
+          Add A New Contractor
+        </h1>
 
         <form action={formAction} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">

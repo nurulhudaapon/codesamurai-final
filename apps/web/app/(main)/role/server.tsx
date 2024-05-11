@@ -27,7 +27,7 @@ export const removePermission = async (role: string, permission: string) => {
 
 export const createPermission = async (name: string) => {
   return await dbClient.permission.create(name);
-}
+};
 
 export type RolesWithPermissionType = Awaited<ReturnType<typeof getRoles>>;
 export type PermissionsType = Awaited<ReturnType<typeof getPermissions>>;
