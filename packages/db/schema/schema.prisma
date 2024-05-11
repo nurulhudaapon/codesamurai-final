@@ -87,7 +87,6 @@ model user {
   post                    post[]
   user_contractor_company user_contractor_company[]
   notification_read       notification_read[]
-  // activity_log            activity_log[]
   notification            notification[]
 
   /// Index for searching by HubSpot ID
@@ -249,7 +248,6 @@ model sts {
   creator            user                 @relation(fields: [created_by_user_id], references: [id], name: "creator_sts")
   vehicles           vehicle[]
   contractor_company contractor_company[]
-  collection_plan    collection_plan[]
 
   /// Index for searching by ward number
   @@index([ward_number])
@@ -552,27 +550,6 @@ model contractor_company {
   collection_id           String?                   @map("collection_id") @db.Uuid
 }
 
-/// Activity Log Table
-// model activity_log {
-//   /// Unique identifier for the STS.
-//   id String @id @default(uuid()) @db.Uuid
-
-//   /// Table name
-//   table_name String
-
-//   /// Action
-//   action String
-
-//   /// User ID
-//   user_id String @db.Uuid
-
-//   /// Timestamp indicating when the post was made
-//   created_at DateTime? @default(now())
-
-//   /// Relation to the user
-//   user user @relation(fields: [user_id], references: [id])
-// }
-
 /// @namespace Workforce
 /// Represents the relation between user and contractor company.
 model user_contractor_company {
@@ -708,8 +685,6 @@ model collection_plan {
   num_laborers            Int
   num_vans                Int
   expected_weight_per_day Float
-  sts_id                  String @db.Uuid
-  sts                     sts    @relation(fields: [sts_id], references: [id])
 
   contractor_company_id String?              @db.Uuid
   // Foreign key relations

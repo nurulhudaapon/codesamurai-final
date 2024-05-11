@@ -46,7 +46,7 @@ export const Workforce_logScalarFieldEnumSchema = z.enum(['id','type','workforce
 
 export const WorkforceScalarFieldEnumSchema = z.enum(['id','full_name','dob','hired_at','job_title','payment_rate','contact_information','collection_route','contractor_id','assigned_collection_route']);
 
-export const Collection_planScalarFieldEnumSchema = z.enum(['id','area_of_collection','collection_start_time','collection_duration','num_laborers','num_vans','expected_weight_per_day','sts_id','contractor_company_id']);
+export const Collection_planScalarFieldEnumSchema = z.enum(['id','area_of_collection','collection_start_time','collection_duration','num_laborers','num_vans','expected_weight_per_day','contractor_company_id']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -769,7 +769,6 @@ export const collection_planSchema = z.object({
   num_laborers: z.number().int(),
   num_vans: z.number().int(),
   expected_weight_per_day: z.number(),
-  sts_id: z.string(),
   contractor_company_id: z.string().nullable(),
 })
 

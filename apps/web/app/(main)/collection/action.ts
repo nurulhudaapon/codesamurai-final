@@ -11,8 +11,7 @@ export async function createCollectionDetails(prev: any, form: FormData) {
       "expected_weight_per_day",
       "num_laborers",
       "num_vans",
-      'collection_duration',
-      
+      "collection_duration",
     ] satisfies Array<keyof Entity.collection_plan>)
   );
 
@@ -22,23 +21,24 @@ export async function createCollectionDetails(prev: any, form: FormData) {
     };
   }
 
-  try {
-    const res = await dbApiClient
-      .from("collection_plan")
-      .insert({
-        ...parsedData.data,
-      })
-      .select("*")
-      .maybeSingle();
+  const res = await dbApiClient
+    .from("collection_plan")
+    .insert({
+      ...parsedData.data,
+    })
+    .select("*")
+    .maybeSingle();
 
+  if (!res.data) {
     return {
-      message: "Workforce created successfully",
-      errors: null,
-    };
-  } catch (error) {
-    return {
-      message: "An error occurred while creating workforce",
-      errors: error,
+      message:null,
+      errors: "An error occurred while creating plan",
     };
   }
+
+  return {
+    message: "Plan created successfully",
+    errors: null,
+    data: res.data,
+  };
 }

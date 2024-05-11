@@ -73,7 +73,6 @@ export type Database = {
           id: string
           num_laborers: number
           num_vans: number
-          sts_id: string
         }
         Insert: {
           area_of_collection: string
@@ -84,7 +83,6 @@ export type Database = {
           id: string
           num_laborers: number
           num_vans: number
-          sts_id: string
         }
         Update: {
           area_of_collection?: string
@@ -95,17 +93,8 @@ export type Database = {
           id?: string
           num_laborers?: number
           num_vans?: number
-          sts_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "collection_plan_sts_id_fkey"
-            columns: ["sts_id"]
-            isOneToOne: false
-            referencedRelation: "sts"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       contractor_company: {
         Row: {

@@ -255,7 +255,6 @@ erDiagram
   Int num_laborers
   Int num_vans
   Float expected_weight_per_day
-  String sts_id FK
   String contractor_company_id "nullable"
 }
 "vehicle" }o--|| "sts" : sts
@@ -268,7 +267,6 @@ erDiagram
 "contractor_company" }o--o| "collection_plan" : collection_plan
 "workforce_log" }o--|| "workforce" : workforce
 "workforce" }o--|| "contractor_company" : contractor_company
-"collection_plan" }o--|| "sts" : sts
 ```
 
 ### `vehicle`
@@ -438,5 +436,4 @@ Notificatons
   - `num_laborers`: 
   - `num_vans`: 
   - `expected_weight_per_day`: 
-  - `sts_id`: 
   - `contractor_company_id`: 

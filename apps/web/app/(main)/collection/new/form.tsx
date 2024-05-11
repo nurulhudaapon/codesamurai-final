@@ -4,10 +4,10 @@ import Input from "@/components/input";
 import { Select } from "@/components/select";
 import Button from "@/components/button";
 import { useFormState } from "react-dom";
-import { createCollectionDetails } from "./action";
+import { createCollectionDetails } from "../action";
 import { notify } from "@/components/toast";
 import { Entity } from "@/types/prisma";
-import { LocationInput } from "./locationInput";
+import { LocationInput } from "../locationInput";
 import { v4 as uuid } from "uuid";
 
 type CollectionDetailsProps = {

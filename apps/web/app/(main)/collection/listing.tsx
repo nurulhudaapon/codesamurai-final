@@ -43,6 +43,7 @@ export const CollectionPlanCardList = ({
 };
 
 const CollectionPlanCard = ({ data }: { data: DatabaseEntity['collection_plan'] }) => {
+ 
   const handleUpdateIssue = async (
     id: string,
     issue: Partial<DatabaseEntity["issue"]>
@@ -51,63 +52,28 @@ const CollectionPlanCard = ({ data }: { data: DatabaseEntity['collection_plan'] 
     // reload the data
     window.location.reload();
   };
+  
   return (
     <div className="col-span-full rounded-md border border-solid text-white p-4 shadow-sm md:col-span-6 lg:col-span-3 w-full max-w-md bg-white shadow-lg rounded-lg overflow-hidden mx-auto mb-4">
-      {issue.attachments?.[0] && (
-        <img
-          className="w-full h-56 object-cover object-center"
-          src={issue.attachments?.[0]}
-          alt="Issue"
-        />
-      )}
       <div className="px-6 py-4">
         <div className="font-bold text-gray-800 text-xl mb-2">
-          {issue.title}
+          {data.area_of_collection}
         </div>
-        <p className="text-gray-700 text-base">{issue.description}</p>
+        <p className="text-gray-700 text-base">{data.num_vans}</p>
         <p className="text-gray-500 text-bold mt-2 text-sm">
-          {Helpers.Time.formatToDateTime(issue.created_at)}
+          {/* {Helpers.Time.formatToDateTime(data.)} */}
         </p>
       </div>
       <div className="px-6 py-4">
         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          {Helpers.String.toTitleCase(issue.type || "")}
+          {Helpers.Number.formatToString(data.num_laborers || 0)}
         </span>
         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          {Helpers.String.toTitleCase(issue.status || "")}
+        {Helpers.Number.formatToString(data.num_vans || 0)}
         </span>
       </div>
       <hr />
       <div className="flex self-end align-end justify-around flex-row mt-4">
-        <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          {(issue.status === "reviewed" || issue.status === "resolved") ? (
-            <span className="text-blue-500">Reviewed</span>
-          ) : (
-            <button
-              onClick={() =>
-                handleUpdateIssue(issue.id, { status: "reviewed" })
-              }
-              className="text-blue-500"
-            >
-              Mark as Reviewed
-            </button>
-          )}
-        </span>
-
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 ">
-          {issue.status === "resolved" ? (
-            <span className="text-green-500">Resolved</span>
-          ) : (
-            <button
-              onClick={() =>
-                handleUpdateIssue(issue.id, { status: "resolved" })
-              }
-              className="text-green-500"
-            >
-              Mark as Resolved
-            </button>
-          )}
-        </span>
       </div>
     </div>
   );

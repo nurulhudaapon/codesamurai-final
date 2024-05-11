@@ -731,5 +731,5 @@ export const InitData = {
   issue,
   post,
   notification,
-  contractor,
+  // contractor,
 };
