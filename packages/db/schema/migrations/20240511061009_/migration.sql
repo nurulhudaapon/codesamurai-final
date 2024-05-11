@@ -1,14 +1,7 @@
-/*
-  Warnings:
 
-  - You are about to drop the `activity_log` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- AlterTable
 ALTER TABLE "contractor_company" ADD COLUMN     "collection_id" UUID;
 
--- DropTable
-DROP TABLE "activity_log";
 
 -- CreateTable
 CREATE TABLE "collection_plan" (

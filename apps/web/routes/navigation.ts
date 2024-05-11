@@ -1,16 +1,14 @@
 import {
-  Monitor,
-  Users,
-  Truck,
+  Award,
+  BadgeHelp,
+  BaggageClaim,
+  CalendarClock,
+  Caravan,
   Factory,
   LandPlot,
-  Caravan,
-  Award,
-  BaggageClaim,
-  BadgeHelp,
-  ListChecks,
+  Monitor,
   TruckIcon,
-  CalendarClock,
+  Users
 } from "lucide-react";
 import { routes } from ".";
 
