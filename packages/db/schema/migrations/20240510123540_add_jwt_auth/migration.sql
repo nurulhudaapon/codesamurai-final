@@ -90,7 +90,7 @@ user_role(email text, pass text) returns name
   as $$
 begin
   return (
-  select role_id from "user"
+  select id from "user"
    where "user".email = user_role.email
      and "user"."password" = crypt(user_role.pass, "user"."password")
   );
