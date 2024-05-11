@@ -8,6 +8,7 @@ import { SessionProvider } from "@/contexts/auth";
 import { StatusBar } from "expo-status-bar";
 import { Notification } from '@/components/notification';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { theme } from '@/styles/theme';
 // has dynamic 
 
 
@@ -60,12 +61,11 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.primary }} >
       <SessionProvider>
         {/* <Notification/> */}
         <StatusBar style="light"
           // move the status bar down to the top of the screen if the iPhone is 14 Pro or 14 Pro Max
-          translucent={true}
           backgroundColor="transparent"
         />
 

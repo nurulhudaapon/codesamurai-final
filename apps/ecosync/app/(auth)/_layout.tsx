@@ -68,7 +68,7 @@ const BubbleActions = () => {
 
 const styles = StyleSheet.create({
   button: {
-    bottom: Platform.OS === 'ios' ? 130 : 70,
+    bottom: Platform.OS === 'ios' ? 200 : 70,
     right: 20,
   },
   bubble: {
