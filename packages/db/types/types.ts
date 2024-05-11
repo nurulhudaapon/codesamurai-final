@@ -222,20 +222,31 @@ export type Database = {
           created_at: string
           id: string
           title: string
+          user_id: string | null
         }
         Insert: {
           content: string
           created_at?: string
           id: string
           title: string
+          user_id?: string | null
         }
         Update: {
           content?: string
           created_at?: string
           id?: string
           title?: string
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "notification_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notification_read: {
         Row: {
