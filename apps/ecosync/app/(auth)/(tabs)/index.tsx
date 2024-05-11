@@ -9,7 +9,7 @@ import Text from "@/components/Text";
 import { Helpers } from "@ecosync/utils"
 
 const fetchFeeds = async () => {
-  const feedQuery = await dbClient.from('post').select('*, user(*)').limit(1000).order('created_at', { ascending: false })
+  const feedQuery = await dbClient.from('post').select('*, user(*)').neq('status', 'inappropriate').limit(1000).order('created_at', { ascending: false })
   return feedQuery.data
 }
 
